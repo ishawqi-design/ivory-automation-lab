@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مختبر الأتمتة التشغيلية — ايفوري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>:root{--bur:#7A2E2E;--bur2:#5e2121;--gold:#C9A961;--gold2:#a88a45;--ink:#2a2220;--mut:#7d716a;--line:#e6ddd2;--paper:#faf7f2;--soft:#f3ece2;--ok:#2f7d4f;--warn:#b7791f;--clay:#D97757}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:'Almarai','Tahoma',sans-serif;font-size:15.5px;line-height:1.7;direction:rtl}
+button,select,input,textarea{font-family:inherit;font-size:inherit}
+a{color:var(--bur)}
+main{max-width:1180px;margin:0 auto;padding:18px 18px 40px}
+.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:10px 18px;background:linear-gradient(120deg,var(--bur2),var(--bur));color:#fff;border-bottom:3px solid var(--gold)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand .claude{color:#f4c3ad;letter-spacing:.3px}.brand .sep{width:1px;height:22px;background:rgba(255,255,255,.35)}
+.brand .ivory{font-size:19px;color:var(--gold)}.brand .tag{font-size:11.5px;opacity:.75;font-weight:400}
+.ttl{display:flex;flex-direction:column;line-height:1.35;flex:1;min-width:220px}.ttl b{font-size:15px}.ttl small{opacity:.75;font-size:12px}
+nav{display:flex;gap:4px;flex-wrap:wrap}nav a{color:#fff;text-decoration:none;padding:6px 12px;border-radius:20px;font-size:13.5px;opacity:.85}
+nav a.on{background:var(--gold);color:var(--bur2);opacity:1;font-weight:800}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:3px 10px;border-radius:20px;background:var(--soft);color:var(--mut);white-space:nowrap}
+.top .chip{background:rgba(255,255,255,.14);color:#fff}.chip.ok{background:#e4f2e9;color:var(--ok)}.top .chip.ok{background:rgba(120,220,160,.2);color:#d6ffe4}
+.chip.warn{background:#fff3dc;color:var(--warn)}.top .chip.warn{background:rgba(255,210,120,.2);color:#ffe9c2}
+.sec{font-size:21px;color:var(--bur);margin:22px 0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+h3{color:var(--bur);margin:0 0 6px;font-size:19px}h4{color:var(--bur);margin:18px 0 8px}
+.mut{color:var(--mut)}.center{text-align:center}
+.hero{background:radial-gradient(circle at 15% 20%,rgba(201,169,97,.25),transparent 45%),linear-gradient(135deg,#fff,var(--soft));border:1px solid var(--line);border-radius:22px;padding:34px 30px;margin-top:6px}
+.hero h1{font-size:28px;line-height:1.45;margin:4px 0 8px;color:var(--bur2)}.kick{color:var(--gold2);font-weight:800;margin:0}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}.row.center{justify-content:center}
+.b{border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:8px 16px;border-radius:12px;cursor:pointer;font-weight:700;text-decoration:none;display:inline-block}
+.b:hover{border-color:var(--gold)}.b.pri{background:var(--bur);border-color:var(--bur);color:#fff}.b.pri:hover{background:var(--bur2)}
+.b.sec2{background:#fff8ea;border-color:var(--gold);color:var(--bur2)}.b.ghost{background:transparent}.b.lg{padding:12px 24px;font-size:16.5px}.b.sm{padding:3px 10px;font-size:12.5px;border-radius:8px}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:900px){.days{grid-template-columns:1fr}}
+.day{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.day.muted{opacity:.6}
+.day-h{display:flex;justify-content:space-between;gap:8px;border-bottom:2px solid var(--gold);padding-bottom:6px;margin-bottom:6px}.day-h b{color:var(--bur)}.day-h span{font-size:13px;color:var(--mut)}
+.ag{display:grid;grid-template-columns:92px 1fr;gap:6px;padding:4px 0;border-bottom:1px dashed var(--line);font-size:13.5px}.ag span{color:var(--gold2);font-weight:800;direction:ltr;text-align:right}.ag p{margin:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:860px){.grid3{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.card p{margin:4px 0 0;font-size:14px;color:var(--mut)}
+.stat{text-align:center}.stat b{font-size:26px;color:var(--bur);display:block}.stat small{color:var(--mut)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin:12px 0}.panel.narrow{max-width:360px;margin:30px auto}
+.panel.narrow input{width:100%;margin:10px 0;padding:10px;border:1.5px solid var(--line);border-radius:10px;text-align:center}
+.stepper{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px}
+.st{flex:1 0 auto;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;cursor:pointer;font-weight:700;color:var(--mut);white-space:nowrap;font-size:13.5px}
+.st i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--bur);font-size:12px}
+.st.on{border-color:var(--bur);color:var(--bur);background:#fff8f3}.st.on i{background:var(--bur);color:#fff}.st.done i{background:var(--ok);color:#fff}.st:disabled{opacity:.45;cursor:not-allowed}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:16px}
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 18px;margin-top:10px}@media(max-width:760px){.form{grid-template-columns:1fr}}
+.form label,.result label{display:flex;flex-direction:column;gap:5px;font-weight:700;font-size:14px}.form label small{color:var(--mut);font-weight:400}
+select,input[type=text],input[type=password],textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;color:var(--ink)}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,97,.2)}
+textarea{line-height:1.75;resize:vertical}
+.form label:has(textarea){grid-column:1/-1}
+.result{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#fff8ea;border:1px solid #efdcb0;border-radius:12px;padding:12px}
+.hook .play{width:86px;height:86px;border-radius:50%;margin:6px auto 10px;display:grid;place-items:center;background:var(--bur);color:#fff;font-size:34px}
+.hook .q{background:var(--soft);border-radius:12px;padding:10px;max-width:640px;margin:14px auto 0}
+.slide{background:linear-gradient(160deg,#fff,var(--soft));border:1px solid var(--line);border-radius:20px;padding:28px 34px;min-height:340px;position:relative}
+.slide h3{font-size:26px}.slide ul{font-size:18px;line-height:2}.slide .key{background:var(--bur);color:#fff;display:inline-block;padding:8px 16px;border-radius:12px;font-weight:700}
+.slide-n{position:absolute;left:20px;top:16px;color:var(--gold2);font-weight:800}
+.dot{width:11px;height:11px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0}.dot.on{background:var(--bur)}
+.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}@media(max-width:900px){.tools{grid-template-columns:1fr}}
+.tool{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px}.tool.done{border-color:#bfe0cb}
+.tool-h{display:flex;gap:10px;align-items:center}.tool-h h4{margin:0}.tool-h small{color:var(--gold2);font-weight:700}.tool-h .chip{margin-inline-start:auto}
+.ic{font-size:26px;width:46px;height:46px;border-radius:12px;background:var(--soft);display:grid;place-items:center}
+.where{font-size:13px;color:var(--mut);background:var(--paper);border-radius:8px;padding:6px 10px}
+.lbl{display:block;margin:10px 0 4px;color:var(--bur);font-size:13.5px}
+.code{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fffdf9}.code-h{display:flex;justify-content:flex-end;padding:4px 6px;background:var(--soft)}
+.code textarea{border:0;border-radius:0;font-size:13.5px;background:#fffdf9}
+.tip{background:#f1f7f3;border-radius:10px;padding:8px 12px;margin:8px 0 0;font-size:13.5px}.tip.warn{background:#fff6e6}
+.taskcard{text-align:start;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-height:150px}
+.taskcard:hover{border-color:var(--gold)}.taskcard small{color:var(--gold2);font-weight:800}.taskcard b{color:var(--bur2);font-size:16px}
+.bar{display:block;height:8px;background:var(--soft);border-radius:8px;overflow:hidden;flex:1}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--bur));border-radius:8px}.bar.sm{height:6px}
+.crumb{font-size:13.5px;color:var(--mut);margin:14px 0 8px}
+.prog{display:flex;gap:10px;align-items:center;margin:8px 0 14px}.prog b{color:var(--bur)}
+.axis{border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;background:var(--paper)}
+.axis-h{display:flex;gap:10px;align-items:baseline;margin-bottom:6px}.axis-h b{color:var(--bur);font-size:16px}.axis-h span{font-size:13px;color:var(--mut)}
+.q{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff}.q.ans{border-color:#bfe0cb}
+.q .qq{font-weight:800;color:var(--ink)}.q .why{font-size:12.5px;color:var(--mut);margin:1px 0 7px}.q input{margin-top:7px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chipb{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:5px 12px;cursor:pointer;font-size:13.5px}.chipb.on{background:var(--bur);border-color:var(--bur);color:#fff}.chipb:hover{border-color:var(--gold)}
+.edit{margin-top:12px}.edit-h{display:flex;gap:8px;align-items:center;margin-bottom:6px}.edit-h .b{margin-inline-start:auto}
+details.edit summary{cursor:pointer;font-weight:700;color:var(--bur);padding:6px 0}
+.ws{display:grid;grid-template-columns:1fr 330px;gap:14px;margin-top:10px}@media(max-width:900px){.ws{grid-template-columns:1fr}}
+.chatbox{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:12px;height:440px;overflow-y:auto}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;margin:8px 0;font-size:14.5px}.msg p{margin:0 0 4px}
+.msg.me{background:var(--bur);color:#fff;margin-inline-start:auto;border-end-end-radius:4px}
+.msg.ai{background:#fff;border:1px solid var(--line);border-end-start-radius:4px}.msg.sys{background:#fff3dc;margin:8px auto;text-align:center}
+.ms{font-size:12px;font-weight:800;color:var(--gold2)}.mq{font-weight:800;color:var(--bur);margin-top:6px!important}.chg{margin:4px 0;padding-inline-start:18px;font-size:13px;color:var(--mut)}
+.reply{display:flex;gap:8px;margin-top:8px}.reply textarea{flex:1}
+.ws-side{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.gauge{width:150px;height:150px;margin:0 auto 10px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--soft) 0);display:grid;place-items:center}
+.gauge>div{width:116px;height:116px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}.gauge b{font-size:28px;color:var(--bur)}.gauge small{font-size:11.5px;color:var(--mut)}
+.cr{display:grid;grid-template-columns:1fr 70px 28px;gap:6px;align-items:center;font-size:12.5px;margin:4px 0}.cr b{text-align:center}.crn{font-size:11.5px;color:var(--mut);margin:-2px 0 6px}
+.sync,.vers{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;align-items:center}.sync b,.vers b{width:100%;color:var(--bur);font-size:13.5px}
+.vb{border:1px solid var(--line);background:#fff;border-radius:8px;padding:2px 8px;font-size:12px;cursor:pointer}.vb.on{border-color:var(--bur);color:var(--bur);font-weight:800}
+.pass{background:#e8f5ec;border:1.5px solid #9fd1b0;border-radius:14px;padding:12px 16px;font-weight:700;color:var(--ok);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.pack{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}@media(max-width:980px){.pack{grid-template-columns:1fr}}
+.pk-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.pk-h b{color:var(--bur)}
+.checks{display:flex;flex-direction:column;gap:6px}
+.ck{display:flex;gap:10px;align-items:flex-start;text-align:start;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;cursor:pointer}
+.ck i{font-style:normal;flex:0 0 22px;height:22px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff}.ck.on{border-color:#bfe0cb;background:#f4fbf6}.ck.on i{background:var(--ok);border-color:var(--ok)}
+.relay{border:2px dashed var(--gold);background:#fffaf0;border-radius:14px;padding:14px;margin:12px 0}.relay b{color:var(--bur2)}.relay p{margin:4px 0 8px;font-size:14px}.relay textarea#relay-in{margin-top:8px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}.tbl th{background:var(--soft);color:var(--bur);text-align:center;padding:8px}.tbl td{border-bottom:1px solid var(--line);padding:8px;text-align:right}
+.busy{position:fixed;inset:0;background:rgba(42,34,32,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;color:#fff;font-weight:800}
+.spin{width:54px;height:54px;border-radius:50%;border:5px solid rgba(255,255,255,.3);border-top-color:var(--gold);animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;transition:.25s;z-index:60;opacity:0}#toast.on{transform:translateX(-50%);opacity:1}
+footer{text-align:center;font-size:12.5px;color:var(--mut);padding:20px}
+.rate b{white-space:nowrap;color:var(--bur);font-size:13.5px}.rate select{flex:1}
+.film{width:100%;max-width:960px;aspect-ratio:16/9;border-radius:14px;background:#0b1530;display:block;margin:10px auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.mgrid{display:grid;gap:12px;margin:14px 0}.mgrid.g3{grid-template-columns:repeat(3,1fr)}.mgrid.g4{grid-template-columns:repeat(4,1fr)}@media(max-width:860px){.mgrid.g3,.mgrid.g4{grid-template-columns:1fr 1fr}}
+.mcard{background:#fff;border:1.5px solid var(--line);border-top:4px solid var(--bur);border-radius:14px;padding:14px}.mcard span{font-size:26px}.mcard b{display:block;color:var(--bur2);font-size:17px;margin:4px 0}.mcard p{margin:0;font-size:14.5px;color:var(--mut)}
+.taskwrap.with-comp{display:grid;grid-template-columns:1fr 380px;gap:14px;align-items:start}@media(max-width:1000px){.taskwrap.with-comp{grid-template-columns:1fr}}
+.taskmain{min-width:0}
+.comp{position:sticky;top:76px;background:#fff;border:1.5px solid #e7cfca;border-radius:16px;padding:12px;margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 96px)}
+.comp-h{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.comp-h b{color:var(--bur)}.comp-h small{flex:1 1 100%;color:var(--mut);font-size:12.5px;line-height:1.5}
+.comp-body{flex:1;overflow-y:auto;min-height:180px;max-height:46vh;background:var(--paper);border-radius:12px;padding:8px}
+.comp .msg{max-width:96%;font-size:14px}.comp .chips{margin:0}.comp .chipb{font-size:12.5px;padding:4px 10px}
+.prop{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}.prop-v{background:#fff8ea;border-radius:8px;padding:8px;font-size:13.5px;white-space:pre-wrap;margin-bottom:6px;max-height:160px;overflow:auto}
+.qbtn{float:left;font-weight:400}.q.focus{border-color:var(--bur);box-shadow:0 0 0 3px rgba(122,46,46,.12)}
+.mdout{border:1px solid var(--line);border-radius:12px;background:#fffdf9;padding:14px 18px;max-height:520px;overflow:auto}.mdout h3,.mdout h4,.mdout h5{color:var(--bur);margin:10px 0 6px}.mdout p{margin:6px 0}.mdout .tbl{margin:8px 0}
+.xfer{background:#fff8ea;border:1.5px solid #efdcb0;border-radius:14px;padding:12px 16px;margin:10px 0}.xfer p{margin:6px 0}.xfer summary{cursor:pointer;font-weight:700;color:var(--bur)}
+.refined-badge{background:var(--gold);color:#5a3800;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:6px;vertical-align:middle}
+.approved-sum{background:#f0f7f1;border:1.5px solid #b8dfc0;border-radius:12px;padding:12px 14px;margin:12px 0}.approved-sum>b{display:block;color:#2f7d4f;font-size:14px;margin-bottom:8px}
+.appr-item{margin:6px 0;padding:6px 10px;background:#fff;border-radius:8px;border-right:3px solid #2f7d4f}.appr-q{display:block;font-size:12.5px;color:var(--mut);margin-bottom:2px}.appr-a{display:block;font-size:14px;color:#1a1a1a;font-weight:500}
+/* بطاقة المشارك */
+.roster-card{background:#fff8ea;border:1.5px solid var(--gold);border-radius:12px;padding:12px 16px;margin:8px 0}
+.rc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #f0e8d4;font-size:14px}
+.rc-row:last-child{border-bottom:none}.rc-row span{color:var(--mut)}.rc-row b{color:var(--bur2)}
+/* اليوم الثالث */
+.d3-secs{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.d3-sec{background:#fafafa;border:1.5px solid var(--line);border-radius:10px;padding:12px;transition:border-color .2s}
+.d3-sec.done{border-color:#2f7d4f;background:#f0f7f1}
+.d3-sec-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.d3-num{background:var(--bur);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.d3-sec.done .d3-num{background:#2f7d4f}
+.d3-note{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13.5px;font-family:inherit;resize:vertical;direction:rtl}
+.d3-sec-q{font-size:13px;margin:4px 0 6px;color:var(--mut)}
+.d3-instr-ref{margin:10px 0;padding:10px;background:#fff8ea;border-radius:10px;border:1px solid #efdcb0}
+.d3-manual{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.d3-manual-sec{background:#fafafa;border:1.5px solid var(--line);border-radius:10px;padding:12px}
+.d3-pillar{border-radius:12px;overflow:hidden;border:2px solid var(--line);transition:border-color .2s}
+.d3-pillar.filled{border-color:#2f7d4f}
+.d3-pillar-h{width:100%;display:grid;grid-template-columns:36px 1fr auto 28px;align-items:center;gap:10px;padding:14px 16px;background:var(--pc,#7a2e2e);color:#fff;border:none;cursor:pointer;text-align:right;direction:rtl}
+.d3-pnum{font-size:22px;font-weight:800;opacity:.9;text-align:center}
+.d3-pillar-name{font-size:17px;font-weight:700}
+.d3-pq{font-size:13px;opacity:.8;grid-column:2/3;margin-top:-4px}
+.d3-pillar-h{grid-template-rows:auto auto}
+.d3-pillar-h .d3-pnum{grid-row:1/3}.d3-pillar-h .d3-pillar-badge{grid-row:1/3}
+.d3-pillar-badge{font-size:16px;text-align:center;opacity:.8}
+.d3-pillar.filled .d3-pillar-badge{background:rgba(255,255,255,.25);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.d3-pillar-body{padding:14px;display:flex;flex-direction:column;gap:10px;background:#fafafa}
+.d3-why{background:#fff;border-radius:8px;padding:8px 12px;font-size:13px;color:var(--mut);border-right:3px solid var(--gold)}
+/* Wizard */
+.wizard-wrap{display:flex;flex-direction:column;gap:14px}
+.wizard-progress{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.wdot{width:32px;height:32px;border-radius:50%;background:#ddd;color:#888;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:all .2s;flex-shrink:0}
+.wdot.active{background:var(--pc,var(--bur));color:#fff;transform:scale(1.15);box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.wdot.done{background:#2f7d4f;color:#fff}
+.wizard-label{flex:1;text-align:left;color:var(--mut);font-size:13px}
+.wizard-card{border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.wizard-head{padding:18px 20px;color:#fff;display:flex;gap:14px;align-items:flex-start}
+.wizard-num{font-size:36px;font-weight:800;opacity:.9;line-height:1;min-width:36px}
+.wizard-name{font-size:20px;font-weight:700;display:block}
+.wizard-q{font-size:14px;opacity:.85;margin:4px 0 0}
+.wizard-body{background:#fff;padding:18px}
+.wizard-nav{display:flex;justify-content:space-between;margin-top:14px}
+.wizard-preview{background:#f9f7f0;border:1.5px solid var(--gold);border-radius:12px;padding:14px}
+.wizard-preview>b{display:block;margin-bottom:8px;color:var(--bur)}
+.d3-prompt-preview{white-space:pre-wrap;font-family:inherit;font-size:13.5px;direction:rtl;text-align:right;background:transparent;border:none;padding:0;margin:0;color:#333}
+.d3-checklist{background:#f5f5f5;border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.d3-checklist.ready{background:#f0f7f1;border-color:#2f7d4f}
+.d3-checklist>b{display:block;margin-bottom:8px;color:var(--bur2);font-size:14px}
+.d3-checklist.ready>b{color:#2f7d4f}
+.d3-checks-row{display:flex;flex-wrap:wrap;gap:8px}
+.d3-chk{padding:5px 12px;border-radius:20px;font-size:13px;background:#e8e8e8;color:#666;border:1.5px solid #ddd}
+.d3-chk.ok{background:var(--pc,#2f7d4f);color:#fff;border-color:transparent}
+.d3-break{display:flex;flex-direction:column;gap:10px}
+.d3-plan{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.d3-plan-row{display:grid;grid-template-columns:180px 1fr;gap:10px;align-items:start;padding:10px;background:#fafafa;border-radius:10px;border:1.5px solid var(--line)}
+.d3-plan-label b{display:block;color:var(--bur);font-size:14px}.d3-plan-label small{color:var(--mut);font-size:12px}
+@media(max-width:700px){.d3-plan-row{grid-template-columns:1fr}}
+</style></head><body><div id="app"></div>
+<script>
+/* ===== بيانات مختبر الأتمتة التشغيلية — ايفوري × طموح ===== */
+const CFG = {
+  program: 'مهارة الأتمتة التشغيلية بالذكاء الاصطناعي',
+  cohort: 'الدفعة الثانية',
+  dates: '22–24 نوفمبر 2026',
+  hours: '12:00 م – 05:00 م',
+  hookUrl: 'hook.mp4',    // الفيلم الافتتاحي — ملف مرافق للصفحة
+  hookPoster: 'poster.jpg',
+  hookTitle: 'الفيلم الافتتاحي',
+  bridgeUrl: '',          // يُملأ تلقائيًا إن وُجد جسر Cloudflare مفعّل
+  bridgePath: '/api/claude',
+  claudeLabUrl: 'https://claude.ai/artifact/67BCr2xeLC325w6EoDbGLH', // نسخة المختبر داخل Claude: الرفيق يعمل بحساب المشارك دون كلفة على ايفوري
+  threshold: 95,          // عتبة اجتياز ورشة التدقيق (قابلة للتغيير من لوحة المدرب)
+  trainerPin: '2211',
+  storeKey: 'ivory-tamouh-lab-v1'
+};
+
+const OTHER = 'أخرى';
+
+/* مهام حقيقية مخصصة لكل مسمى وظيفي — مستخلصة من الأوصاف الوظيفية القياسية */
+const ROLE_TASKS = {
+  'مستشار تدريب وتطوير': [
+    'يُعدّ مقترح برنامج تدريبي مكتملاً بالأهداف والجدول الزمني والميزانية',
+    'يُحلّل نتائج استبيانات تحديد الاحتياجات التدريبية ويستخلص الأولويات',
+    'يُصيغ تقرير أثر البرنامج التدريبي بمؤشرات قياسية للعميل',
+    'يُتابع مراحل تنفيذ مشروع تدريبي متعدد الدفعات ويرصد الانحرافات',
+    'يُعدّ خطاب عرض خدمات تدريبية مخصصاً لجهة معينة',
+    'يُصمّم أجندة ورشة عمل تنفيذية بمحاور ومخرجات محددة',
+    'يُراجع حقيبة تدريبية ويضع تعليقات تطويرية منظمة',
+    'يُعدّ ملخصاً تنفيذياً لاجتماع تعاقدي مع عميل مؤسسي',
+    'يُقارن عروض مدربين خارجيين ويُعدّ توصية بالاختيار',
+    'يُحدّث خطة مشروع تدريبي بناءً على تغذية راجعة من العميل',
+  ],
+  'مدير مالي': [
+    'يُراجع التقرير المالي الشهري ويُعدّ ملخص الانحرافات للإدارة',
+    'يُعدّ توقعات التدفق النقدي للربع القادم بسيناريوهين',
+    'يُحلّل هيكل التكاليف ويحدد مناطق الهدر المحتمل',
+    'يُعدّ تقرير الموازنة مقابل الإنفاق الفعلي شهرياً',
+    'يُراجع مؤشرات السيولة والملاءة المالية ويُعدّ توصياته',
+    'يُصيغ مذكرة مالية لدعم قرار استثماري أو توسعي',
+    'يُتابع الذمم المدينة والدائنة ويُعدّ تقرير التقادم',
+    'يُعدّ ملف بيانات ضريبة القيمة المضافة للتقديم للهيئة',
+    'يُراجع عقود الموردين من الجانب المالي قبل الاعتماد',
+    'يُعدّ لوحة مؤشرات مالية أسبوعية للرئيس التنفيذي',
+  ],
+  'رئيس قسم': [
+    'يُعدّ تقرير أداء القسم الأسبوعي بمؤشرات الإنجاز والتأخير',
+    'يُوزّع المهام على أعضاء الفريق ويُتابع إنجازها عبر لوحة متابعة',
+    'يُحدد احتياجات القسم من الموارد في ميزانية الربع القادم',
+    'يُعدّ خطة عمل أسبوعية للقسم تتضمن الأولويات والمسؤوليات',
+    'يُصيغ محضر اجتماع القسم ويُتابع بنود العمل المطلوبة',
+    'يُعدّ تقرير مقارنة أداء القسم مقابل المستهدفات الفصلية',
+    'يُراجع نماذج الطلبات الواردة للقسم ويُعيد توجيهها',
+    'يُعدّ توصية ترقية أو تطوير لأحد أعضاء فريقه',
+    'يُصيغ إجراءات تشغيلية معيارية (SOP) لعملية متكررة في القسم',
+    'يُعدّ ملخصاً للدروس المستفادة من مشروع أو مهمة منتهية',
+  ],
+  'الرئيس التنفيذي': [
+    'يُراجع لوحة المؤشرات التنفيذية الأسبوعية ويُعدّ أسئلة المراجعة',
+    'يُصيغ رسالة توجيهية للقيادة العليا حول أولويات الفترة القادمة',
+    'يُعدّ مواد اجتماع مجلس الإدارة من ملخصات وقرارات مقترحة',
+    'يُحلّل تقارير الأداء المرفوعة من المدراء ويرصد الانحرافات الجوهرية',
+    'يُراجع عرضاً تجارياً أو شراكة استراتيجية ويُعدّ ملاحظاته',
+    'يُصيغ بيان موقف أو رد رسمي على استفسار حكومي أو جهة رقابية',
+    'يُعدّ خطة عمل تنفيذية لمبادرة استراتيجية جديدة',
+    'يُتابع تنفيذ قرارات مجلس الإدارة عبر مصفوفة متابعة',
+    'يُعدّ ملخصاً تنفيذياً لتقرير سوق أو دراسة منافسة',
+    'يُصيغ أهداف الأداء السنوية لكبار المدراء وفق إطار OKR',
+  ],
+  'محاسب': [
+    'يُسجّل القيود اليومية ويُطابق رصيد الحسابات مع المستندات',
+    'يُعدّ تسوية الحسابات البنكية الشهرية ويرصد الفروقات',
+    'يُصدر الفواتير وإشعارات الدائن والمدين للعملاء',
+    'يُتابع حركة الذمم المدينة ويُعدّ كشف المتأخرات الأسبوعي',
+    'يُعدّ كشف رواتب الموظفين الشهري مع الاستقطاعات والبدلات',
+    'يُصنّف المصروفات ويُدخلها في مراكز التكلفة الصحيحة',
+    'يُعدّ ميزان المراجعة الشهري للتحقق من توازن الحسابات',
+    'يُراجع فواتير الموردين ويُعدّ أوامر الدفع المستحقة',
+    'يُعدّ ملف ضريبة القيمة المضافة الشهري ويُحسب المبلغ المستحق',
+    'يُعدّ تقرير التدفقات النقدية الأسبوعي للإدارة المالية',
+  ],
+  'مدير إدارة الموارد البشرية': [
+    'يُراجع طلبات التوظيف الواردة ويُصادق على متطلبات المنصب',
+    'يُعدّ تقرير مؤشرات الموارد البشرية الشهري (دوران، غياب، توطين)',
+    'يُصيغ سياسة داخلية جديدة أو يُراجع سياسة قائمة',
+    'يُتابع نسبة السعودة ويُعدّ خطة رفعها للامتثال النظامي',
+    'يُعدّ خطة التدريب السنوية بناءً على تقييمات الأداء',
+    'يُراجع نتائج تقييم أداء الموظفين ويُعدّ توصيات الترقيات',
+    'يُصيغ خطاب إنذار أو قرار تأديبي وفق نظام العمل',
+    'يُعدّ تقرير تحليل الفجوة بين الكوادر المتاحة والمطلوبة',
+    'يُتابع تجديد التأشيرات والإقامات والتصاريح منتهية الصلاحية',
+    'يُعدّ خطة تهيئة الموظف الجديد بمراحل الأسابيع الأولى',
+  ],
+  'أخصائي أول موارد بشرية وامتثال نظامي': [
+    'يُتابع ملفات الامتثال النظامي (نطاقات وقوى وتأمينات) ويُعدّ كشف الحالات المخالفة',
+    'يُعدّ خطابات الموظفين الرسمية (عمل، راتب، خبرة) وفق قوالب معتمدة',
+    'يُدخل بيانات الموظفين الجدد في أنظمة الموارد البشرية ويُدققها',
+    'يُتابع حضور وانصراف الكوادر الطبية وفق جداول المناوبات',
+    'يُعدّ تقرير إجازات الموظفين والأرصدة المتبقية شهرياً',
+    'يُتابع تقديم التأمينات الاجتماعية والاشتراكات الشهرية',
+    'يُصيغ ردوداً على استفسارات نظام العمل الواردة من الموظفين',
+    'يُعدّ ملف توثيق النزاعات العمالية وخطوات التسوية',
+    'يُتابع انتهاء مدد العقود وتجديدها قبل الموعد بشهر',
+    'يُعدّ تقرير امتثال دوري لإدارة الصحة والسلامة المهنية',
+  ],
+  'مدير إداري': [
+    'يُتابع عقود الخدمات (صيانة، أمن، نظافة) ويُقيّم مستوى تنفيذها',
+    'يُعدّ تقرير المصروفات الإدارية الشهري مقارنةً بالميزانية',
+    'يُنسّق جداول الصيانة الوقائية للمبنى والمعدات',
+    'يُعدّ كشف المخزون الإداري (مستلزمات، قرطاسية) ويُتابع الطلبات',
+    'يُصيغ مواصفات التوريد لطرح عطاء خدمة أو مشتريات',
+    'يُراجع الطلبات الإدارية المرفوعة ويُعيد توجيهها للجهات المختصة',
+    'يُعدّ جدول سيارات الشركة وتخصيصها لرحلات الأسبوع',
+    'يُتابع ترخيص المبنى والسجل التجاري وتاريخ انتهائهما',
+    'يُصيغ تقرير تقييم أداء الموردين والمقاولين الإداريين',
+    'يُعدّ خطة استمرارية الأعمال للقسم الإداري في حالات الطوارئ',
+  ],
+  'أخصائي إداري': [
+    'يُعدّ جدول اجتماعات الأسبوع ويُرسل دعوات بالمستندات المرفقة',
+    'يُصيغ محضر الاجتماع فور انتهائه ويُوزّع بنود العمل على المعنيين',
+    'يُتابع البريد الوارد والصادر ويُدوّن أرقام القيد في السجل',
+    'يُعدّ طلبات الشراء الإدارية ويُتابع مسار اعتمادها',
+    'يُنظّم ملفات الحضور والانصراف اليومي للموظفين',
+    'يُعدّ تقرير حجوزات السفر والفنادق لزيارات الموظفين',
+    'يُتابع مهام بنود العمل السابقة ويُعدّ كشف المتأخر منها',
+    'يُرتّب ملفات الوثائق الإدارية ويُدخلها في نظام الأرشفة',
+    'يُصيغ المراسلات الرسمية الصادرة ويُعدّها للاعتماد والتوقيع',
+    'يُعدّ كشف المواعيد المهمة (تجديد عقود، انتهاء وثائق) للشهر القادم',
+  ],
+  'مدير حسابات — تنظيم فعاليات': [
+    'يُعدّ عرضاً تجارياً لفعالية مؤسسية بالتفاصيل والتسعير',
+    'يُتابع مراحل تنفيذ الفعالية مع فرق الإنتاج والعمليات',
+    'يُصيغ ملخص إحاطة (Brief) للعميل قبيل الفعالية',
+    'يُعدّ تقرير ما بعد الفعالية بمؤشرات الأداء وملاحظات العميل',
+    'يُتابع سداد دفعات العملاء ويُعدّ كشف الحسابات المتأخرة',
+    'يُنسّق مع الموردين (كيترينج، ديكور، صوت وضوء) ويُتابع التأكيدات',
+    'يُعدّ جدول الفعالية التفصيلي ويُوزّعه على فرق التنفيذ',
+    'يُصيغ رد على شكوى عميل بأسلوب احترافي واقتراح حل',
+    'يُعدّ تقرير تحليل أسعار المنافسين في عروض الفعاليات',
+    'يُتابع فرص التجديد والتوسع في حسابات العملاء الحاليين',
+  ],
+};
+
+/* قائمة المشاركين المسجّلين — طموح الدفعة الثانية */
+const ROSTER = [
+  { name: 'إبراهيم شوقي',               title: 'مستشار تدريب وتطوير',                              org: 'ايفوري للتدريب والاستشارات',      fam: 'gen',  dept: 'التدريب والتطوير المؤسسي',              roleKey: 'مستشار تدريب وتطوير' },
+  { name: 'سارة العويد',                  title: '',                                                  org: '',                                 fam: 'gen',  dept: '',                                        roleKey: '' },
+  { name: 'السيد رزق',                    title: 'مدير مالي',                                         org: 'شركة مرو لتقنية الصخور',          fam: 'fin',  dept: 'الإدارة المالية',                       roleKey: 'مدير مالي' },
+  { name: 'لميس البيوك',                  title: 'رئيس قسم',                                          org: 'شركة حسام البيوك',                fam: 'admin',dept: 'الإدارة العامة',                       roleKey: 'رئيس قسم' },
+  { name: 'أحمد سعد الشهراني',           title: 'الرئيس التنفيذي',                                   org: '',                                 fam: 'exec', dept: 'القيادة التنفيذية',                     roleKey: 'الرئيس التنفيذي' },
+  { name: 'علي سالم الحربي',              title: 'محاسب',                                             org: '',                                 fam: 'fin',  dept: 'الشؤون المالية والمحاسبة',              roleKey: 'محاسب' },
+  { name: 'عبدالرحمن ربيع عاتي',         title: 'مدير إدارة الموارد البشرية',                        org: 'شركة المطلق',                     fam: 'hr',   dept: 'الموارد البشرية',                       roleKey: 'مدير إدارة الموارد البشرية' },
+  { name: 'عبدالله علي الذياب',           title: 'أخصائي أول موارد بشرية وامتثال نظامي',             org: 'مستشفى د. عبدالرحمن المشاري',    fam: 'hr',   dept: 'الموارد البشرية والامتثال',             roleKey: 'أخصائي أول موارد بشرية وامتثال نظامي' },
+  { name: 'عبدالعزيز خالد الوهابي',      title: 'مدير إداري',                                        org: 'مجالات الجودة للتجارة',           fam: 'admin',dept: 'الإدارة العامة والخدمات المساندة',    roleKey: 'مدير إداري' },
+  { name: 'عبدالله خالد نويهض',           title: 'أخصائي إداري',                                      org: 'شركة المطلق',                     fam: 'admin',dept: 'الشؤون الإدارية',                     roleKey: 'أخصائي إداري' },
+  { name: 'عبدالرحمن الحبردي',           title: 'الرئيس التنفيذي',                                   org: 'شركة شغن المحدودة',               fam: 'exec', dept: 'القيادة التنفيذية',                     roleKey: 'الرئيس التنفيذي' },
+  { name: 'عاصم عادل',                    title: 'مدير حسابات — تنظيم فعاليات',                       org: '',                                 fam: 'sales',dept: 'المبيعات وإدارة العملاء',              roleKey: 'مدير حسابات — تنظيم فعاليات' },
+];
+
+/* المسارات الوظيفية: المسميات واقتراحات المهام (إلهام فقط — المشارك يكتب مهامه بيده) */
+const FAMILIES = [
+  { k:'exec', n:'القيادة التنفيذية', titles:['الرئيس التنفيذي','المدير العام','نائب الرئيس التنفيذي','مدير تنفيذي لقطاع'],
+    domain:'القيادة التنفيذية وحوكمة القرار',
+    tasks:['إعداد الموجز التنفيذي الأسبوعي لمؤشرات الأداء','تحضير اجتماعات مجلس الإدارة واللجان: جدول الأعمال والمواد','متابعة قرارات الاجتماعات حتى إغلاقها','صياغة التوجيهات والخطابات الرسمية الصادرة','مراجعة المقترحات والعروض قبل الاعتماد','قراءة التقرير المالي الشهري واستخلاص القرارات'] },
+  { k:'admin', n:'الإدارة العامة والشؤون الإدارية', titles:['مدير إداري','أخصائي إداري','مدير مكتب','سكرتير تنفيذي','منسق إداري'],
+    domain:'الشؤون الإدارية والخدمات المساندة',
+    tasks:['متابعة الطلبات الإدارية والخدمات المساندة','إعداد التقرير الإداري الشهري','قيد المراسلات الواردة والصادرة ومتابعة ردودها','تنظيم الاجتماعات وكتابة محاضرها وبنود العمل','متابعة العقود والتجديدات: إيجارات وصيانة واشتراكات','مقارنة عروض الموردين للمشتريات الصغيرة'] },
+  { k:'hr', n:'الموارد البشرية والامتثال', titles:['مدير الموارد البشرية','أخصائي أول موارد بشرية وامتثال نظامي','أخصائي موارد بشرية','مسؤول توظيف','مسؤول رواتب'],
+    domain:'الموارد البشرية والامتثال لنظام العمل السعودي',
+    tasks:['إعداد تقرير الموارد البشرية الشهري: الدوران والغياب والتوطين','فرز السير الذاتية ومطابقتها مع الوصف الوظيفي','صياغة السياسات واللوائح الداخلية ومراجعتها','متابعة الامتثال النظامي: نطاقات وقوى ومدد والتأمينات','إعداد خطابات الموظفين والقرارات الإدارية','تخطيط برامج التهيئة والتدريب للموظفين الجدد'] },
+  { k:'fin', n:'المالية والمحاسبة', titles:['مدير مالي','محاسب','محاسب أول','مسؤول ذمم مدينة ودائنة','مراجع داخلي'],
+    domain:'المحاسبة والرقابة المالية',
+    tasks:['مطابقة كشوف البنك مع الدفاتر','إعداد التقرير المالي الشهري للإدارة','متابعة الذمم المدينة والتحصيل','مراجعة الفواتير والمصروفات قبل الاعتماد','تجهيز بيانات إقرار ضريبة القيمة المضافة','تحليل الانحراف بين الموازنة والفعلي'] },
+  { k:'sales', n:'حسابات العملاء والمبيعات والفعاليات', titles:['مدير حسابات عملاء (Account Manager)','مدير مبيعات','منسق فعاليات','أخصائي تسويق','أخصائي خدمة عملاء'],
+    domain:'إدارة حسابات العملاء وتنظيم الفعاليات',
+    tasks:['إعداد عروض الأسعار والمقترحات للعملاء','إعداد تقرير الحساب الدوري لكل عميل','تخطيط الفعاليات وجداولها التنفيذية','صياغة رسائل المتابعة بعد اجتماعات العملاء','إعداد تقرير ما بعد الفعالية','تحديث سجل العملاء وفرص البيع'] },
+  { k:'ops', n:'العمليات والتشغيل والتقنية', titles:['مدير عمليات','مهندس','مشرف موقع','أخصائي جودة','أخصائي تقنية معلومات'],
+    domain:'العمليات التشغيلية والجودة',
+    tasks:['إعداد تقرير التشغيل الأسبوعي','متابعة طلبات الصيانة والأعطال','إعداد المواصفات الفنية لطلبات الشراء','تحليل بيانات الإنتاج والجودة','توثيق الإجراءات التشغيلية القياسية (SOP)','متابعة حوادث السلامة وإجراءاتها التصحيحية'] },
+  { k:'gen', n:OTHER, titles:[], domain:'مجال عملي',
+    tasks:['إعداد تقرير دوري لمديري','متابعة طلبات ومهام متكررة','صياغة مراسلات رسمية','تحليل بيانات جدول Excel'] }
+];
+
+/* أنواع المهام — تحدد خيارات الأسئلة المشتقة */
+const TYPES = [
+  { k:'rep', n:'تقرير دوري أو موجز للإدارة' },
+  { k:'cor', n:'مراسلات وخطابات وردود' },
+  { k:'ana', n:'تحليل بيانات وجداول' },
+  { k:'fol', n:'متابعة طلبات ومهام وإجراءات' },
+  { k:'pln', n:'تخطيط وجدولة واجتماعات' },
+  { k:'pol', n:'سياسات ولوائح ومستندات مرجعية' },
+  { k:'eva', n:'تقييم وفرز ومقارنة (سير ذاتية، عروض…)' }
+];
+
+const BY_TYPE = {
+  late: {
+    rep:['أرقام إدارة أخرى','البيانات المالية لنهاية الفترة','ملاحظات المدير على المسودة','بيانات النظام بعد الإقفال','لا شيء يتأخر عادة'],
+    cor:['معلومة من الإدارة المعنية','اعتماد الصيغة من المسؤول','المرفقات والمستندات الداعمة','رقم القيد أو المرجع','لا شيء يتأخر عادة'],
+    ana:['الملف المصدر من الجهة المعنية','تصحيح بيانات ناقصة أو خاطئة','تحديد الفترة المقارنة','الأرقام المستهدفة أو الموازنة','لا شيء يتأخر عادة'],
+    fol:['رد الجهة المنفذة','تحديث الحالة من صاحب الطلب','المستندات المطلوبة لإغلاق الطلب','موافقة صاحب الصلاحية','لا شيء يتأخر عادة'],
+    pln:['تأكيد مواعيد الحضور','مواد العرض من المتحدثين','الميزانية المعتمدة','قائمة المدعوين النهائية','لا شيء يتأخر عادة'],
+    pol:['ملاحظات الإدارات','الرأي القانوني أو النظامي','النسخة السابقة المعتمدة','اعتماد الإدارة العليا','لا شيء يتأخر عادة'],
+    eva:['المستندات من المتقدمين أو الموردين','معايير التقييم المعتمدة','رأي الجهة الطالبة','الميزانية المتاحة','لا شيء يتأخر عادة']
+  },
+  rule: {
+    rep:['أبدأ بالانحرافات عن الخطة قبل الإنجازات','أي رقم بلا مصدر لا يدخل التقرير','أقارن دائمًا بالفترة نفسها من العام السابق','لا يتجاوز الموجز صفحة واحدة','أرتب البنود حسب أثرها المالي'],
+    cor:['الرد على الجهات الرسمية خلال يومي عمل','لا أذكر التزامًا ماليًا دون اعتماد','أستخدم صيغة مخاطبة حسب مرتبة المرسل إليه','كل خطاب يحمل رقمًا مرجعيًا وتاريخًا','أرسل نسخة للمدير في المراسلات الحساسة'],
+    ana:['أستبعد القيم الشاذة قبل حساب المتوسطات','أتحقق من مجموع الأعمدة مقابل المصدر','أعرض النسبة والرقم المطلق معًا','أوضح الافتراض خلف كل تقدير','أفصل بين الفعلي والمتوقع بوضوح'],
+    fol:['الطلب المتأخر أكثر من 3 أيام يُصعَّد','الأولوية للطلبات التي توقف العمل','لا يُغلق الطلب دون تأكيد صاحبه','أتابع كل يوم أحد ما بقي مفتوحًا','لكل طلب مسؤول واحد بالاسم'],
+    pln:['لا اجتماع بلا جدول أعمال قبله بيوم','أترك هامشًا 15 دقيقة بين الالتزامات','أؤكد الحضور قبل 48 ساعة','أوزع المواد قبل الاجتماع لا أثناءه','كل اجتماع ينتهي ببنود عمل ومواعيد'],
+    pol:['كل بند يستند إلى مادة نظامية أو قرار','أستخدم لغة إلزامية واضحة (يجب/لا يجوز)','أحدد المسؤول عن تطبيق كل بند','أذكر تاريخ السريان والمراجعة','أبدأ بالتعريفات قبل الأحكام'],
+    eva:['المعايير الإلزامية تُفحص قبل المفاضلة','أوزن المعايير قبل رؤية المتقدمين','أوثق سبب كل استبعاد','لا أعتمد على انطباع غير موثق','أقارن ثلاثة خيارات على الأقل']
+  },
+  exc: {
+    rep:['طلب عاجل من الإدارة العليا خارج الموعد','تغيّر مفاجئ في الأرقام يحتاج تفسيرًا','غياب بيانات إدارة بالكامل','تغيير في شكل التقرير المطلوب','فترة إقفال أو مواسم ذروة'],
+    cor:['مراسلة بلغة أجنبية','شكوى أو مراسلة حساسة','طلب من جهة حكومية بمهلة قصيرة','مراسلة تتطلب رأيًا قانونيًا','رد يحتاج توقيع أعلى من المعتاد'],
+    ana:['بيانات بصيغة مختلفة عن المعتاد','أرقام متضاربة بين مصدرين','فترة غير مكتملة','بنود جديدة لم تكن في السابق','طلب تحليل بزاوية مختلفة'],
+    fol:['طلب عاجل يتجاوز الطابور','طلب مكرر من أكثر من جهة','طلب خارج الصلاحية','طلب بلا مستندات كافية','تعارض بين طلبين'],
+    pln:['إلغاء أو تأجيل في اللحظة الأخيرة','ضيف رفيع المستوى بمتطلبات خاصة','تعارض مواعيد بين مسؤولين','تغيير المكان','حضور عن بعد ومختلط'],
+    pol:['تعارض مع نظام صدر حديثًا','حالة لا يغطيها أي بند','طلب استثناء من موظف','اختلاف التطبيق بين الفروع','ملاحظة من جهة رقابية'],
+    eva:['متقدم أو مورد وحيد','تعادل في الدرجات','نقص مستند جوهري','طلب استعجال من الإدارة','تضارب مصالح محتمل']
+  },
+  err: {
+    rep:['رقم خاطئ يصل للإدارة العليا','تأخر التقرير عن موعده','إغفال انحراف مهم','تفسير مضلل للأرقام','تقرير طويل لا يُقرأ'],
+    cor:['التزام لم يُعتمد يصل لجهة خارجية','خطأ في اسم أو صفة المرسل إليه','فوات مهلة الرد','نبرة غير مناسبة','إرسال معلومة سرية'],
+    ana:['خطأ في معادلة يغيّر النتيجة','دمج بيانات غير متطابقة','استنتاج لا تدعمه الأرقام','تجاهل قيم شاذة','مقارنة فترات غير متكافئة'],
+    fol:['طلب يضيع دون متابعة','إغلاق طلب لم يُنفذ فعلًا','تصعيد متأخر','تكرار العمل على طلب واحد','عدم إبلاغ صاحب الطلب'],
+    pln:['تعارض مواعيد مع مسؤول رفيع','نسيان دعوة طرف أساسي','نقص مادة في الاجتماع','تجاوز الميزانية','بنود عمل بلا مسؤول'],
+    pol:['بند يخالف نظامًا نافذًا','صياغة تحتمل أكثر من تفسير','تطبيق نسخة قديمة','إغفال فئة من الموظفين','عدم توثيق الاعتماد'],
+    eva:['استبعاد مؤهل جيد خطأً','قبول من لا يستوفي شرطًا إلزاميًا','قرار لا يمكن تبريره','تسرب بيانات المتقدمين','انحياز غير مقصود']
+  },
+  ambition: {
+    rep:['تحليل اتجاه لآخر ستة أشهر','تنبيه مبكر بالمخاطر','توصيات مرتبة حسب الأثر','نسخة تنفيذية في صفحة + ملحق تفصيلي','مؤشرات أداء بالألوان (أخضر/أصفر/أحمر)'],
+    cor:['قوالب جاهزة لكل نوع مراسلة','سجل آلي بالمهل وتنبيه قبل انتهائها','نسختان عربية وإنجليزية تلقائيًا','تلخيص المراسلات الطويلة في سطرين','اقتراح الرد مع درجة حساسيته'],
+    ana:['تفسير الأسباب لا الأرقام فقط','سيناريوهات «ماذا لو»','رسوم بيانية جاهزة للعرض','كشف الشذوذ تلقائيًا','توصية بقرار مع درجة الثقة'],
+    fol:['لوحة متابعة حية بالحالات','تنبيه تلقائي بالمتأخر','تقرير أسبوعي جاهز للمدير','قياس زمن إنجاز كل نوع طلب','تحليل أسباب التأخر المتكررة'],
+    pln:['جدول أعمال ومواد تلقائيًا','محضر وبنود عمل فور الانتهاء','متابعة تنفيذ البنود حتى الإغلاق','تقويم موحد بلا تعارض','ملخص تحضيري لكل حضور'],
+    pol:['مقارنة بأفضل الممارسات','جدول مطابقة مع المواد النظامية','نسخة مبسطة للموظفين','أسئلة شائعة مستخرجة من السياسة','تنبيه بموعد المراجعة الدورية'],
+    eva:['مصفوفة مفاضلة موزونة تلقائية','ملخص مقارن في صفحة','أسئلة مقابلة مخصصة لكل متقدم','كشف المخاطر في كل عرض','توصية مسببة جاهزة للاعتماد']
+  }
+};
+
+/* أسئلة الاستنطاق القياسية: 18 سؤالاً في ستة محاور */
+const AXES = [
+  { k:'A', n:'الواقع الحالي', d:'كيف تجري المهمة اليوم فعلاً' },
+  { k:'B', n:'المدخلات والمصادر', d:'ما الذي يدخل المهمة ومن أين' },
+  { k:'C', n:'خبرتك غير المكتوبة', d:'القواعد التي في رأسك ولم تُكتب' },
+  { k:'D', n:'المخرج والمستلم', d:'ما الذي يخرج ولمن وبأي معيار' },
+  { k:'E', n:'الحوكمة والحدود', d:'ما يبقى قرارك وكيف تُحمى البيانات' },
+  { k:'F', n:'رفع السقف', d:'كيف تصبح المهمة أعلى أثرًا مما هي عليه' }
+];
+
+const QS = [
+  { id:'trigger', ax:'A', q:'ما الذي يُطلق هذه المهمة عادة؟', why:'يحدد متى يُستدعى كلود وما المدخل الأول في كل مرة.',
+    o:['موعد دوري ثابت','طلب من مسؤولي المباشر','وصول بيانات أو طلب جديد','حدث طارئ أو شكوى','مبادرة مني'] },
+  { id:'freq', ax:'A', q:'كم مرة تتكرر المهمة؟', why:'التكرار يحدد قيمة الأتمتة ومستوى النضج المناسب.',
+    o:['يوميًا','عدة مرات أسبوعيًا','أسبوعيًا','كل أسبوعين','شهريًا','ربع سنوي','عند الطلب'] },
+  { id:'mins', ax:'A', q:'كم تستغرق يدويًا في المرة الواحدة؟', why:'هو خط الأساس الذي نقيس عليه التوفير لاحقًا.',
+    o:['أقل من 30 دقيقة','30–60 دقيقة','1–2 ساعة','2–4 ساعات','يوم عمل أو أكثر'] },
+  { id:'sink', ax:'A', q:'ما الجزء الذي يلتهم معظم الوقت؟', why:'يُوجَّه إليه الجهد الأكبر في التعليمات.',
+    o:['جمع البيانات من مصادر متعددة','التنسيق والصياغة','المراجعة والتدقيق','انتظار الآخرين','التعديل بعد الملاحظات'] },
+  { id:'src', ax:'B', q:'من أين تأتي مدخلات المهمة؟ (اختر كل ما ينطبق)', why:'يحدد ما سترفعه لكلود أو تربطه به.', multi:true,
+    o:['ملفات Excel','البريد الإلكتروني','نظام داخلي (ERP / موارد بشرية / محاسبة)','ملفات PDF أو Word','رسائل واتساب','ملاحظات اجتماعات'] },
+  { id:'quality', ax:'B', q:'ما حال جودة المدخلات عادة؟', why:'يحدد خطوات التنظيف والتحقق قبل المعالجة.',
+    o:['منظمة وثابتة الشكل','منظمة مع اختلاف في الصيغ','ناقصة في الغالب','متناثرة تحتاج تجميعًا','تتغير كل مرة'] },
+  { id:'late', ax:'B', q:'ما المدخل الذي يتأخر أو ينقص عادة؟', why:'تتعلم الأداة كيف تتصرف حين ينقص، بدل أن تخترع.', bt:'late' },
+  { id:'rule', ax:'C', q:'ما القاعدة التي تطبقها من خبرتك ولم تُكتب في أي مكان؟', why:'هذه أثمن ما في المهمة؛ بدونها يخرج عمل عام لا يشبهك.', bt:'rule' },
+  { id:'exc', ax:'C', q:'ما الاستثناء الأشهر الذي يكسر الطريقة المعتادة؟', why:'الحالات الحدّية هي ما يفشل فيه أي نظام غير مدرّب.', bt:'exc' },
+  { id:'err', ax:'C', q:'ما الخطأ الذي يكلّفك أكثر إن وقع؟', why:'يتحول إلى قاعدة فحص إلزامية قبل كل مخرج.', bt:'err' },
+  { id:'rcv', ax:'D', q:'من يستلم المخرج؟', why:'المستلم يحدد العمق والنبرة وطول المخرج.',
+    o:['مديري المباشر','الإدارة العليا أو مجلس الإدارة','فريقي','إدارات أخرى','عميل أو جهة خارجية','جهة رقابية أو حكومية'] },
+  { id:'fmt', ax:'D', q:'ما صيغة المخرج النهائية؟', why:'تحدد شكل ما يُنتجه كلود في كل مرة.',
+    o:['مستند Word','جدول Excel','عرض شرائح','رسالة بريد','لوحة متابعة تفاعلية','ملخص قصير يُقرأ على الجوال'] },
+  { id:'tone', ax:'D', q:'ما اللغة والنبرة؟', why:'تمنع إعادة الصياغة في كل مرة.',
+    o:['عربية رسمية','عربية مهنية مباشرة','إنجليزية رسمية','عربية وإنجليزية معًا','حسب المستلم'] },
+  { id:'excel', ax:'D', q:'متى يقول المستلم: «هذا ممتاز»؟', why:'يتحول إلى معيار جودة قابل للقياس.',
+    o:['يقرؤه في دقيقتين ويفهمه','كل رقم موثق بمصدره','فيه توصية جاهزة للقرار','يقارن بالفترة السابقة','لا يحتاج أي تعديل'] },
+  { id:'human', ax:'E', q:'ما الذي يبقى قرارك أنت ولا تفوّضه للآلة؟', why:'يُكتب حدًا صارمًا: كلود يجهّز وأنت تعتمد.',
+    o:['الاعتماد النهائي والإرسال','الأرقام المالية','تقييم الأشخاص','أي التزام تجاه طرف خارجي','كل ما سبق'] },
+  { id:'sens', ax:'E', q:'ما مستوى حساسية بيانات المهمة؟', why:'يحدد قاعدة الإخفاء قبل رفع أي ملف.',
+    o:['عامة','داخلية غير حساسة','سرية: بيانات موظفين أو رواتب','سرية جدًا: تتطلب إخفاء الهوية دائمًا'] },
+  { id:'amb', ax:'F', q:'لو زال عناء التنفيذ تمامًا، ماذا ستضيف للمخرج؟', why:'هنا ترتفع المهمة درجة أو اثنتين فوق ما تفعله اليوم.', bt:'ambition' },
+  { id:'level', ax:'F', q:'إلى أي مستوى تريد أن تصل المهمة؟', why:'سلّم النضج: كل درجة تضاعف الأثر وتقلل تدخلك.',
+    o:['١ — مساعد صياغة عند الطلب','٢ — مشروع بتعليمات ثابتة','٣ — مهارة تكرر التنفيذ بالمعيار نفسه','٤ — أداة تفاعلية أو لوحة متابعة','٥ — مهمة مجدولة تعمل وحدها وأنا أعتمد'] }
+];
+
+/* معايير ورشة التدقيق الثمانية */
+const CRIT = ['وضوح الدور والنطاق','اكتمال السياق','المدخلات ومصادرها','خطوات التنفيذ','قواعد الخبرة والاستثناءات','معايير جودة قابلة للقياس','الحوكمة وحماية البيانات','صيغة المخرج ومستلمه'];
+
+/* الأدوات الأربع لليوم الأول */
+const TOOLS = [
+  { k:'chat', n:'المحادثة مع ملفاتك', icon:'💬', min:'30 دقيقة',
+    what:'ترفع ملفًا حقيقيًا من عملك (بعد إخفاء ما هو حساس) فيقرؤه كلود ويحلله ويجيب عنه كما يفعل زميل خبير.',
+    where:'claude.ai ← محادثة جديدة ← زر (+) ← رفع ملف',
+    notice:'لاحظ كيف تتغير جودة الرد حين تذكر له من أنت ولمن المخرج.',
+    trap:'لا ترفع ملفًا فيه أسماء موظفين أو أرقام هويات أو رواتب كما هي — استبدلها برموز أولاً.' },
+  { k:'research', n:'البحث في الويب والبحث المعمّق', icon:'🔎', min:'30 دقيقة',
+    what:'يبحث في مصادر حية ويعود بخلاصة موثقة بروابطها؛ والبحث المعمّق يقرأ عشرات المصادر ويكتب تقريرًا.',
+    where:'في المحادثة: أيقونة الأدوات ← فعّل «Research» أو «البحث في الويب»',
+    notice:'افتح رابطين من المصادر وتحقق بنفسك: هل يقول المصدر ما نسبه إليه كلود؟',
+    trap:'البحث لا يعفيك من التحقق؛ الرقم الذي لم تتحقق منه لا يدخل مستندًا رسميًا.' },
+  { k:'artifact', n:'الأداة الحية (Artifact)', icon:'🧩', min:'30 دقيقة',
+    what:'بدل أن يكتب لك نصًا، يبني تطبيقًا صغيرًا يعمل أمامك: نموذج إدخال، حاسبة، لوحة متابعة.',
+    where:'اكتب الطلب في المحادثة — تظهر الأداة في لوحة جانبية، ويمكنك نشرها برابط',
+    notice:'اطلب تعديلًا واحدًا بعد الأولى («أضف عمودًا للحالة») وراقب كيف يعدّل الأداة نفسها.',
+    trap:'لا تُدخل بيانات حقيقية حساسة في أداة ستنشرها برابط.' },
+  { k:'project', n:'المشاريع (Projects)', icon:'🗂️', min:'20 دقيقة',
+    what:'مساحة تحمل تعليماتك الثابتة وملفاتك المرجعية، فتبدأ كل محادثة داخلها وهي تعرفك — هذا جسرنا إلى اليوم الثاني.',
+    where:'claude.ai ← Projects ← Create project ← Set project instructions',
+    notice:'اسأل السؤال نفسه داخل المشروع وخارجه، وقارن الردين.',
+    trap:'التعليمات العامة («كن محترفًا») لا تضيف شيئًا؛ القيمة في التفاصيل التي لا يعرفها غيرك.' }
+];
+
+/* الشرائح الثلاث المركزة: تعرّف على Claude */
+const MEET = [
+  { t:'من هو Claude؟', s:'في دقيقة واحدة', cards:[
+    { i:'🏛', h:'الشركة', d:'تطوّره Anthropic، شركة أبحاث أمريكية تأسست عام 2021، وتضع الأمان والموثوقية في قلب تصميمه.' },
+    { i:'🧠', h:'العائلة', d:'ثلاث فئات: Haiku الأسرع، وSonnet المتوازن، وOpus الأعمق. وأحدثها Opus 5.5 (سبتمبر 2026).' },
+    { i:'📱', h:'أين تجده', d:'claude.ai على الويب، وتطبيقات الجوال وسطح المكتب — والحساب نفسه في كل مكان.' }],
+    k:'ليس محرك بحث ولا قاعدة بيانات: زميل يفكّر بما تعطيه.' },
+  { t:'ماذا يستطيع اليوم؟', s:'ست قدرات تهمّ عملك', cards:[
+    { i:'📄', h:'يقرأ', d:'ملفات وتقارير طويلة كاملة؛ تتسع المحادثة في Opus 5.5 لمليون رمز.' },
+    { i:'🔎', h:'يبحث', d:'في الويب، ويعود بخلاصة موثقة بروابطها.' },
+    { i:'🧩', h:'يبني', d:'مستندات وجداول وعروضًا وأدوات تفاعلية تعمل أمامك.' },
+    { i:'🗂', h:'يتذكّر عملك', d:'المشاريع والمهارات تحفظ تعليماتك وطريقتك.' },
+    { i:'🔗', h:'يتصل', d:'ببريدك وتقويمك وملفاتك عبر الموصلات، وبإذنك.' },
+    { i:'⚙️', h:'ينفّذ', d:'مهامًا متعددة الخطوات ومهامًا مجدولة، وأنت تعتمد.' }],
+    k:'وكل قدرة منها تبدأ بسؤال واحد: ما السياق الذي أعطيته؟' },
+  { t:'كيف تعمل معه؟', s:'معادلة واحدة وأربعة عناصر', cards:[
+    { i:'👤', h:'من أنت', d:'دورك، ومجالك، ومن يستلم المخرج.' },
+    { i:'🎯', h:'ماذا تريد', d:'المهمة بدقة، والبيانات التي يعمل عليها.' },
+    { i:'📏', h:'بأي معيار', d:'متى يكون المخرج ممتازًا، وما الذي لا يجوز.' },
+    { i:'🧾', h:'بأي شكل', d:'الصيغة والطول واللغة والنبرة.' }],
+    k:'جودة المخرج = جودة السياق… وClaude يجهّز وأنت تعتمد.' }
+];
+
+/* جدول الأيام — التوقيت 12:00–5:00 */
+const AGENDA = [
+  { d:'اليوم الأول', s:'التعارف والانطلاقة', rows:[
+    ['12:00–12:20','التعارف: ملفك في المختبر'],
+    ['12:20–12:35','الفيلم الافتتاحي (4 دقائق) ونقاشه'],
+    ['12:35–12:55','تعرّف على كلود في ثلاث شرائح'],
+    ['12:55–13:25','الأداة ١: المحادثة مع ملفاتك'],
+    ['13:25–13:55','الأداة ٢: البحث والبحث المعمّق'],
+    ['13:55–14:10','استراحة'],
+    ['14:10–14:40','الأداة ٣: الأداة الحية (Artifact)'],
+    ['14:40–15:00','الأداة ٤: المشاريع — جسر اليوم الثاني'],
+    ['15:00–15:20','استراحة وصلاة العصر'],
+    ['15:20–16:45','انطلاقة اليوم الثاني: مهامي الثلاث واستنطاق المهمة الأولى'],
+    ['16:45–17:00','ختام اليوم: أين وصلت؟']
+  ]},
+  { d:'اليوم الثاني', s:'من المهمة إلى الحزمة', rows:[
+    ['12:00–12:15','أين توقفنا؟ ومراجعة الاستنطاق'],
+    ['12:15–13:30','المهمة ١: الاستنطاق مع رفيقك Claude ← ورشة التدقيق ← تشغيل تجريبي داخل المختبر'],
+    ['13:30–13:45','استراحة'],
+    ['13:45–14:55','المهمة ٢: الدورة كاملة داخل المختبر'],
+    ['14:55–15:15','استراحة وصلاة العصر'],
+    ['15:15–16:30','المهمة ٣: الدورة كاملة داخل المختبر'],
+    ['16:30–17:00','نقل الحزم المعتمدة إلى حسابك وقياس الوقت']
+  ]},
+  { d:'اليوم الثالث', s:'من الأداة إلى المهارة', rows:[
+    ['12:00–12:20','استهلال: ماذا بنيت؟ وماذا فهمت؟'],
+    ['12:20–13:20','المحطة الأولى: فكّ الأداة — اشرح تعليماتك قسماً قسماً'],
+    ['13:20–14:30','المحطة الثانية: ابنِ أداة ثانية يدوياً — بقلمك أنت'],
+    ['14:30–14:45','استراحة'],
+    ['14:45–15:30','المحطة الثالثة: كسر وإصلاح — استثناء حقيقي تُشخّصه'],
+    ['15:30–15:45','استراحة وصلاة العصر'],
+    ['15:45–16:00','الختام: خطة 30 يوماً وشهادة الممارسة']
+  ]}
+];
+
+/* ===== محرك مختبر الأتمتة التشغيلية — ايفوري ===== */
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const AR_D = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+/* ---------- الحالة ---------- */
+const blankTask = i => ({ id: 't' + (i + 1), pick: '', raw: '', title: '', output: '', type: '', stage: 1, ans: {}, other: {}, refined: false,
+  deep: [], deepAns: {}, deepOther: {}, deepDone: false, instr: '', versions: [], chat: [], score: null, crit: [], passed: false,
+  skill: '', skillName: '', prompt: '', syncedAt: 0, aiSynced: false, after: '', steps: {}, comp: [], trialData: '', trialOut: '', trialRuns: 0, trialOk: false });
+let S = { v: 1, profile: { name: '', fam: '', title: '', titleOther: '', years: '', ai: '' }, d1: { step: 1, slide: 0, tools: {} },
+  tasks: [blankTask(0), blankTask(1), blankTask(2)], cur: 0, compOpen: true, compFocus: null, threshold: CFG.threshold, relay: null, busy: '' , updated: 0,
+  d3manual: {}, d3pillar: {}, d3wStep: 0, d3exc: '', d3fail: '', d3fix: '', d3fixDone: false, d3plan: {}, d3done: false, d3reviewResult: '' };
+
+function load() {
+  try { const j = JSON.parse(localStorage.getItem(CFG.storeKey) || 'null'); if (j && j.v === 1) S = Object.assign(S, j); } catch (e) {}
+  S.tasks.forEach((t, i) => { const b = blankTask(i); Object.keys(b).forEach(k => { if (t[k] === undefined) t[k] = b[k]; }); });
+  S.busy = ''; S.relay = null;
+}
+let remoteTimer = null;
+function save() {
+  S.updated = Date.now();
+  try { localStorage.setItem(CFG.storeKey, JSON.stringify(Object.assign({}, S, { busy: '', relay: null }))); } catch (e) {}
+  clearTimeout(remoteTimer); remoteTimer = setTimeout(saveRemote, 1500);
+}
+
+/* ---------- قدرات المنصة (اختيارية) ---------- */
+const AI = { sample: null, db: null, user: null, uid: null, mode: 'manual' };
+async function initPlatform() {
+  if (!window.claude || typeof window.claude.use !== 'function') { await probeBridge(); render(); return; }
+  try { AI.sample = await window.claude.use('sample'); } catch (e) { AI.sample = null; }
+  try { AI.user = await window.claude.use('user'); AI.db = await window.claude.use('db'); } catch (e) { AI.db = null; }
+  if (AI.sample) AI.mode = 'sample';
+  try { if (AI.user && AI.user.id) AI.uid = await AI.user.id(); } catch (e) { AI.uid = null; }
+  await loadRemote();
+  render();
+}
+async function probeBridge() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  try { const r = await fetch(CFG.bridgePath, { cache: 'no-store' }); const j = await r.json(); if (j && j.ok) { CFG.bridgeUrl = CFG.bridgePath; AI.mode = 'bridge'; } } catch (e) {}
+}
+async function loadRemote() {
+  if (!AI.db || !AI.uid) return;
+  try {
+    const snap = await AI.db.collection('data/users/' + AI.uid).doc('state').get();
+    const d = snap && (typeof snap.data === 'function' ? snap.data() : snap);
+    if (d && d.json) { const j = JSON.parse(d.json); if (j && j.v === 1 && (j.updated || 0) > (S.updated || 0)) { S = Object.assign(S, j); S.busy = ''; S.relay = null; } }
+  } catch (e) {}
+}
+async function saveRemote() {
+  if (!AI.db || !AI.uid) return;
+  try { await AI.db.collection('data/users/' + AI.uid).doc('state').set({ json: JSON.stringify(Object.assign({}, S, { busy: '', relay: null })), at: Date.now() }); } catch (e) {}
+  try {
+    const p = S.profile; await AI.db.doc('progress/' + AI.uid).set({
+      nick: (p.name || '').slice(0, 30), role: roleName(), d1: Object.keys(S.d1.tools).filter(k => S.d1.tools[k] && S.d1.tools[k].done).length,
+      tasks: S.tasks.map(t => ({ st: t.stage, sc: t.score == null ? -1 : t.score, ok: !!t.passed })), at: Date.now() });
+  } catch (e) {}
+}
+
+/* ---------- استدعاء كلود ---------- */
+async function ask(prompt, opts = {}) {
+  if (AI.mode === 'sample' && AI.sample) {
+    const r = await AI.sample(prompt, { modelTier: opts.tier || 'default', cache: false });
+    return r.text;
+  }
+  if (AI.mode === 'bridge' && CFG.bridgeUrl) {
+    const r = await fetch(CFG.bridgeUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ prompt }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || typeof j.text !== 'string') { const e = new Error(j.error || 'bridge'); e.code = r.status === 429 ? 'rate_limited' : (j.error || 'bridge'); throw e; }
+    return j.text;
+  }
+  const e = new Error('manual'); e.code = 'manual'; throw e;
+}
+function parseJSON(txt) {
+  if (!txt) return null; let s = String(txt).trim();
+  s = s.replace(/^```(?:json)?/i, '').replace(/```\s*$/, '').trim();
+  const a = s.indexOf('{'), b = s.lastIndexOf('}');
+  if (a < 0 || b <= a) return null;
+  try { return JSON.parse(s.slice(a, b + 1)); } catch (e) { return null; }
+}
+/* يشغّل طلبًا: بكلود مباشرة إن أمكن، وإلا يفتح لوحة النقل اليدوي داخل المختبر */
+async function run(kind, prompt, handler, label) {
+  if (AI.mode !== 'manual') {
+    S.busy = label || 'كلود يعمل…'; render();
+    try { const txt = await ask(prompt, { tier: kind === 'review' || kind === 'generate' ? 'complex' : 'default' }); S.busy = ''; handler(txt); save(); render(); return; }
+    catch (e) {
+      S.busy = '';
+      if (e && e.code === 'rate_limited') { toast('ضغط مؤقت على كلود — انتظر دقيقة ثم أعد المحاولة'); render(); return; }
+      if (e && e.code === 'not_granted') { AI.mode = 'manual'; toast('لم يُمنح الإذن — تحوّل المختبر إلى النقل اليدوي'); }
+      else { toast('تعذّر الاتصال بكلود — استخدم النقل اليدوي'); }
+    }
+  }
+  S.relay = { kind, prompt, label: label || '' };
+  relayHandler = handler; render();
+  const box = $('#relay'); if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+let relayHandler = null;
+
+/* ---------- أدوات مساعدة ---------- */
+const fam = () => FAMILIES.find(f => f.k === S.profile.fam) || FAMILIES[FAMILIES.length - 1];
+const roleName = () => (S.profile.title === OTHER || !S.profile.title) ? (S.profile.titleOther || 'موظف') : S.profile.title;
+const T = () => S.tasks[S.cur];
+const typeName = k => (TYPES.find(x => x.k === k) || {}).n || '';
+const qOptions = (q, t) => q.o || (BY_TYPE[q.bt][t.type || 'rep'] || BY_TYPE[q.bt].rep);
+function ansText(t, q) {
+  const v = t.ans[q.id];
+  if (q.multi) { const arr = (v || []).map(x => x === OTHER ? (t.other[q.id] || OTHER) : x); return arr.join('، '); }
+  if (v === OTHER) return t.other[q.id] || '';
+  return v || '';
+}
+function answered(t, q) { const v = t.ans[q.id]; if (q.multi) return Array.isArray(v) && v.length > 0 && (!v.includes(OTHER) || (t.other[q.id] || '').trim()); return !!v && (v !== OTHER || (t.other[q.id] || '').trim()); }
+const answeredCount = t => QS.filter(q => answered(t, q)).length;
+function deepText(t) {
+  return (t.deep || []).map((d, i) => { const v = t.deepAns[i]; const a = v === OTHER ? (t.deepOther[i] || '') : (v || ''); return a ? `- ${d.q} ← ${a}` : ''; }).filter(Boolean).join('\n');
+}
+function contextBlock(t) {
+  const lines = QS.map(q => `- ${q.q} ← ${ansText(t, q) || 'لم يُجب'}`).join('\n');
+  const dt = deepText(t);
+  return `المشارك: ${roleName()} — المسار: ${fam().n} — المجال: ${fam().domain}\nالمهمة: ${t.title || t.raw}\nالمخرج المطلوب: ${t.output || ansText(t, QS[11])}\nنوع المهمة: ${typeName(t.type)}\n\nإجابات الاستنطاق:\n${lines}${dt ? `\n\nإجابات التعميق:\n${dt}` : ''}`;
+}
+const MIN_MAP = { 'أقل من 30 دقيقة': 20, '30–60 دقيقة': 45, '1–2 ساعة': 90, '2–4 ساعات': 180, 'يوم عمل أو أكثر': 420 };
+const FREQ_MAP = { 'يوميًا': 22, 'عدة مرات أسبوعيًا': 12, 'أسبوعيًا': 4, 'كل أسبوعين': 2, 'شهريًا': 1, 'ربع سنوي': 0.33, 'عند الطلب': 2 };
+const AFTER = ['أقل من 5 دقائق', '5–10 دقائق', '10–20 دقيقة', '20–40 دقيقة', 'أكثر من 40 دقيقة'];
+const AFTER_MAP = { 'أقل من 5 دقائق': 4, '5–10 دقائق': 8, '10–20 دقيقة': 15, '20–40 دقيقة': 30, 'أكثر من 40 دقيقة': 50 };
+function slug(t) {
+  const base = { rep: 'periodic-report', cor: 'correspondence', ana: 'data-analysis', fol: 'requests-tracker', pln: 'planning-meetings', pol: 'policy-drafting', eva: 'evaluation-matrix' }[t.type] || 'task';
+  return (fam().k + '-' + base + '-' + t.id).toLowerCase();
+}
+
+/* ---------- المولّدات المحلية (تعمل دون كلود) ---------- */
+function genInstr(t) {
+  const a = q => ansText(t, QS.find(x => x.id === q));
+  const dt = deepText(t);
+  return `# تعليمات مشروع: ${t.title || t.raw}
+
+⟦١⟧ السياق والخلفية
+أنت مساعد متخصص ل${roleName()} في مجال ${fam().domain}.
+مهمتك الوحيدة في هذا المشروع: «${t.title || t.raw}». لا تخرج عن هذا النطاق إلا بطلب صريح.
+تنطلق المهمة عند: ${a('trigger')}، وتتكرر: ${a('freq')}، وتستغرق يدويًا: ${a('mins')}.
+أكثر ما يستهلك الوقت: ${a('sink')} — ركّز جهدك هنا أولاً.
+المدخلات المتاحة: ${a('src')} — حالها: ${a('quality')}. نظّفها ووحّد صيغها قبل المعالجة.
+المدخل الذي يتأخر أو ينقص عادة: ${a('late')}. إن نقص فاكتب [بانتظار: ${a('late')}] ولا تخترع.
+
+⟦٢⟧ الطلب
+١. اقرأ المدخلات كاملة وتحقق من اكتمالها.
+٢. طبّق قواعد الخبرة في الركن ⟦٣⟧.
+٣. أنتج المخرج بالصيغة في الركن ⟦٤⟧.
+٤. نفّذ فحص الجودة قبل التسليم واذكر نتيجته في سطر.
+٥. اختم بقائمة «ما يحتاج تأكيدك» إن وُجد.
+٦. إن كانت أي معلومة ناقصة أو غير واضحة، اسألني سؤالاً واحداً محدداً ولا تُكمل حتى أُجيبك.
+
+⟦٣⟧ المعيار
+- قاعدة ثابتة: ${a('rule')}.
+- الاستثناء الأشهر: ${a('exc')} — إن صادفته فنبّهني صراحة قبل المتابعة.
+- المخرج ممتاز حين: ${a('excel')}.
+- فحص إلزامي ضد أكثر خطأ مكلف: ${a('err')}.
+- كل رقم يُذكر مصدره، وما لم يُتحقق منه يُعلَّم [يحتاج تحقق].
+- يبقى قراري وحدي: ${a('human')}. كل مخرج ينتهي بـ «مسودة للمراجعة والاعتماد».
+- لا تخترع أرقامًا أو أسماء أو أنظمة؛ اكتب [يُستكمل] مكان الناقص.
+${dt ? dt.split('\n').map(x => x.replace(/^- /, '- ')).join('\n') + '\n' : ''}
+- حساسية البيانات: ${a('sens')}. لا تطلب أسماء أو أرقام هويات أو رواتب حقيقية.
+
+⟦٤⟧ شكل المنتج النهائي
+- المستلم: ${a('rcv')}.
+- الصيغة: ${a('fmt')}، واللغة والنبرة: ${a('tone')}.
+- قيمة مضافة دائمة: ${a('amb')}.
+- مستوى النضج المستهدف: ${a('level')}.`;
+}
+function genSkill(t) {
+  const name = slug(t); const instr = t.instr || genInstr(t);
+  const sec = n => { const m = instr.split(/⟦[١٢٣٤]⟧/); return (m[n] || '').trim(); };
+  return `---
+name: ${name}
+description: مهارة «${t.title || t.raw}» ل${roleName()}. تُستخدم كلما طُلب ${typeName(t.type) || 'تنفيذ هذه المهمة'} أو ذُكر «${t.title || t.raw}»، وتُخرج: ${ansText(t, QS[11]) || 'المخرج المعتمد'}.
+---
+
+# ${t.title || t.raw}
+
+## ⟦١⟧ السياق والخلفية
+${sec(1)}
+
+## ⟦٢⟧ الطلب
+${sec(2)}
+
+## ⟦٣⟧ المعيار
+${sec(3)}
+
+## ⟦٤⟧ شكل المنتج النهائي
+${sec(4)}`;
+}
+function genPrompt(t) {
+  const a = q => ansText(t, QS.find(x => x.id === q));
+  return `⟦١⟧ السياق والخلفية
+أنا ${roleName()} في مجال ${fam().domain}. أعمل على مهمة «${t.title || t.raw}» وتعليمات المشروع هي المرجع الكامل.
+المدخلات لهذا التشغيل:
+[ألصق هنا البيانات الجديدة أو أرفق الملف — بعد إخفاء ما هو حساس]
+
+⟦٢⟧ الطلب
+نفّذ «${t.title || t.raw}» على المدخلات أعلاه وفق تعليمات المشروع والمهارة المرتبطة بها.
+أي تعديل أو إضافة على هذا التشغيل تحديداً:
+[اكتب هنا أي تعديل خاص بهذه المرة — أو احذف هذا السطر إن لم يكن هناك تعديل]
+
+⟦٣⟧ المعيار
+- المخرج ممتاز حين: ${a('excel') || 'جاهز للاعتماد'}.
+- افحص ضد: ${a('err') || 'الأخطاء الشائعة'}.
+- استخدم المدخلات فقط ولا تخترع ما ليس فيها.
+- إن كانت أي معلومة ناقصة أو غير واضحة، اسألني سؤالاً واحداً محدداً ولا تُكمل حتى أُجيبك.
+
+⟦٤⟧ شكل المنتج النهائي
+${a('fmt') || 'مستند'} ل${a('rcv') || 'المستلم'}، بنبرة ${a('tone') || 'مهنية'}.
+اختم بـ: «مسودة للمراجعة والاعتماد» وقائمة «ما يحتاج تأكيدك».`;
+}
+/* درجة محلية تقريبية لاكتمال البنية (ليست تقييم كلود) */
+function localScore(txt) {
+  if (!txt) return 0; let s = 0;
+  for (let i = 1; i <= 8; i++) if (txt.includes('⟦' + '١٢٣٤٥٦٧٨'[i - 1] + '⟧')) s += 7;
+  if (!/لم يُجب/.test(txt)) s += 10;
+  const holes = (txt.match(/\[يُستكمل\]/g) || []).length; s += Math.max(0, 12 - holes * 3);
+  s += Math.min(22, Math.floor(txt.length / 120));
+  return Math.min(88, s);
+}
+function syncLocal(t) { t.skill = genSkill(t); t.skillName = slug(t); t.prompt = genPrompt(t); t.syncedAt = Date.now(); t.aiSynced = false; }
+
+/* ---------- برومبتات كلود ---------- */
+const P = {
+  phrase: t => `أنت مستشار في تحليل العمل. موظف يعمل «${roleName()}» في مجال «${fam().domain}» كتب مهمة من عمله بكلماته:
+«${t.raw}»
+أعد صياغتها صياغة مهنية دقيقة دون أن تغيّر معناها أو تضيف ما لم يقله، ثم حدّد مخرجها ونوعها.
+أعد JSON فقط بلا أي نص آخر:
+{"title":"عنوان المهمة في أقل من 12 كلمة يبدأ بمصدر (إعداد/متابعة/تحليل…)","output":"المخرج الملموس في جملة","type":"واحد من: ${TYPES.map(x => x.k).join('|')}","note":"ملاحظة واحدة قصيرة إن كانت المهمة واسعة وتحتاج تجزئة، وإلا فارغة"}`,
+  deepen: t => `أنت مستشار أتمتة عمليات من الطراز الرفيع. هذه مهمة موظف وإجاباته على 18 سؤالاً قياسيًا:
+${contextBlock(t)}
+
+اطرح من 3 إلى 4 أسئلة تعميق فقط، تكشف ما لم تكشفه الأسئلة القياسية: تفاصيل على أرض الواقع، أو قاعدة ضمنية، أو فرصة لرفع سقف المهمة درجتين. لا تكرر ما أُجيب عنه.
+لكل سؤال أربعة خيارات واقعية قصيرة مشتقة من سياقه.
+أعد JSON فقط: {"questions":[{"q":"السؤال","why":"لماذا نسأله في جملة","options":["","","",""]}]}`,
+  generate: t => `أنت كاتب تعليمات مشاريع Claude محترف. اكتب «تعليمات المشروع» لهذه المهمة بالعربية، من هذه المعلومات وحدها:
+${contextBlock(t)}
+
+البنية الإلزامية: ثمانية أقسام بعناوينها ورموزها كما هي:
+⟦١⟧ الدور والنطاق ⟦٢⟧ سياق المهمة ولماذا تهم ⟦٣⟧ المدخلات ومصادرها ⟦٤⟧ خطوات التنفيذ ⟦٥⟧ قواعد الخبرة والاستثناءات ⟦٦⟧ معايير الجودة ⟦٧⟧ صيغة المخرج ومستلمه ⟦٨⟧ الحدود والحوكمة
+القواعد: اكتب بصيغة الأمر الموجّه إلى Claude. ارفع سقف المهمة وفق إجابتي «رفع السقف» دون أن تتجاوز الواقع. لا تخترع أرقامًا أو أسماء أو سياسات أو أنظمة؛ ضع [يُستكمل] مكان أي معلومة ناقصة. الطول بين 1800 و3000 حرف.
+أعد نص التعليمات فقط، بلا مقدمة ولا خاتمة.`,
+  review: (t, msg) => `أنت «مدقق تعليمات المشاريع» في مختبر ايفوري. تعمل مع المشارك داخل نافذة واحدة حتى تصل تعليمات مشروعه إلى أعلى مستوى احترافي.
+
+معايير التقييم الثمانية (كل معيار من 0 إلى 100):
+${CRIT.map((c, i) => `${i + 1}. ${c}`).join('\n')}
+الدرجة الكلية = متوسط المعايير. كن صارمًا: لا تمنح ${S.threshold} فأكثر إلا إذا كانت التعليمات قابلة للتشغيل دون أي سؤال إضافي، وخالية من [يُستكمل]، وكل معيار فيها ${S.threshold - 5} فأكثر.
+
+سياق المهمة:
+${contextBlock(t)}
+
+التعليمات الحالية (النسخة ${t.versions.length || 1}):
+<instructions>
+${t.instr}
+</instructions>
+
+آخر الحوار:
+${t.chat.slice(-8).map(m => (m.role === 'user' ? 'المشارك: ' : 'المدقق: ') + m.content).join('\n') || '(بداية الورشة)'}
+
+رسالة المشارك الآن: «${msg}»
+
+في هذه الجولة:
+1) أدخل إلى التعليمات كل ما تفيده رسالة المشارك، وحسّن الصياغة والبنية بنفسك، مع الحفاظ على الأقسام الثمانية ورموزها.
+2) قيّم النسخة المعدلة بالمعايير الثمانية بصدق.
+3) إن لم تبلغ العتبة: اطرح سؤالًا واحدًا فقط عن أضعف معيار، لكن اصنعه من سياق المهمة الفعلي لا من صياغات عامة — مثلاً: بدل «كيف تتعامل مع الاستثناءات؟» قل «عندما يصل تقرير من إدارة المبيعات بأرقام مختلفة عن نظام SAP، ما الخطوة الأولى التي يتخذها Claude؟» — السؤال يذكر أسماء الأنظمة والإدارات والمواقف الواردة في سياق المهمة. الخيارات الثلاثة كذلك مشتقة من واقع المشارك وليست عامة.
+4) إن بلغت العتبة: هنّئه بجملة واحدة وقل له إنه وصل إلى المستوى الاحترافي ويمكنه الانتقال إلى الحزمة.
+5) لا تخترع أرقامًا أو أسماء أو أنظمة.
+أعد JSON فقط بلا أي نص خارجه:
+{"score":0,"criteria":[0,0,0,0,0,0,0,0],"notes":["ملاحظة قصيرة لكل معيار بالترتيب"],"message":"رسالتك للمشارك في سطرين أو ثلاثة: ما الذي حسّنته وما الذي ينقص","question":"سؤالك الواحد أو فارغ","options":["","",""],"changes":["أهم التعديلات في هذه الجولة"],"revised":"النص الكامل للتعليمات بعد التعديل"}`,
+  comp: (t, msg) => { const f = S.compFocus; const q = f && f.qid ? QS.find(x => x.id === f.qid) : null; const dq = f && f.deep != null ? t.deep[f.deep] : null;
+    return `أنت «رفيق المختبر» في برنامج ايفوري للأتمتة التشغيلية: مستشار أتمتة عمليات خبير يعمل مع ${roleName()} في مجال ${fam().domain}، داخل المختبر نفسه، فلا تطلب منه الخروج إلى أي أداة أخرى.
+المرحلة الحالية: ${STAGES[t.stage - 1]}.
+${q ? `يناقش الآن السؤال: «${q.q}» — لماذا نسأله: ${q.why}. إجابته الحالية: «${ansText(t, q) || 'لم يُجب'}». الخيارات المتاحة: ${[...qOptions(q, t)].join(' | ')}.` : ''}${dq ? `يناقش الآن سؤال التعميق: «${dq.q}». إجابته الحالية: «${t.deepAns[f.deep] === OTHER ? t.deepOther[f.deep] : (t.deepAns[f.deep] || 'لم يُجب')}».` : ''}
+
+سياق المهمة:
+${contextBlock(t)}
+${t.instr ? `\nتعليمات المشروع الحالية:\n<instructions>\n${t.instr}\n</instructions>` : ''}${t.trialOut ? `\nآخر مخرج تجريبي:\n<output>\n${t.trialOut.slice(0, 5000)}\n</output>` : ''}
+
+آخر الحوار بينكما:
+${(t.comp || []).slice(-8, -1).map(m => (m.role === 'user' ? 'المشارك: ' : 'أنت: ') + m.content).join('\n') || '(بداية النقاش)'}
+
+رسالة المشارك الآن: «${msg}»
+
+قواعدك:
+- ناقش بعمق وبلغة عربية مهنية مباشرة، في فقرة أو فقرتين، وابنِ على خبرته ولا تحاضره.
+- إن احتجت معلومة فاسأل سؤالًا واحدًا فقط.
+- عند ذكر المراجع والأطر: اذكر أسماء أطر ومعايير معروفة فعلًا (مثل نظام العمل السعودي، ISO 9001، COSO، PMBOK) دون أرقام مواد أو روابط إلا إن كنت متيقنًا، وقل «تحقق من النص الرسمي».
+- لا تخترع أرقامًا أو أسماء أو سياسات تخص جهته.
+- إن خلص النقاش إلى صياغة قابلة للاعتماد فضعها في proposal ليعتمدها بضغطة، وإلا اجعل proposal = null.
+- إن طلب المشارك «اقترح صياغة للاعتماد» فأنت مُلزَم بإرجاع proposal مناسبة للمرحلة الحالية (deep أو answer أو title) بناء على كل ما ناقشتماه.
+أنواع proposal: {"kind":"answer","qid":"${q ? q.id : 'معرّف السؤال'}","value":"الإجابة المقترحة"} أو {"kind":"deep","i":${f && f.deep != null ? f.deep : 0},"value":"..."} أو {"kind":"title","value":"صياغة المهمة"} أو {"kind":"instr","value":"النص الكامل للتعليمات بعد التعديل بأقسامها الثمانية"}.
+أعد JSON فقط: {"reply":"ردك","proposal":null}`; },
+  dummy: t => `ولّد بيانات تجريبية وهمية واقعية لمهمة «${t.title || t.raw}» كما يؤديها ${roleName()}، بصيغة مدخلاتها المعتادة (${ansText(t, QS.find(q => q.id === 'src')) || 'جدول'})، وجودتها المعتادة (${ansText(t, QS.find(q => q.id === 'quality')) || 'منظمة'}).
+اجعلها من 10 إلى 25 سجلًا أو ما يعادلها نصًا، وأدخل فيها حالة واحدة من الاستثناء: «${ansText(t, QS.find(q => q.id === 'exc')) || 'حالة غير معتادة'}» ونقصًا واحدًا في: «${ansText(t, QS.find(q => q.id === 'late')) || 'مدخل'}».
+استخدم رموزًا بدل الأسماء (م1، ع2…)، ولا أرقام هويات. أعد البيانات فقط بلا شرح.`,
+  trial: t => `أنت Claude تعمل داخل مشروع على claude.ai. هذه تعليمات المشروع التي تحكم عملك:
+<project_instructions>
+${t.instr}
+</project_instructions>
+وهذه المهارة المرتبطة بالمشروع:
+<skill>
+${t.skill}
+</skill>
+والمستخدم أرسل الآن الرسالة التالية:
+${(t.prompt || '').replace(/\[ألصق هنا[^\]]*\]/, t.trialData)}
+${/\[ألصق هنا/.test(t.prompt || '') ? '' : `\n<البيانات>\n${t.trialData}\n</البيانات>`}
+نفّذ كما لو كنت داخل المشروع تمامًا، وأخرج المخرج النهائي فقط بالصيغة المطلوبة.`,
+  sync: t => `حوّل تعليمات المشروع المعتمدة التالية إلى ملفين متزامنين معها تمامًا:
+<instructions>
+${t.instr}
+</instructions>
+المهمة: ${t.title || t.raw} — الدور: ${roleName()}.
+
+1) skill_md: ملف SKILL.md كامل يبدأ بترويسة:
+---
+name: ${slug(t)}
+description: (سطر عربي واحد يذكر متى تُستخدم المهارة وعبارات الطلب التي تستدعيها والمخرج)
+---
+ثم الأقسام: متى تُستخدم · المدخلات · الخطوات · قواعد الخبرة · فحص الجودة قبل التسليم · صيغة المخرج · ما لا تفعله أبدًا · مثال طلب.
+2) main_prompt: البرومبت الرئيسي الذي يلصقه المشارك داخل المشروع كل مرة، بأربعة وسوم: <السياق> <البيانات> <الطلب> <المعيار> <المخرج>، ويترك مكان البيانات [ألصق هنا…].
+لا تضف أي قاعدة ليست في التعليمات.
+أعد JSON فقط: {"skill_md":"","main_prompt":""}`
+};
+
+/* ---------- الإجراءات ---------- */
+function act(a, el) {
+  const t = T();
+  switch (a) {
+    case 'go': location.hash = el.dataset.v; break;
+    case 'roster-pick': {
+      const name = el.value; S.profile.rosterPick = name;
+      const r = ROSTER.find(x => x.name === name);
+      if (r) {
+        S.profile.name = r.name.split(' ')[0]; // الاسم الأول للمناداة
+        S.profile.fam = r.fam || 'gen';
+        S.profile.title = r.title || '';
+        S.profile.titleOther = r.title || '';
+        S.profile.dept = r.dept || '';
+        S.profile.org = r.org || '';
+      } else if (name === OTHER) {
+        S.profile.name = ''; S.profile.fam = ''; S.profile.title = '';
+      }
+      save(); render(); break; }
+    case 'prof': { S.profile[el.dataset.k] = el.value; if (el.dataset.k === 'fam') { S.profile.title = ''; S.profile.titleOther = ''; } save(); render(); break; }
+    case 'prof-text': { S.profile[el.dataset.k] = el.value; save(); break; }
+    case 'd1step': S.d1.step = +el.dataset.v; save(); render(); scrollTop(); break;
+    case 'slide': S.d1.slide = Math.max(0, Math.min(MEET.length - 1, S.d1.slide + (+el.dataset.v))); save(); render(); break;
+    case 'slide-to': S.d1.slide = +el.dataset.v; save(); render(); break;
+    case 'tool-done': { const k = el.dataset.k; S.d1.tools[k] = S.d1.tools[k] || {}; S.d1.tools[k].done = !S.d1.tools[k].done; save(); render(); break; }
+    case 'tool-rate': { const k = el.dataset.k; S.d1.tools[k] = S.d1.tools[k] || {}; S.d1.tools[k].rate = el.value; S.d1.tools[k].done = true; save(); render(); break; }
+    case 'copy': copy(el.dataset.src ? ($('#' + el.dataset.src) || {}).value || ($('#' + el.dataset.src) || {}).textContent : el.dataset.txt, el); break;
+    case 'task': S.cur = +el.dataset.v; save(); location.hash = 'task'; render(); scrollTop(); break;
+    case 'stage': t.stage = +el.dataset.v; save(); render(); scrollTop(); break;
+    case 'pick': { t.pick = el.value; if (el.value && el.value !== OTHER) { t.raw = el.value; } else if (el.value === OTHER) t.raw = ''; t.title = ''; save(); render(); break; }
+    case 'raw': t.raw = el.value; save(); break;
+    case 'tfield': t[el.dataset.k] = el.value; save(); if (el.tagName === 'SELECT') render(); break;
+    case 'phrase': {
+      if (!(t.raw || '').trim()) { toast('اكتب المهمة أو اخترها أولاً'); return; }
+      run('phrase', P.phrase(t), txt => { const j = parseJSON(txt); if (!j) { toast('لم أفهم رد كلود — أعد المحاولة'); return; }
+        t.title = j.title || t.raw; t.output = j.output || ''; if (TYPES.some(x => x.k === j.type)) t.type = j.type; t.phraseNote = j.note || ''; }, 'كلود يصوغ مهمتك…'); break; }
+    case 'confirm-task': {
+      if (!(t.raw || '').trim()) { toast('اكتب المهمة أولاً'); return; }
+      if (!t.type) { toast('اختر نوع المهمة'); return; }
+      if (!t.title) t.title = t.raw.trim(); t.stage = 2; save(); render(); scrollTop(); break; }
+    case 'ans': { const q = QS.find(x => x.id === el.dataset.q); t.ans[q.id] = el.value; save(); render(); break; }
+    case 'ans-other': { t.other[el.dataset.q] = el.value; save(); break; }
+    case 'ans-other-done': render(); break;
+    case 'chip': { const id = el.dataset.q, v = el.dataset.v; const arr = Array.isArray(t.ans[id]) ? t.ans[id].slice() : []; const i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); t.ans[id] = arr; save(); render(); break; }
+    case 'to-deep': { if (answeredCount(t) < QS.length) { toast('أكمل الأسئلة الثمانية عشر أولاً'); return; } t.stage = 3; save(); render(); scrollTop(); break; }
+    case 'deepen': run('deepen', P.deepen(t), txt => { const j = parseJSON(txt); if (!j || !Array.isArray(j.questions)) { toast('لم أفهم رد كلود — أعد المحاولة'); return; }
+        t.deep = j.questions.slice(0, 4).map(x => ({ q: x.q, why: x.why || '', o: (x.options || []).slice(0, 4) })); t.deepAns = {}; t.deepOther = {}; }, 'كلود يحضّر أسئلة التعميق…'); break;
+    case 'deep-ans': t.deepAns[el.dataset.i] = el.value; save(); render(); break;
+    case 'deep-other': t.deepOther[el.dataset.i] = el.value; save(); break;
+    case 'skip-deep': t.deepDone = true; t.stage = 4; save(); render(); scrollTop(); break;
+    case 'to-instr': t.deepDone = true; t.stage = 4; save(); render(); scrollTop(); break;
+    case 'gen-local': t.instr = genInstr(t); t.versions = [{ text: t.instr, at: Date.now(), score: null, by: 'قالب' }]; syncLocal(t); save(); render(); break;
+    case 'gen-ai': run('generate', P.generate(t), txt => { const s = (txt || '').trim(); if (s.length < 300) { toast('الرد قصير — أعد المحاولة'); return; }
+        t.instr = s; t.versions = [{ text: s, at: Date.now(), score: null, by: 'كلود' }]; syncLocal(t); }, 'كلود يكتب تعليمات مشروعك…'); break;
+    case 'instr-edit': t.instr = el.value; save(); break;
+    case 'to-review': { if (!t.instr) { toast('ولّد التعليمات أولاً'); return; } t.stage = 5; save(); render(); scrollTop(); break; }
+    case 'review-start': reviewTurn('ابدأ التدقيق: قيّم التعليمات وحسّنها واسألني عن أضعف نقطة.'); break;
+    case 'quick': reviewTurn(el.dataset.v); break;
+    case 'send': { const box = $('#reply'); const v = (box && box.value || '').trim(); if (!v) { toast('اكتب ردك أو اختر خيارًا'); return; } reviewTurn(v); break; }
+    case 'restore': { const v = t.versions[+el.dataset.v]; if (v) { t.instr = v.text; t.score = v.score; syncLocal(t); save(); render(); toast('استُعيدت النسخة ' + AR_D(+el.dataset.v + 1)); } break; }
+    case 'to-pack': t.stage = 6; save(); render(); scrollTop(); break;
+    case 'xfer-copy': copy(exportCode(), el); break;
+    case 'xfer-import': { const v = ($('#xferin') || {}).value || ''; if (importCode(v)) { toast('نُقل تقدمك'); render(); } else toast('الرمز غير صالح — انسخه كاملًا'); break; }
+    case 'comp-toggle': S.compOpen = S.compOpen === false; save(); render(); break;
+    case 'comp-q': S.compOpen = true; S.compFocus = { qid: el.dataset.q }; save(); render(); { const c = $('#compin'); if (c) c.focus(); } break;
+    case 'comp-deep': S.compOpen = true; S.compFocus = { deep: +el.dataset.i }; save(); render(); break;
+    case 'comp-unfocus': S.compFocus = null; save(); render(); break;
+    case 'comp-chip': S.compOpen = true; compTurn(el.dataset.v); break;
+    case 'comp-send': { const c = $('#compin'); const v = (c && c.value || '').trim(); if (!v) { toast('اكتب سؤالك'); return; } compTurn(v); break; }
+    case 'comp-apply': applyProposal(t, +el.dataset.k); break;
+    case 'trial-data': t.trialData = el.value; save(); break;
+    case 'trial-dummy': run('dummy', P.dummy(t), txt => { t.trialData = (txt || '').trim(); }, 'Claude يولّد بيانات تجريبية…'); break;
+    case 'trial-run': { const d = (($('#trialdata') || {}).value || t.trialData || '').trim(); if (!d) { toast('ألصق بيانات أو ولّدها أولًا'); return; } t.trialData = d; if (!t.prompt) syncLocal(t);
+      run('trial', P.trial(t), txt => { t.trialOut = (txt || '').trim(); t.trialRuns = (t.trialRuns || 0) + 1; t.trialOk = false; }, 'Claude يشغّل حزمتك…'); break; }
+    case 'trial-ok': t.trialOk = true; save(); render(); toast('اعتُمد المخرج التجريبي'); break;
+    case 'force-pack': t.stage = 6; t.forced = true; save(); render(); scrollTop(); break;
+    case 'sync-ai': run('sync', P.sync(t), txt => applySync(t, txt), 'كلود يزامن المهارة والبرومبت…'); break;
+    case 'step': t.steps[el.dataset.k] = !t.steps[el.dataset.k]; save(); render(); break;
+    case 'dl': download(el.dataset.f, el.dataset.f === 'skill' ? t.skill : el.dataset.f === 'instr' ? t.instr : el.dataset.f === 'prompt' ? t.prompt : packText(t), el.dataset.f); break;
+    case 'after': t.after = el.value; save(); render(); break;
+    // اليوم الثالث
+    case 'd3step': { const tk = S.tasks[0]; if (!tk.steps) tk.steps = {}; tk.steps[el.dataset.k] = !tk.steps[el.dataset.k]; save(); render(); break; }
+    case 'd3note': { const tk = S.tasks[0]; if (!tk.d3notes) tk.d3notes = {}; tk.d3notes[el.dataset.k] = el.value; save(); break; }
+    case 'd3manual': { if (!S.d3manual) S.d3manual = {}; S.d3manual[el.dataset.k] = el.value; save(); break; }
+    case 'd3pillar': { if (!S.d3pillar) S.d3pillar = {}; S.d3pillar[el.dataset.k] = !S.d3pillar[el.dataset.k]; save(); render(); break; }
+    case 'd3-wnext': { S.d3wStep = Math.min((S.d3wStep || 0) + 1, 3); save(); render(); break; }
+    case 'd3-wback': { S.d3wStep = Math.max((S.d3wStep || 0) - 1, 0); save(); render(); break; }
+    case 'd3-wdone': { save(); render(); toast('✓ برومبتك مكتمل — جاهز للمراجعة'); break; }
+    case 'd3exc': S.d3exc = el.value; save(); break;
+    case 'd3fail': S.d3fail = el.value; save(); break;
+    case 'd3fix': S.d3fix = el.value; save(); break;
+    case 'd3plan': { if (!S.d3plan) S.d3plan = {}; S.d3plan[el.dataset.k] = el.value; save(); break; }
+    case 'd3-break-done': { if (!S.d3fix || !S.d3fix.trim()) { toast('اكتب الإصلاح أولاً'); return; }
+      S.d3fixDone = true; S.tasks[1] = S.tasks[1] || blankTask(1);
+      const excText = (S.d3exc || '') + '\n\nما حدث: ' + (S.d3fail || '') + '\n\nالإصلاح: ' + (S.d3fix || '');
+      if (S.tasks[1].instr) S.tasks[1].instr += '\n\n⟦استثناء مكتشف في التدريب⟧\n' + excText;
+      save(); render(); toast('سُجّل الإصلاح في تعليمات مهمتك ✓'); break; }
+    case 'd3-review-manual': {
+      const m = S.d3manual || {};
+      const manualText = `الركن الأول — السياق والخلفية:\n${m.c1||'—'}\n\nالركن الثاني — الطلب:\n${m.c2||'—'}\n\nالركن الثالث — المعيار:\n${m.c3||'—'}\n\nالركن الرابع — شكل المنتج:\n${m.c4||'—'}`;
+      if (!Object.values(m).some(v => v && v.trim().length > 10)) { toast('اكتب الأركان أولاً'); return; }
+      run('d3review', `أنت مدقق تعليمات مشاريع خبير. المشارك يعمل بوصفه «${roleName()}» وكتب برومبتاً بيده بالأركان الأربعة. راجعه وأعطه:\n١. ثلاث نقاط قوة حقيقية\n٢. ثلاث نقاط تحتاج تحسيناً محدداً\n٣. سؤال واحد يرفع جودة أضعف ركن\nبلغة مشجعة وعملية، لا تكتب له البرومبت من جديد.\n\nالبرومبت:\n${manualText}`,
+        txt => { toast('راجع كلود برومبتك'); S.d3reviewResult = txt; render(); }, 'كلود يراجع ما كتبت…'); break; }
+    case 'd3-save-manual': { const t2 = S.tasks[1] || blankTask(1); S.tasks[1] = t2;
+      const m = S.d3manual || {};
+      t2.instr = `⟦١⟧ السياق والخلفية\n${m.c1||'—'}\n\n⟦٢⟧ الطلب\n${m.c2||'—'}\n\n⟦٣⟧ المعيار\n${m.c3||'—'}\n\n⟦٤⟧ شكل المنتج النهائي\n${m.c4||'—'}`;
+      t2.versions = [{ text: t2.instr, at: Date.now(), score: null, by: 'بناء يدوي بالأركان الأربعة — اليوم الثالث' }];
+      t2.stage = 5; save(); render(); toast('حُفظ برومبتك في مهمتك الثانية ✓'); break; }
+    case 'd3-finish': { const plan = S.d3plan || {}; if (Object.values(plan).filter(Boolean).length < 4) { toast('أكمل الأسابيع الأربعة أولاً'); return; } S.d3done = true; save(); render(); toast('🎓 أكملت البرنامج — وفّقك الله!'); break; }
+    case 'relay-send': { const v = ($('#relay-in') || {}).value || ''; if (!v.trim()) { toast('ألصق رد كلود أولاً'); return; } const h = relayHandler; S.relay = null; relayHandler = null; if (h) h(v); save(); render(); break; }
+    case 'relay-cancel': S.relay = null; relayHandler = null; render(); break;
+    case 'pin': { if (($('#pin') || {}).value === CFG.trainerPin) { sessionTrainer = true; render(); loadProgress(); } else toast('رمز غير صحيح'); break; }
+    case 'thr': S.threshold = +el.value; save(); render(); break;
+    case 'mode': AI.mode = el.value; render(); break;
+    case 'reset': if (el.dataset.c === '1') { localStorage.removeItem(CFG.storeKey); location.hash = 'home'; location.reload(); } else { el.dataset.c = '1'; el.textContent = 'اضغط مرة أخرى للتأكيد'; } break;
+  }
+}
+function compTurn(msg) {
+  const t = T(); t.comp = t.comp || []; t.comp.push({ role: 'user', content: msg }); save();
+  run('comp', P.comp(t, msg), txt => applyComp(t, txt), 'Claude يناقشك…');
+}
+function applyComp(t, txt) {
+  const j = parseJSON(txt);
+  if (!j) { t.comp.push({ role: 'ai', content: String(txt || '').trim().slice(0, 4000) || 'لم يصل رد.' }); return; }
+  let pr = j.proposal && j.proposal.kind && j.proposal.value ? j.proposal : null;
+  if (pr && pr.kind === 'answer' && !QS.some(q => q.id === pr.qid)) pr = null;
+  t.comp.push({ role: 'ai', content: j.reply || '', proposal: pr });
+}
+function applyProposal(t, k) {
+  const m = (t.comp || [])[k]; if (!m || !m.proposal) return; const pr = m.proposal;
+  if (pr.kind === 'answer') { const q = QS.find(x => x.id === pr.qid); if (q.multi) { const a = Array.isArray(t.ans[q.id]) ? t.ans[q.id].slice() : []; if (!a.includes(OTHER)) a.push(OTHER); t.ans[q.id] = a; } else t.ans[q.id] = OTHER; t.other[q.id] = pr.value; }
+  else if (pr.kind === 'deep') { const i = +pr.i || 0; t.deepAns[i] = OTHER; t.deepOther[i] = pr.value; }
+  else if (pr.kind === 'title') {
+    t.raw = pr.value; t.pick = OTHER; t.refined = true;
+    m.applied = true; save(); render(); toast('اعتُمد — جاري توليد العنوان المهني…');
+    run('phrase', P.phrase(t), txt => {
+      const j = parseJSON(txt);
+      if (j) { t.title = j.title || pr.value; t.output = j.output || ''; if (TYPES.some(x => x.k === j.type)) t.type = j.type; t.phraseNote = j.note || ''; }
+      else { t.title = pr.value; }
+      save(); render(); toast('اكتملت صياغة المهمة ✓');
+    }, 'رفيقك يكمل الصياغة…');
+    return;
+  }
+  else if (pr.kind === 'instr' && pr.value.length > 300) { t.instr = pr.value; t.versions.push({ text: t.instr, at: Date.now(), score: null, by: 'رفيقك Claude' }); syncLocal(t); if (AI.mode !== 'manual') setTimeout(() => autoSync(t), 50); }
+  m.applied = true; save(); render(); toast('اعتُمد التعديل');
+}
+function reviewTurn(msg) {
+  const t = T(); t.chat.push({ role: 'user', content: msg }); save();
+  run('review', P.review(t, msg), txt => applyReview(t, txt), 'المدقق يراجع تعليماتك…');
+}
+function applyReview(t, txt) {
+  const j = parseJSON(txt);
+  if (!j || typeof j.score !== 'number') { t.chat.push({ role: 'sys', content: 'تعذّر قراءة رد المدقق — أعد الإرسال.' }); return; }
+  const revised = (j.revised || '').trim();
+  if (revised.length > 300) t.instr = revised;
+  t.score = Math.max(0, Math.min(100, Math.round(j.score)));
+  t.crit = (j.criteria || []).slice(0, 8).map((s, i) => ({ s: Math.round(+s || 0), n: (j.notes || [])[i] || '' }));
+  t.versions.push({ text: t.instr, at: Date.now(), score: t.score, by: 'المدقق', changes: j.changes || [] });
+  t.passed = t.score >= S.threshold;
+  t.chat.push({ role: 'ai', content: j.message || '', q: t.passed ? '' : (j.question || ''), o: t.passed ? [] : (j.options || []).filter(Boolean).slice(0, 3), score: t.score, changes: j.changes || [] });
+  syncLocal(t);
+  if (AI.mode !== 'manual') setTimeout(() => autoSync(t), 50);
+}
+async function autoSync(t) {
+  try { const txt = await ask(P.sync(t), { tier: 'default' }); applySync(t, txt); save(); render(); } catch (e) {}
+}
+function applySync(t, txt) {
+  const j = parseJSON(txt); if (!j || !j.skill_md) { toast('تعذّرت المزامنة بكلود — بقيت النسخة المحلية'); return; }
+  t.skill = j.skill_md; t.prompt = j.main_prompt || t.prompt; t.syncedAt = Date.now(); t.aiSynced = true;
+}
+function packText(t) {
+  return `# حزمة المهمة: ${t.title || t.raw}\n${CFG.program} — ايفوري للتدريب والاستشارات\n\n## ١. تعليمات المشروع\n\n${t.instr}\n\n## ٢. ملف المهارة SKILL.md\n\n${t.skill}\n\n## ٣. البرومبت الرئيسي\n\n${t.prompt}\n`;
+}
+async function download(kind, text, f) {
+  const t = T(); const names = { skill: 'SKILL.md', instr: 'تعليمات-المشروع.md', prompt: 'البرومبت-الرئيسي.md', pack: 'حزمة-' + (t.id) + '.md' };
+  let filename = names[f] || 'file.md', data = text;
+  if (f === 'skill' && window.JSZip) {
+    try { const z = new JSZip(); z.folder(t.skillName || slug(t)).file('SKILL.md', text); data = await z.generateAsync({ type: 'blob' }); filename = (t.skillName || slug(t)) + '.zip'; } catch (e) {}
+  }
+  if (window.claude && window.claude.use) {
+    try { const d = await window.claude.use('downloads'); if (d) { await d.save({ filename, data }); return; } } catch (e) { if (e && e.code) { toast('لم يتم التنزيل — استخدم زر النسخ'); return; } }
+  }
+  try { const blob = data instanceof Blob ? data : new Blob([data], { type: 'text/markdown;charset=utf-8' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); a.remove(); }
+  catch (e) { toast('التنزيل غير متاح هنا — استخدم زر النسخ'); }
+}
+async function copy(txt, el) {
+  try { await navigator.clipboard.writeText(txt || ''); flash(el, '✓ نُسخ'); }
+  catch (e) { const ta = document.createElement('textarea'); ta.value = txt || ''; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); flash(el, '✓ نُسخ'); } catch (x) { toast('حدّد النص وانسخه يدويًا'); } ta.remove(); }
+}
+function flash(el, s) { if (!el) return; const o = el.textContent; el.textContent = s; setTimeout(() => { el.textContent = o; }, 1400); }
+let toastTimer = null;
+function toast(m) { const b = $('#toast'); if (!b) return; b.textContent = m; b.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => b.classList.remove('on'), 2600); }
+function scrollTop() { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }
+
+/* نقل التقدم بين نسخة Cloudflare ونسخة Claude */
+function exportCode() { const j = JSON.stringify(Object.assign({}, S, { busy: '', relay: null })); return 'IVL1.' + btoa(unescape(encodeURIComponent(j))); }
+function importCode(code) {
+  try { const c = String(code || '').trim(); if (!c.startsWith('IVL1.')) throw 0; const j = JSON.parse(decodeURIComponent(escape(atob(c.slice(5)))));
+    if (!j || j.v !== 1) throw 0; S = Object.assign(S, j); S.busy = ''; S.relay = null; save(); return true; } catch (e) { return false; }
+}
+/* عرض Markdown مبسّط للمخرج التجريبي */
+function md(src) {
+  const L = String(src || '').split('\n'); let h = '', i = 0;
+  const inl = x => esc(x).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  while (i < L.length) {
+    const l = L[i];
+    if (/^\s*\|.*\|\s*$/.test(l) && i + 1 < L.length && /^\s*\|?\s*:?-{2,}/.test(L[i + 1])) {
+      const row = x => x.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+      const hd = row(l); i += 2; const rows = []; while (i < L.length && /^\s*\|.*\|\s*$/.test(L[i])) rows.push(row(L[i++]));
+      h += `<table class="tbl"><thead><tr>${hd.map(c => `<th>${inl(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${inl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`; continue;
+    }
+    const m = l.match(/^(#{1,4})\s+(.*)/);
+    if (m) h += `<h${Math.min(6, m[1].length + 2)}>${inl(m[2])}</h${Math.min(6, m[1].length + 2)}>`;
+    else if (/^\s*[-*•]\s+/.test(l)) { h += '<ul>'; while (i < L.length && /^\s*[-*•]\s+/.test(L[i])) h += `<li>${inl(L[i++].replace(/^\s*[-*•]\s+/, ''))}</li>`; h += '</ul>'; continue; }
+    else if (l.trim()) h += `<p>${inl(l)}</p>`;
+    i++;
+  }
+  return h;
+}
+/* ---------- لوحة المدرب ---------- */
+let sessionTrainer = false, progressRows = null;
+async function loadProgress() {
+  if (!AI.db) { progressRows = null; render(); return; }
+  try { const snap = await AI.db.collection('progress').get(); const docs = snap.docs || snap || []; progressRows = docs.map(d => (typeof d.data === 'function' ? d.data() : d)); }
+  catch (e) { progressRows = []; }
+  render();
+}
+
+/* ===== الواجهات ===== */
+const route = () => (location.hash || '#home').slice(1) || 'home';
+const sel = (a, opts, cur, extra = '') => `<select data-a="${a}" ${extra}><option value="">— اختر —</option>${opts.map(o => `<option ${o === cur ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+const btn = (a, label, cls = '', data = '') => `<button class="b ${cls}" data-a="${a}" ${data}>${label}</button>`;
+const codeBox = (id, txt, rows = 8) => `<div class="code"><div class="code-h">${btn('copy', '⧉ انسخ', 'sm', `data-src="${id}"`)}</div><textarea id="${id}" readonly rows="${rows}">${esc(txt)}</textarea></div>`;
+
+function header() {
+  const r = route(); const tab = (h, n) => `<a href="#${h}" class="${r === h || (h === 'day2' && r === 'task') ? 'on' : ''}">${n}</a>`;
+  const modeChip = AI.mode === 'sample' ? '<span class="chip ok">● كلود متصل داخل المختبر</span>' : AI.mode === 'bridge' ? '<span class="chip ok">● كلود متصل عبر الجسر</span>' : '<span class="chip warn">● النقل اليدوي: انسخ ← كلود ← ألصق</span>';
+  return `<header class="top"><div class="brand"><span class="claude">✳ Claude</span><span class="sep"></span><span class="ivory">ايفوري</span><span class="tag">وسّع نجاحك</span></div>
+  <div class="ttl"><b>${esc(CFG.program)}</b><small>${esc(CFG.cohort)} · ${esc(CFG.dates)} · ${esc(CFG.hours)}</small></div>
+  <nav>${tab('home', 'الرئيسية')}${tab('day1', 'اليوم الأول')}${tab('day2', 'اليوم الثاني')}${tab('day3', 'اليوم الثالث')}</nav>${modeChip}</header>`;
+}
+
+function vHome() {
+  const p = S.profile; const has = p.fam && (p.title || p.titleOther);
+  return `<section class="hero"><div class="hero-in"><p class="kick">مختبرك الشخصي</p><h1>من مهمة تستنزف وقتك… إلى حزمة أتمتة تعمل في حسابك</h1>
+  <p>ثلاثة أيام تعمل فيها على جهازك وبمهامك أنت. ما تكتبه هنا يبقى على جهازك ولا يراه زملاؤك.</p>
+  <div class="row">${btn('go', has ? 'تابع من حيث توقفت ←' : 'ابدأ: عرّفنا بك ←', 'pri lg', `data-v="${has ? (S.tasks[0].stage > 1 ? 'day2' : 'day1') : 'day1'}"`)}</div></div></section>
+  <section><h2 class="sec">خريطة البرنامج</h2><div class="days">${AGENDA.map((d, i) => `<div class="day ${i === 2 ? 'muted' : ''}"><div class="day-h"><b>${d.d}</b><span>${d.s}</span></div>${d.rows.map(r => `<div class="ag"><span>${r[0]}</span><p>${esc(r[1])}</p></div>`).join('')}</div>`).join('')}</div></section>
+  <section class="rules"><h2 class="sec">قواعد المختبر</h2><div class="grid3">
+  <div class="card"><b>🔒 بياناتك لك</b><p>لا ترفع اسمًا أو رقم هوية أو راتبًا حقيقيًا. استبدلها برموز قبل أي تجربة.</p></div>
+  <div class="card"><b>✍️ كلود يجهّز وأنت تعتمد</b><p>كل مخرج مسودة حتى تراجعه أنت. الإرسال والاعتماد قرارك وحدك.</p></div>
+  <div class="card"><b>🎯 مهامك أنت</b><p>أنت من يكتب مهامه. المختبر يساعدك في الصياغة ولا يفرض عليك شيئًا.</p></div></div></section>`;
+}
+
+/* ---------- اليوم الأول ---------- */
+const D1 = ['التعارف', 'الفيلم الافتتاحي', 'تعرّف على كلود', 'الأدوات الأربع', 'إلى اليوم الثاني'];
+function vDay1() {
+  const st = S.d1.step;
+  const steps = `<div class="stepper">${D1.map((n, i) => `<button class="st ${st === i + 1 ? 'on' : ''} ${st > i + 1 ? 'done' : ''}" data-a="d1step" data-v="${i + 1}"><i>${AR_D(i + 1)}</i>${n}</button>`).join('')}</div>`;
+  let body = '';
+  if (st === 1) body = vProfile();
+  if (st === 2) body = vHook();
+  if (st === 3) body = vMeet();
+  if (st === 4) body = vTools();
+  if (st === 5) body = `<div class="panel center"><h2>أنهيت الجولة التعريفية</h2><p>الآن تبدأ أهم مرحلة: تكتب ثلاث مهام من عملك، ونحوّل كل واحدة إلى حزمة أتمتة كاملة.</p>${btn('go', 'ابدأ مهامي ←', 'pri lg', 'data-v="day2"')}</div>`;
+  const nav = `<div class="navrow">${st > 1 ? btn('d1step', '→ السابق', 'ghost', `data-v="${st - 1}"`) : '<span></span>'}${st < 5 ? btn('d1step', 'التالي ←', 'pri', `data-v="${st + 1}"`) : ''}</div>`;
+  return `<section><h2 class="sec">اليوم الأول — التعارف والانطلاقة</h2>${steps}${body}${nav}</section>`;
+}
+function vProfile() {
+  const p = S.profile; const f = fam();
+  const titles = p.fam ? [...f.titles, OTHER] : [];
+  const rosterPick = p.rosterPick || '';
+  const picked = ROSTER.find(r => r.name === rosterPick);
+
+  return `<div class="panel"><h3>عرّفنا بك</h3><p class="mut">اختر اسمك من القائمة — تُملأ بقية بياناتك تلقائياً.</p>
+  <div class="form">
+   <label>اسمك
+     <select data-a="roster-pick">
+       <option value="">— اختر اسمك —</option>
+       ${ROSTER.map(r => `<option value="${esc(r.name)}" ${rosterPick === r.name ? 'selected' : ''}>${esc(r.name)}</option>`).join('')}
+       <option value="${OTHER}">أخرى — اسم غير مدرج</option>
+     </select>
+   </label>
+   ${picked ? `<div class="roster-card">
+     <div class="rc-row"><span>المسمى الوظيفي</span><b>${esc(picked.title || '—')}</b></div>
+     <div class="rc-row"><span>الإدارة / القسم</span><b>${esc(picked.dept || '—')}</b></div>
+     ${picked.org ? `<div class="rc-row"><span>جهة العمل</span><b>${esc(picked.org)}</b></div>` : ''}
+   </div>` : ''}
+   ${rosterPick === OTHER ? `<label>اكتب اسمك<input type="text" data-a="prof-text" data-k="name" value="${esc(p.name)}" placeholder="اسمك الكامل"></label>` : ''}
+   ${!picked || picked.title === '' ? `<label>مسارك الوظيفي${sel('prof', FAMILIES.map(x => x.n), (FAMILIES.find(x => x.k === p.fam) || {}).n || '', 'data-k="famn"')}</label>` : ''}
+   ${!picked && p.fam && p.fam !== 'gen' ? `<label>مسماك الوظيفي${sel('prof', titles, p.title, 'data-k="title"')}</label>` : ''}
+   ${!picked && (p.fam === 'gen' || p.title === OTHER) ? `<label>اكتب مسماك الوظيفي<input type="text" data-a="prof-text" data-k="titleOther" value="${esc(p.titleOther)}" placeholder="مثال: مشرف مستودعات"></label>` : ''}
+   <label>سنوات خبرتك في هذا الدور${sel('prof', ['أقل من سنتين', '2–5 سنوات', '6–10 سنوات', 'أكثر من 10 سنوات'], p.years, 'data-k="years"')}</label>
+   <label>علاقتك بالذكاء الاصطناعي حتى اليوم${sel('prof', ['لم أستخدمه في العمل', 'جربته قليلًا', 'أستخدمه أسبوعيًا', 'أستخدمه يوميًا'], p.ai, 'data-k="ai"')}</label>
+  </div></div>`;
+}
+function vHook() {
+  return `<div class="panel center hook"><h3>${esc(CFG.hookTitle)}</h3><p class="mut">أربع دقائق: من بناء الأهرامات إلى عصر الوكلاء — لماذا تغيّر سؤال الإدارة اليوم؟</p>
+  ${CFG.hookUrl ? `<video class="film" src="${esc(CFG.hookUrl)}" poster="${esc(CFG.hookPoster || '')}" controls playsinline preload="metadata"></video>` : '<p class="mut">يُعرض على شاشة القاعة.</p>'}
+  <p class="q">بعد المشاهدة: ما المهمة المتكررة التي خطرت في بالك وأنت تشاهد؟ احتفظ بها — قد تكون مهمتك الأولى في اليوم الثاني.</p></div>`;
+}
+function vMeet() {
+  const i = S.d1.slide, m = MEET[i];
+  return `<div class="slide"><div class="slide-n">${AR_D(i + 1)} / ${AR_D(MEET.length)}</div><p class="kick">${esc(m.s)}</p><h3>${esc(m.t)}</h3>
+  <div class="mgrid g${m.cards.length > 4 ? 3 : m.cards.length}">${m.cards.map(c => `<div class="mcard"><span>${c.i}</span><b>${esc(c.h)}</b><p>${esc(c.d)}</p></div>`).join('')}</div>
+  <p class="key">${esc(m.k)}</p>
+  <div class="row center">${btn('slide', '→', 'ghost', 'data-v="-1"')}${MEET.map((_, j) => `<button class="dot ${j === i ? 'on' : ''}" data-a="slide-to" data-v="${j}"></button>`).join('')}${btn('slide', '←', 'ghost', 'data-v="1"')}</div></div>`;
+}
+function toolPrompt(k) {
+  const role = roleName(), f = fam(), task = (S.tasks[0].title || S.tasks[0].raw || f.tasks[0]);
+  if (k === 'chat') return `أنا ${role} في مجال ${f.domain}. أرفقت لك ملفًا من عملي بعد إخفاء البيانات الحساسة. اقرأه كاملًا ثم:
+١) لخّص أهم خمس نقاط في جدول من ثلاثة أعمدة (النقطة · لماذا تهم · الإجراء المقترح).
+٢) استخرج كل رقم أو تاريخ يحتاج تحققًا قبل الاعتماد.
+٣) اقترح ثلاثة أسئلة كان ينبغي أن أطرحها على هذا الملف ولم أطرحها.
+اكتب بالعربية المهنية المباشرة، وابدأ بالخلاصة في سطرين.`;
+  if (k === 'research') return `أنا ${role}. ابحث في مصادر حديثة موثوقة (2025–2026) عن أفضل الممارسات في «${task}» لدى المنشآت السعودية متوسطة الحجم، مع مراعاة الأنظمة السعودية ذات الصلة.
+أريد: خمس ممارسات في جدول (الممارسة · كيف تُطبَّق عمليًا · المصدر برابطه)، ثم أكثر خطأ شائع يقع فيه من يؤدي هذه المهمة.
+لا تذكر أي معلومة بلا مصدر، وميّز بين ما هو نظام ملزم وما هو ممارسة اختيارية.`;
+  if (k === 'artifact') return `ابنِ لي أداة تفاعلية (Artifact) بالعربية من اليمين لليسار لمتابعة «${task}» كما يؤديها ${role}:
+- نموذج إدخال بقوائم منسدلة قدر الإمكان
+- جدول بالحالات (جديد · قيد التنفيذ · بانتظار · مكتمل) بلون لكل حالة
+- بطاقات علوية: العدد الكلي، والمتأخر، والمكتمل هذا الأسبوع
+- بحث وتصفية حسب الحالة، وزر لنسخ الجدول
+املأها بخمسة سجلات وهمية للتجربة فقط.`;
+  return `أنت مساعد مهني ل${role} يعمل في مجال ${f.domain}.
+قواعد ثابتة في كل محادثة داخل هذا المشروع:
+١) اكتب بالعربية المهنية المباشرة، والجداول من اليمين لليسار.
+٢) إن نقصتك معلومة جوهرية فاسألني سؤالًا واحدًا بدل أن تفترض.
+٣) لا تخترع أرقامًا أو أسماء أو أنظمة؛ اكتب [يُستكمل] مكان الناقص.
+٤) أي مخرج سيُرسل لطرف آخر يكون «مسودة للمراجعة» وأنا من يعتمد.
+٥) ابدأ كل رد بالخلاصة في سطرين ثم التفصيل.`;
+}
+function vTools() {
+  const done = TOOLS.filter(x => (S.d1.tools[x.k] || {}).done).length;
+  return `<p class="mut">جرّب كل أداة في حسابك على claude.ai بأمر مكتوب لوظيفتك. أنجزت ${AR_D(done)} من ${AR_D(TOOLS.length)}.</p>
+  <div class="tools">${TOOLS.map((x, i) => { const s = S.d1.tools[x.k] || {}; return `<article class="tool ${s.done ? 'done' : ''}">
+   <div class="tool-h"><span class="ic">${x.icon}</span><div><small>الأداة ${AR_D(i + 1)} · ${x.min}</small><h4>${esc(x.n)}</h4></div>${s.done ? '<span class="chip ok">✓ جرّبتها</span>' : ''}</div>
+   <p>${esc(x.what)}</p><p class="where">📍 ${esc(x.where)}</p>
+   <b class="lbl">${x.k === 'project' ? 'الصق هذه في تعليمات المشروع' : 'الأمر التجريبي لوظيفتك'}</b>${codeBox('tp-' + x.k, toolPrompt(x.k), 7)}
+   ${x.k === 'project' ? `<b class="lbl">ثم اسأله داخل المشروع</b>${codeBox('tp-q', 'ما الذي تعرفه عن دوري وطريقة عملي؟ ثم اقترح ثلاث مهام من عملي يمكن أن تساعدني فيها هذا الأسبوع.', 2)}` : ''}
+   <div class="tip"><b>لاحظ:</b> ${esc(x.notice)}</div><div class="tip warn"><b>انتبه:</b> ${esc(x.trap)}</div>
+   <div class="row rate"><b>قيّم التجربة:</b>${sel('tool-rate', ['مفيدة جدًا لعملي', 'مفيدة', 'لم تعمل كما توقعت'], s.rate, `data-k="${x.k}"`)}</div></article>`; }).join('')}</div>`;
+}
+
+/* ---------- اليوم الثاني ---------- */
+const STAGES = ['صياغة المهمة', 'الاستنطاق', 'التعميق', 'التعليمات', 'ورشة التدقيق', 'التشغيل التجريبي', 'الحزمة والنقل', 'القياس'];
+function xferBox() {
+  const inClaude = AI.mode === 'sample';
+  if (AI.mode === 'bridge') return '';
+  if (inClaude) return `<details class="xfer"><summary>📥 بدأت على رابط آخر؟ انقل تقدمك إلى هنا</summary><p class="mut">في النسخة الأخرى اضغط «انسخ رمز تقدمي»، ثم ألصقه هنا.</p><div class="reply"><textarea id="xferin" rows="2" placeholder="IVL1.…"></textarea>${btn('xfer-import', 'انقل', 'pri')}</div></details>`;
+  return `<div class="xfer on"><b>🤝 ليعمل Claude معك داخل المختبر مجانًا بحسابك</b><p>افتح نسخة المختبر داخل Claude، فيعمل رفيقك والمدقق والتشغيل التجريبي في النافذة نفسها دون نسخ ولصق.</p>
+   <div class="row">${btn('xfer-copy', '① انسخ رمز تقدمي', 'ghost')}<a class="b pri" href="${esc(CFG.claudeLabUrl)}" target="_blank" rel="noopener">② افتح المختبر داخل Claude ←</a></div>
+   <p class="mut" style="font-size:13px">ثم ألصق الرمز هناك في «انقل تقدمك»، فتكمل من حيث توقفت. يلزم أن تكون مسجّل الدخول في claude.ai.</p></div>`;
+}
+function vDay2() {
+  return `<section><h2 class="sec">اليوم الثاني — مهامي الثلاث</h2>${xferBox()}
+  <p class="mut">اكتب ثلاث مهام حقيقية من عملك. كل مهمة تمر بسبع مراحل وتخرج بحزمة جاهزة: تعليمات مشروع، ومهارة، وبرومبت رئيسي.</p>
+  <div class="grid3">${S.tasks.map((t, i) => { const pct = Math.round(((t.stage - 1) / 7) * 100); return `<button class="taskcard" data-a="task" data-v="${i}">
+   <small>المهمة ${AR_D(i + 1)}</small><b>${esc(t.title || t.raw || 'لم تُكتب بعد')}</b>
+   <span class="bar"><i style="width:${pct}%"></i></span><span class="mut">${t.stage > 1 || t.raw ? 'المرحلة: ' + STAGES[t.stage - 1] : 'ابدأ ←'}${t.score != null ? ' · الدرجة ' + AR_D(t.score) + '٪' : ''}</span></button>`; }).join('')}</div></section>`;
+}
+function vTask() {
+  const t = T(); const i = S.cur; t.max = Math.max(t.max || 1, t.stage);
+  const stg = `<div class="stepper s7">${STAGES.map((n, k) => { const can = k + 1 <= t.max; return `<button class="st ${t.stage === k + 1 ? 'on' : ''} ${t.stage > k + 1 ? 'done' : ''}" ${can ? `data-a="stage" data-v="${k + 1}"` : 'disabled'}><i>${AR_D(k + 1)}</i>${n}</button>`; }).join('')}</div>`;
+  const body = [null, stPhrase, stQs, stDeep, stInstr, stReview, stTrial, stPack, stMeasure][t.stage](t);
+  const open = S.compOpen !== false;
+  return `<section><div class="crumb"><a href="#day2">مهامي</a> ‹ المهمة ${AR_D(i + 1)}${t.title ? ': ' + esc(t.title) : ''}${btn('comp-toggle', open ? '⇥ إخفاء رفيقك Claude' : '🤝 ناقش مع Claude', 'sm ghost', 'style="margin-inline-start:12px"')}</div>${stg}
+  <div class="taskwrap ${open ? 'with-comp' : ''}"><div class="taskmain">${body}</div>${open ? compPanel(t) : ''}</div></section>`;
+}
+function stPhrase(t) {
+  const f = fam();
+  const rp = S.profile.rosterPick;
+  const r = rp && rp !== OTHER ? ROSTER.find(x => x.name === rp) : null;
+  const roleTasks = r && r.roleKey && ROLE_TASKS[r.roleKey] ? ROLE_TASKS[r.roleKey] : f.tasks;
+  const opts = [...roleTasks, OTHER];
+  return `<div class="panel"><h3>١. اكتب مهمتك</h3><p class="mut">اختر من الأمثلة إن وجدت ما يطابق عملك، أو اختر «أخرى» واكتبها بكلماتك — الأفضل دائمًا أن تكتبها أنت.</p>
+  <div class="form"><label>مهمة من مسارك (للإلهام)${sel('pick', opts, t.pick)}</label>
+  ${t.pick ? `<label>المهمة بكلماتك${t.refined ? ' <span class="refined-badge">✦ منقّحة</span>' : ''}<textarea data-a="raw" rows="3" placeholder="مثال: كل خميس أجمع أرقام المبيعات من ثلاثة ملفات وأكتب ملخصًا للمدير…">${esc(t.raw)}</textarea></label>` : ''}
+  ${t.pick ? `<div class="row">${btn('phrase', '✨ صِغها لي باحتراف', 'sec2')}</div>` : ''}
+  ${t.title ? `<div class="result"><label>العنوان المهني<input type="text" data-a="tfield" data-k="title" value="${esc(t.title)}"></label><label>المخرج المطلوب<input type="text" data-a="tfield" data-k="output" value="${esc(t.output)}"></label>${t.phraseNote ? `<p class="tip">${esc(t.phraseNote)}</p>` : ''}</div>` : ''}
+  ${t.pick ? `<label>نوع المهمة${sel('tfield', TYPES.map(x => x.n), typeName(t.type), 'data-k="typen"')}</label>` : ''}
+  </div>${relayBox('phrase')}<div class="navrow"><span></span>${btn('confirm-task', 'اعتمد المهمة وابدأ الاستنطاق ←', 'pri')}</div></div>`;
+}
+function stQs(t) {
+  const n = answeredCount(t);
+  return `<div class="panel"><h3>٢. استنطاق المهمة — ${AR_D(QS.length)} سؤالاً في ستة محاور</h3>
+  <p class="mut">أجب كما تجري المهمة فعلاً اليوم، لا كما يجب أن تكون. محور «رفع السقف» في الآخر هو ما ينقل المهمة درجتين فوق مستواها الحالي.</p>
+  <div class="prog"><span class="bar"><i style="width:${Math.round(n / QS.length * 100)}%"></i></span><b>${AR_D(n)} / ${AR_D(QS.length)}</b></div>
+  ${AXES.map(ax => `<div class="axis"><div class="axis-h"><b>${ax.k === 'F' ? '🚀 ' : ''}${esc(ax.n)}</b><span>${esc(ax.d)}</span></div>
+   ${QS.filter(q => q.ax === ax.k).map(q => { const ok = answered(t, q); const opts = [...qOptions(q, t), OTHER];
+     return `<div class="q ${ok ? 'ans' : ''} ${S.compFocus && S.compFocus.qid === q.id ? 'focus' : ''}"><div class="qq">${esc(q.q)}${btn('comp-q', '💬 ناقش', 'sm ghost qbtn', `data-q="${q.id}"`)}</div><div class="why">${esc(q.why)}</div>
+     ${q.multi ? `<div class="chips">${opts.map(o => `<button class="chipb ${(t.ans[q.id] || []).includes(o) ? 'on' : ''}" data-a="chip" data-q="${q.id}" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>`
+       : sel('ans', opts, t.ans[q.id], `data-q="${q.id}"`)}
+     ${(q.multi ? (t.ans[q.id] || []).includes(OTHER) : t.ans[q.id] === OTHER) ? `<input type="text" data-a="ans-other" data-q="${q.id}" value="${esc(t.other[q.id] || '')}" placeholder="اكتب إجابتك بدقة">` : ''}</div>`; }).join('')}</div>`).join('')}
+  <div class="navrow">${btn('stage', '→ المهمة', 'ghost', 'data-v="1"')}${btn('to-deep', 'التالي: التعميق ←', 'pri')}</div></div>`;
+}
+function approvedSummary(t) {
+  const items = [];
+  // إجابات التعميق المعتمدة
+  t.deep.forEach((d, i) => {
+    const ans = t.deepAns[i] === OTHER ? t.deepOther[i] : t.deepAns[i];
+    if (ans) items.push({ q: d.q, a: ans });
+  });
+  // إجابات من رفيق Claude المعتمدة (comp applied)
+  (t.comp || []).forEach(m => {
+    if (m.applied && m.proposal && m.proposal.kind === 'deep') {
+      const dq = t.deep[m.proposal.i];
+      if (dq && !items.find(x => x.q === dq.q))
+        items.push({ q: dq.q, a: m.proposal.value });
+    }
+  });
+  if (!items.length) return '';
+  return `<div class="approved-sum"><b>✓ ما اعتمدته حتى الآن</b>${items.map(x => `<div class="appr-item"><span class="appr-q">${esc(x.q)}</span><span class="appr-a">${esc(x.a)}</span></div>`).join('')}</div>`;
+}
+function stDeep(t) {
+  return `<div class="panel"><h3>٣. أسئلة التعميق</h3><p class="mut">يقرأ كلود إجاباتك ويطرح ٣–٤ أسئلة خاصة بمهمتك أنت، تكشف ما لا تكشفه الأسئلة القياسية.</p>
+  ${!t.deep.length ? `<div class="row">${btn('deepen', '🔍 اطلب أسئلة التعميق من كلود', 'pri')}${btn('skip-deep', 'تخطَّ إلى التعليمات', 'ghost')}</div>` : ''}
+  ${relayBox('deepen')}
+  ${approvedSummary(t)}
+  ${t.deep.map((d, i) => `<div class="q ${t.deepAns[i] ? 'ans' : ''}"><div class="qq">${esc(d.q)}${btn('comp-deep', '💬 ناقش', 'sm ghost qbtn', `data-i="${i}"`)}</div><div class="why">${esc(d.why)}</div>${sel('deep-ans', [...d.o, OTHER], t.deepAns[i], `data-i="${i}"`)}
+   ${t.deepAns[i] === OTHER ? `<input type="text" data-a="deep-other" data-i="${i}" value="${esc(t.deepOther[i] || '')}" placeholder="اكتب إجابتك">` : ''}</div>`).join('')}
+  <div class="navrow">${btn('stage', '→ الاستنطاق', 'ghost', 'data-v="2"')}${t.deep.length ? btn('to-instr', 'التالي: التعليمات ←', 'pri') : ''}</div></div>`;
+}
+function stInstr(t) {
+  return `<div class="panel"><h3>٤. تعليمات المشروع — المسودة الأولى</h3><p class="mut">تُبنى من إجاباتك في ثمانية أقسام. هذه مسودة فقط؛ الصقل الحقيقي في ورشة التدقيق.</p>
+  <div class="row">${btn('gen-ai', '✨ اكتبها بكلود من إجاباتي', 'pri')}${btn('gen-local', 'ولّد مسودة سريعة من القالب', 'ghost')}</div>
+  ${relayBox('generate')}
+  ${t.instr ? `<div class="edit"><div class="edit-h"><b>التعليمات</b><span class="chip">${AR_D(t.instr.length)} حرف</span>${btn('copy', '⧉ انسخ', 'sm', 'data-src="instr"')}</div><textarea id="instr" data-a="instr-edit" rows="18">${esc(t.instr)}</textarea></div>` : ''}
+  <div class="navrow">${btn('stage', '→ التعميق', 'ghost', 'data-v="3"')}${t.instr ? btn('to-review', 'ادخل ورشة التدقيق ←', 'pri') : ''}</div></div>`;
+}
+function gauge(score) {
+  const s = score == null ? 0 : score; const c = score == null ? '#c8bfb3' : s >= S.threshold ? '#2f7d4f' : s >= 80 ? '#C9A961' : '#9a3b3b';
+  return `<div class="gauge" style="--p:${s};--c:${c}"><div><b>${score == null ? '—' : AR_D(s) + '٪'}</b><small>العتبة ${AR_D(S.threshold)}٪</small></div></div>`;
+}
+function stReview(t) {
+  const last = [...t.chat].reverse().find(m => m.role === 'ai');
+  const chat = t.chat.map(m => m.role === 'user' ? `<div class="msg me">${esc(m.content)}</div>` : m.role === 'sys' ? `<div class="msg sys">${esc(m.content)}</div>`
+    : `<div class="msg ai"><div class="ms">الدرجة ${AR_D(m.score)}٪</div><p>${esc(m.content)}</p>${(m.changes || []).length ? `<ul class="chg">${m.changes.map(c => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}${m.q ? `<p class="mq">❓ ${esc(m.q)}</p>` : ''}</div>`).join('');
+  const quick = last && last.o && last.o.length && !t.passed ? `<div class="chips">${last.o.map(o => `<button class="chipb" data-a="quick" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>` : '';
+  return `<div class="panel"><h3>٥. ورشة التدقيق — حتى تصل تعليماتك إلى المستوى الاحترافي</h3>
+  <p class="mut">يراجع المدقق تعليماتك في كل جولة: يحسّنها بنفسه، ويقيّمها بثمانية معايير، ويسألك سؤالًا واحدًا عن أضعف نقطة. أجب أو اختر، وتتحدث المهارة والبرومبت تلقائيًا مع كل نسخة.</p>
+  ${t.passed ? `<div class="pass">🎉 وصلت تعليماتك إلى ${AR_D(t.score)}٪ — المستوى الاحترافي. انتقل الآن إلى التشغيل التجريبي داخل المختبر. ${btn('to-pack', 'شغّلها تجريبيًا ←', 'pri')}</div>` : ''}
+  <div class="ws"><div class="ws-chat"><div class="chatbox" id="chatbox">${chat || '<p class="mut center">ابدأ الورشة ليقرأ المدقق تعليماتك ويقيّمها.</p>'}</div>
+   ${relayBox('review')}
+   ${!t.chat.length ? `<div class="row">${btn('review-start', '▶ ابدأ ورشة التدقيق', 'pri lg')}</div>` : !t.passed ? `${quick}<div class="reply"><textarea id="reply" rows="2" placeholder="أجب المدقق، أو اطلب تعديلًا محددًا…"></textarea>${btn('send', 'أرسل', 'pri')}</div>` : ''}</div>
+   <aside class="ws-side">${gauge(t.score)}
+    <div class="crit">${CRIT.map((c, k) => { const v = t.crit[k]; const s = v ? v.s : null; return `<div class="cr"><span>${esc(c)}</span><span class="bar sm"><i style="width:${s || 0}%;background:${s == null ? '#ddd' : s >= S.threshold - 5 ? '#2f7d4f' : s >= 75 ? '#C9A961' : '#9a3b3b'}"></i></span><b>${s == null ? '—' : AR_D(s)}</b></div>${v && v.n ? `<div class="crn">${esc(v.n)}</div>` : ''}`; }).join('')}</div>
+    <div class="sync"><b>التزامن</b><span class="chip ok">✓ تعليمات · نسخة ${AR_D(Math.max(1, t.versions.length))}</span><span class="chip ${t.skill ? 'ok' : ''}">${t.skill ? '✓' : '…'} المهارة SKILL.md</span><span class="chip ${t.prompt ? 'ok' : ''}">${t.prompt ? '✓' : '…'} البرومبت الرئيسي</span></div>
+    <div class="vers"><b>النسخ</b>${t.versions.map((v, k) => `<button class="vb ${v.text === t.instr ? 'on' : ''}" data-a="restore" data-v="${k}">ن${AR_D(k + 1)} · ${v.score == null ? v.by : AR_D(v.score) + '٪'}</button>`).join('')}</div>
+   </aside></div>
+  <details class="edit"><summary>التعليمات الحالية (يمكنك تعديلها بيدك — والجولة التالية تبني على تعديلك)</summary><textarea id="instr" data-a="instr-edit" rows="16">${esc(t.instr)}</textarea></details>
+  <div class="navrow">${btn('stage', '→ التعليمات', 'ghost', 'data-v="4"')}${t.passed ? btn('to-pack', 'التشغيل التجريبي ←', 'pri') : (t.chat.length >= 6 ? btn('force-pack', 'انتقل دون بلوغ العتبة', 'ghost') : '')}</div></div>`;
+}
+
+/* ---------- رفيقك Claude: نقاش في كل مرحلة دون مغادرة المختبر ---------- */
+const COMP_CHIPS = {
+  1: ['هل مهمتي مناسبة للأتمتة؟', 'جزّئ مهمتي إن كانت واسعة', 'اقترح صياغة أدق لمهمتي'],
+  2: ['اشرح لي هذا السؤال بمثال من وظيفتي', 'اقترح إجابة تناسب خبرتي', 'عمّق إجابتي الحالية', 'أعد صياغة إجابتي بدقة'],
+  3: ['ما الذي فاتني في إجاباتي؟', 'عمّق إجابتي الحالية', 'اقترح إجابة تناسب خبرتي', '✓ اقترح صياغة للاعتماد'],
+  4: ['اشرح لي هذه التعليمات قسمًا قسمًا', 'ما الأطر والمراجع المهنية لهذه المهمة؟', 'أضعف قسم في التعليمات وكيف أقويه'],
+  5: ['لماذا هذه الدرجة؟', 'ساعدني أجيب سؤال المدقق', 'ما الأطر والمراجع المهنية لهذه المهمة؟'],
+  6: ['اقرأ المخرج التجريبي وانقده', 'ما التعديل الذي يحتاجه المخرج؟', 'عدّل التعليمات بناء على ملاحظتي'],
+  7: ['اشرح لي الفرق بين التعليمات والمهارة والبرومبت', 'كيف أستخدم الحزمة كل أسبوع؟'],
+  8: ['كيف أقيس الأثر بدقة؟', 'كيف أعرض هذا التوفير على مديري؟']
+};
+function focusLabel(t) {
+  const f = S.compFocus; if (!f) return 'المرحلة كلها: ' + STAGES[t.stage - 1];
+  if (f.qid) { const q = QS.find(x => x.id === f.qid); return 'السؤال: ' + (q ? q.q : ''); }
+  if (f.deep != null) return 'سؤال التعميق: ' + ((t.deep[f.deep] || {}).q || '');
+  return STAGES[t.stage - 1];
+}
+function proposalLabel(pr) {
+  if (!pr) return ''; return { answer: 'اعتمد هذه الإجابة', deep: 'اعتمد هذه الإجابة', title: 'اعتمد هذه الصياغة', instr: 'اعتمد التعليمات المعدلة' }[pr.kind] || 'اعتمد';
+}
+function compPanel(t) {
+  const msgs = (t.comp || []).slice(-14).map((m, k, arr) => m.role === 'user' ? `<div class="msg me">${esc(m.content)}</div>`
+    : `<div class="msg ai"><p>${esc(m.content).replace(/\n/g, '<br>')}</p>${m.proposal && !m.applied ? `<div class="prop"><div class="prop-v">${esc(m.proposal.value || '').slice(0, 600)}${(m.proposal.value || '').length > 600 ? '…' : ''}</div>${btn('comp-apply', '✓ ' + proposalLabel(m.proposal), 'pri sm', `data-k="${(t.comp || []).length - arr.length + k}"`)}</div>` : m.applied ? '<div class="chip ok">✓ اعتُمد</div>' : ''}</div>`).join('');
+  const chips = (COMP_CHIPS[t.stage] || []).map(c => `<button class="chipb" data-a="comp-chip" data-v="${esc(c)}">${esc(c)}</button>`).join('');
+  return `<aside class="comp"><div class="comp-h"><b>🤝 رفيقك Claude</b><small>${esc(focusLabel(t))}</small>${S.compFocus ? btn('comp-unfocus', '× الكل', 'sm ghost') : ''}</div>
+  <div class="comp-body" id="compbox">${msgs || '<p class="mut center">ناقش أي سؤال أو إجابة أو قسم هنا. Claude يقترح، وأنت تعتمد قبل أن تنتقل.</p>'}</div>
+  ${relayBox('comp')}<div class="chips">${chips}</div>
+  <div class="reply"><textarea id="compin" rows="2" placeholder="اسأل، أو اطلب تعميقًا أو مرجعًا أو إعادة صياغة…"></textarea>${btn('comp-send', 'أرسل', 'pri')}</div></aside>`;
+}
+function stTrial(t) {
+  return `<div class="panel"><h3>٦. التشغيل التجريبي — جرّب حزمتك هنا قبل أن تنقلها</h3>
+  <p class="mut">يشغّل Claude حزمتك داخل المختبر كما ستعمل في حسابك: تعليمات المشروع، والمهارة، والبرومبت الرئيسي على بيانات تجريبية. راجع المخرج، وناقشه مع رفيقك Claude، واعتمد التعديلات حتى يرضيك المخرج.</p>
+  <label class="lbl">بيانات التجربة <small class="mut">(ألصق عينة بعد إخفاء الحساس، أو ولّد بيانات وهمية واقعية)</small></label>
+  <textarea id="trialdata" data-a="trial-data" rows="7" placeholder="ألصق هنا جدولًا أو نصًا بصيغة مدخلاتك المعتادة…">${esc(t.trialData || '')}</textarea>
+  <div class="row">${btn('trial-dummy', '🧪 ولّد بيانات تجريبية واقعية', 'ghost')}${btn('trial-run', '▶ شغّل الحزمة على هذه البيانات', 'pri')}</div>
+  ${relayBox('dummy')}${relayBox('trial')}
+  ${t.trialOut ? `<div class="edit"><div class="edit-h"><b>المخرج التجريبي</b><span class="chip">${AR_D(t.trialRuns || 1)} تشغيل</span>${btn('copy', '⧉ انسخ', 'sm', 'data-src="trialout"')}</div><div class="mdout">${md(t.trialOut)}</div><textarea id="trialout" readonly rows="1" style="position:absolute;left:-9999px">${esc(t.trialOut)}</textarea>
+   <div class="row">${btn('trial-ok', '✓ المخرج مرضٍ — اعتمده', 'pri')}${btn('comp-chip', '✎ ناقش المخرج مع Claude', 'ghost', 'data-v="اقرأ المخرج التجريبي وانقده مقابل معايير الجودة في التعليمات"')}</div></div>` : ''}
+  ${t.trialOk ? '<div class="pass">✓ اعتمدت المخرج التجريبي. حزمتك جاهزة للنقل إلى حسابك.</div>' : ''}
+  <div class="navrow">${btn('stage', '→ ورشة التدقيق', 'ghost', 'data-v="5"')}${btn('stage', 'التالي: الحزمة والنقل ←', t.trialOk ? 'pri' : 'ghost', 'data-v="7"')}</div></div>`;
+}
+function stPack(t) {
+  const steps = [
+    ['p1', 'في claude.ai افتح Projects ← Create project، وسمِّه باسم المهمة.'],
+    ['p1b', `أنشئ مجلداً على جهازك باسم المهمة، وبداخله مجلدان: 📁 المدخلات (ملفات العمل الحقيقية التي يحتاجها Claude) · 📁 المخرجات (ما يُنتجه Claude لك). ارفع ملفات المدخلات الأساسية على المشروع من Knowledge في الإعدادات.`],
+    ['p2', 'الصق «تعليمات المشروع» في Set project instructions.'],
+    ['p3', 'أضف المهارة: نزّل ملفها وارفعه من Settings ← Capabilities ← Skills، أو الصق محتواها في محادثة واطلب «احفظ هذه كمهارة».'],
+    ['p4', 'افتح محادثة داخل المشروع، وارفع ملفات المدخلات من مجلدك بزر الإرفاق، ثم الصق «البرومبت الرئيسي». تأكد أن البرومبت يتضمن هذا السطر: «إن كانت أي معلومة ناقصة أو غير واضحة، اسألني قبل أن تبدأ».'],
+    ['p5', 'راجع المخرج كما تراجع عمل زميل: صحّح، ثم احفظه في مجلد المخرجات، وأضف ما تعلمته إلى تعليمات المشروع.']];
+  return `<div class="panel"><h3>٧. الحزمة — انقلها إلى حسابك بعد أن جرّبتها هنا</h3>
+  ${t.forced && !t.passed ? '<p class="tip warn">انتقلت دون بلوغ العتبة. يمكنك العودة إلى ورشة التدقيق في أي وقت.</p>' : ''}
+  <div class="row">${btn('dl', '⬇ نزّل الحزمة كاملة', 'pri', 'data-f="pack"')}${btn('sync-ai', '↻ زامن المهارة والبرومبت بكلود', 'ghost')}<span class="chip ${t.aiSynced ? 'ok' : ''}">${t.aiSynced ? 'مزامنة كلود' : 'مزامنة القالب'}</span></div>
+  ${relayBox('sync')}
+  <div class="pack"><div><div class="pk-h"><b>١. تعليمات المشروع</b>${btn('dl', '⬇', 'sm', 'data-f="instr"')}</div>${codeBox('pk-instr', t.instr, 10)}</div>
+  <div><div class="pk-h"><b>٢. ملف المهارة SKILL.md</b>${btn('dl', '⬇ ZIP', 'sm', 'data-f="skill"')}</div>${codeBox('pk-skill', t.skill, 10)}</div>
+  <div><div class="pk-h"><b>٣. البرومبت الرئيسي</b>${btn('dl', '⬇', 'sm', 'data-f="prompt"')}</div>${codeBox('pk-prompt', t.prompt, 10)}</div></div>
+  <h4>خطوات النقل إلى حسابك</h4><div class="checks">${steps.map(([k, s]) => `<button class="ck ${t.steps[k] ? 'on' : ''}" data-a="step" data-k="${k}"><i>${t.steps[k] ? '✓' : ''}</i>${esc(s)}</button>`).join('')}</div>
+  <div class="navrow">${btn('stage', '→ التشغيل التجريبي', 'ghost', 'data-v="6"')}${btn('stage', 'التالي: القياس ←', 'pri', 'data-v="8"')}</div></div>`;
+}
+function stMeasure(t) {
+  const before = MIN_MAP[ansText(t, QS.find(q => q.id === 'mins'))] || 0; const fr = FREQ_MAP[ansText(t, QS.find(q => q.id === 'freq'))] || 1; const after = AFTER_MAP[t.after] || 0;
+  const saved = t.after ? Math.max(0, Math.round((before - after) * fr)) : null;
+  return `<div class="panel"><h3>٨. القياس — قبل وبعد</h3><p class="mut">بعد أول تشغيل حقيقي في حسابك، سجّل كم استغرقت المهمة مع كلود (بما فيها مراجعتك).</p>
+  <div class="grid3"><div class="card stat"><small>يدويًا (إجابتك)</small><b>${before ? AR_D(before) + ' د' : '—'}</b></div>
+  <div class="card stat"><small>مع كلود</small>${sel('after', AFTER, t.after)}</div>
+  <div class="card stat"><small>التوفير الشهري التقديري</small><b>${saved == null ? '—' : AR_D(saved) + ' د'}</b></div></div>
+  <p class="tip">الأرقام تقديرية من إجاباتك، والرقم المعتبر هو ما تقيسه بعد أسبوعين من الاستخدام الفعلي.</p>
+  <div class="navrow">${btn('stage', '→ الحزمة', 'ghost', 'data-v="7"')}${S.cur < 2 ? btn('task', 'المهمة التالية ←', 'pri', `data-v="${S.cur + 1}"`) : btn('go', 'العودة إلى مهامي', 'pri', 'data-v="day2"')}</div></div>`;
+}
+function relayBox(kind) {
+  if (!S.relay || S.relay.kind !== kind) return '';
+  return `<div class="relay" id="relay"><b>🔁 النقل اليدوي</b><p>كلود غير متصل داخل هذه النسخة. انسخ الطلب، والصقه في محادثة جديدة على claude.ai، ثم ألصق رده كاملًا هنا.</p>
+  ${codeBox('relay-out', S.relay.prompt, 5)}<textarea id="relay-in" rows="5" placeholder="ألصق رد كلود هنا كما هو"></textarea>
+  <div class="row">${btn('relay-send', 'أدخل الرد', 'pri')}${btn('relay-cancel', 'إلغاء', 'ghost')}</div></div>`;
+}
+function vDay3() {
+  const t = T(); // المهمة الأولى كمرجع
+  const hasPack = t && t.passed && t.instr;
+
+  // ١. فكّ الأداة — الأركان الأربعة
+  const BREAK_PILLARS = [
+    { k: 'd3s0', n: 'السياق والخلفية',      q: 'هل يصف الركن دورك وجهتك والمشكلة الحقيقية بوضوح؟ هل المدخلات محددة؟' },
+    { k: 'd3s1', n: 'الطلب',                q: 'هل الطلب مجزّأ إلى بنود مرقّمة؟ هل كل بند قابل للتحقق؟' },
+    { k: 'd3s2', n: 'المعيار',              q: 'هل يمنع الخطأ المتكرر؟ هل يحدد الحد البشري (مسودة لا قرار)؟' },
+    { k: 'd3s3', n: 'شكل المنتج النهائي',   q: 'هل الصيغة واضحة؟ هل المستلم محدد؟ هل النبرة تناسبه؟' },
+  ];
+  const breakRows = BREAK_PILLARS.map(p => {
+    const done = S.tasks[0] && S.tasks[0].steps && S.tasks[0].steps[p.k];
+    return `<div class="d3-sec ${done ? 'done' : ''}">
+      <div class="d3-sec-h"><span class="d3-num">${done ? '✓' : ''}</span><b>${esc(p.n)}</b>
+      <button class="chipb sm" data-a="d3step" data-k="${p.k}">${done ? '✓ فهمت' : 'فهمت ✓'}</button></div>
+      <p class="d3-sec-q mut">${esc(p.q)}</p>
+      <textarea class="d3-note" data-a="d3note" data-k="${p.k}" rows="2" placeholder="ما الذي يقوله هذا الركن في تعليماتك؟ وهل هو دقيق كفاية؟">${esc((S.tasks[0] && S.tasks[0].d3notes && S.tasks[0].d3notes[p.k]) || '')}</textarea>
+    </div>`;
+  }).join('');
+
+  // ٢. البناء اليدوي — خريطة الأركان الأربعة
+  const rp2 = S.profile.rosterPick;
+  const r2 = rp2 && rp2 !== OTHER ? ROSTER.find(x => x.name === rp2) : null;
+  const roleTitle = r2 ? r2.title : roleName();
+  const roleOrg = r2 && r2.org ? r2.org : '';
+
+  const PILLARS = [
+    {
+      num: '١', name: 'السياق والخلفية', color: '#1e5799',
+      q: 'من أنا؟ أين أعمل؟ ما المهمة؟ وما المدخلات التي سأعطيك إياها؟',
+      why: 'بدونه يكتب كلود لشخص عام في جهة عامة ويخترع بيانات. هذا الركن يُخبره بالضبط من تكون وعلى ماذا سيعمل.',
+      ph: `مثال: أنا ${roleTitle}${roleOrg ? ' في ' + roleOrg : ''}. مهمتي هي [اسم المهمة]. المدخلات التي سأعطيك إياها: [ملف / جدول / نص…]`,
+      key: 'c1'
+    },
+    {
+      num: '٢', name: 'الطلب', color: '#2d6a4f',
+      q: 'ماذا أريد منك بالضبط؟ — مجزّأً إلى بنود مرقّمة',
+      why: 'البند المرقّم أوضح لكلود من فقرة طويلة، ويُسهّل عليك بعدها تعديل بند بعينه دون إعادة كل شيء.',
+      ph: 'مثال:\n١. استخرج من الملف المرفق…\n٢. رتّب النتائج حسب…\n٣. أضف عموداً يحسب…',
+      key: 'c2'
+    },
+    {
+      num: '٣', name: 'المعيار', color: '#6b3fa0',
+      q: 'ما الجودة المقبولة؟ وما الذي لا يُفعل؟ وكيف نختبر النتيجة؟',
+      why: 'هنا تمنع الخطأ المتكرر، وتحدد كيف يُختبر الناتج، وتحفظ الحد البشري: المخرج مسودة لا قرار نهائي.',
+      ph: 'مثال:\n- إن كانت قيمة الحقل غير مكتملة، ضع «يحتاج مراجعة» لا تخترع.\n- لا تُضف بيانات خارج ما أعطيتك.\n- المخرج مسودة تُعتمد مني.',
+      key: 'c3'
+    },
+    {
+      num: '٤', name: 'شكل المنتج النهائي', color: '#7a2e2e',
+      q: 'كيف يبدو الناتج؟ بأي صيغة ولغة ولمن يُرفع؟',
+      why: 'بدونه قد تحصل على ناتج صحيح المضمون لا يناسب طريقة استخدامك: جدول عريض على جوال، أو لغة لا تناسب من يستلمه.',
+      ph: 'مثال: جدول Excel بأعمدة [أ، ب، ج] · باللغة العربية · يُرفع لمديري المباشر · في نهاية كل مخرج: «مسودة — تُعتمد من صاحب الدور».',
+      key: 'c4'
+    }
+  ];
+
+  // Wizard — ركن واحد في كل مرة
+  const wStep = S.d3wStep || 0;
+  const p = PILLARS[wStep];
+  const val = S.d3manual && S.d3manual[p.key] || '';
+  const filled = val.trim().length > 15;
+  const allFilled = PILLARS.every(px => (S.d3manual && S.d3manual[px.key] || '').trim().length > 15);
+
+  // شريط التقدم
+  const progressDots = PILLARS.map((px, i) => {
+    const ok = (S.d3manual && S.d3manual[px.key] || '').trim().length > 15;
+    return `<span class="wdot ${i === wStep ? 'active' : ''} ${ok ? 'done' : ''}" style="--pc:${px.color}">${ok && i !== wStep ? '✓' : AR_D(i+1)}</span>`;
+  }).join('');
+
+  const MANUAL_SECTIONS = `
+    <div class="wizard-wrap">
+      <div class="wizard-progress">
+        ${progressDots}
+        <span class="wizard-label">الركن ${AR_D(wStep+1)} من ${AR_D(PILLARS.length)}</span>
+      </div>
+      <div class="wizard-card" style="--pc:${p.color}">
+        <div class="wizard-head" style="background:${p.color}">
+          <span class="wizard-num">${p.num}</span>
+          <div><b class="wizard-name">${esc(p.name)}</b><p class="wizard-q">${esc(p.q)}</p></div>
+        </div>
+        <div class="wizard-body">
+          <div class="d3-why"><b>لماذا هذا الركن؟</b> ${esc(p.why)}</div>
+          <textarea data-a="d3manual" data-k="${p.key}" rows="5" placeholder="${esc(p.ph)}">${esc(val)}</textarea>
+          <div class="wizard-nav">
+            ${wStep > 0 ? btn('d3-wback', '→ السابق', 'ghost') : '<span></span>'}
+            ${wStep < PILLARS.length - 1
+              ? btn('d3-wnext', `التالي: ${esc(PILLARS[wStep+1].name)} ←`, filled ? 'pri' : 'ghost')
+              : btn('d3-wdone', '✓ اكتملت الأركان — راجع برومبتك', allFilled ? 'pri' : 'ghost')}
+          </div>
+        </div>
+      </div>
+      ${allFilled ? `<div class="wizard-preview"><b>برومبتك كاملاً:</b><pre class="d3-prompt-preview">${PILLARS.map(px => `⟦${px.num}⟧ ${px.name}\n${esc(S.d3manual[px.key])}`).join('\n\n')}</pre></div>` : ''}
+    </div>`;
+
+  const checkList = '';
+
+  // ٣. كسر وإصلاح
+  const breakPanel = `<div class="d3-break">
+    <p class="mut">اختر مهمتك الأولى وأدخل عليها هذا الموقف: حالة استثنائية حقيقية لم تُصمَّم لها التعليمات. شغّل Claude وراقب أين يتعثر.</p>
+    <label>الاستثناء الذي ستختبره<textarea data-a="d3exc" rows="2" placeholder="مثال: وصل تقرير من إدارة X بأرقام مختلفة عن المصدر الأصلي…">${esc(S.d3exc || '')}</textarea></label>
+    <label>ماذا حدث؟ أين تعثّر Claude؟<textarea data-a="d3fail" rows="2" placeholder="صِف بدقة ما أنتجه Claude وأين كان الخطأ أو النقص…">${esc(S.d3fail || '')}</textarea></label>
+    <label>كيف أصلحت التعليمات؟<textarea data-a="d3fix" rows="2" placeholder="القسم الذي عدّلته، والإضافة التي أضفتها…">${esc(S.d3fix || '')}</textarea></label>
+    <div class="row">${btn('d3-break-done', '✓ سجّل الإصلاح في تعليماتي', S.d3fixDone ? 'ghost' : 'pri')}${S.d3fixDone ? '<span class="chip ok">✓ سُجّل</span>' : ''}</div>
+  </div>`;
+
+  // ٤. خطة 30 يوماً
+  const WEEKS = [
+    ['الأسبوع الأول','أول تشغيل حقيقي للأداة على بيانات فعلية'],
+    ['الأسبوع الثاني','راجع المخرج: هل احتاج تعديلاً في التعليمات؟'],
+    ['الأسبوع الثالث','شارك الأداة مع زميل واجمع ملاحظاته'],
+    ['الأسبوع الرابع','قس الوقت الفعلي الموفَّر وحدّث لوحة الأثر']
+  ];
+  const planRows = WEEKS.map(([w, desc], i) => {
+    const k = 'd3plan' + i;
+    const val = S.d3plan && S.d3plan[k] || '';
+    return `<div class="d3-plan-row"><div class="d3-plan-label"><b>${esc(w)}</b><small>${esc(desc)}</small></div>
+    <input type="text" data-a="d3plan" data-k="${k}" value="${esc(val)}" placeholder="التزامك المحدد…"></div>`;
+  }).join('');
+
+  return `<section><h2 class="sec">اليوم الثالث — من الأداة إلى المهارة</h2>
+
+  ${!hasPack ? `<div class="panel"><p class="tip warn">⚠️ أكمل بناء مهمتك الأولى في اليوم الثاني أولاً، ثم عد هنا.</p></div>` : ''}
+
+  <!-- المحطة الأولى: فكّ الأداة -->
+  <div class="panel"><h3>① فكّ الأداة — اشرح تعليماتك قسماً قسماً</h3>
+  <p class="mut">افتح تعليمات مهمتك الأولى وقرأ كل قسم بصوت عالٍ لزميلك — أو لنفسك. لكل قسم: ماذا يقول؟ ولماذا هو مهم؟ هل هو دقيق كفاية؟ من لا يستطيع الشرح لم يفهم البنية بعد.</p>
+  ${hasPack ? `<div class="d3-instr-ref"><b>تعليماتك — للمرجع:</b>${codeBox('d3ref', t.instr, 6)}</div>` : ''}
+  <div class="d3-secs">${breakRows}</div></div>
+
+  <!-- المحطة الثانية: البناء اليدوي -->
+  <div class="panel"><h3>② ابنِ أداة ثانية يدوياً</h3>
+  <p class="mut">اختر مهمتك الثانية من اليوم الثاني. الآن اكتب تعليماتها بيدك — قسماً قسماً — من إجاباتك في الاستنطاق. <b>لا تضغط «اكتبها بكلود»</b>. كلود يراجع فقط في النهاية.</p>
+  <div class="d3-manual">${MANUAL_SECTIONS}</div>
+  ${checkList}
+  <div class="row">${btn('d3-review-manual', '🔍 راجع كلود ما كتبته', allFilled ? 'pri' : 'ghost')}${btn('d3-save-manual', '💾 احفظ في مهمتي الثانية', 'ghost')}</div>
+  ${relayBox('d3review')}</div>
+
+  <!-- المحطة الثالثة: كسر وإصلاح -->
+  <div class="panel"><h3>③ كسر وإصلاح — استثناء حقيقي تُشخّصه بنفسك</h3>
+  ${breakPanel}</div>
+
+  <!-- الختام: خطة 30 يوماً -->
+  <div class="panel"><h3>④ خطة 30 يوماً — التزامك قبل المغادرة</h3>
+  <p class="mut">لا تغادر إلا بأربعة التزامات محددة. الغموض عدو الممارسة.</p>
+  <div class="d3-plan">${planRows}</div>
+  <div class="navrow"><span></span>${btn('d3-finish', '🎓 أنهيت اليوم الثالث — احفظ خطتي', 'pri')}</div>
+  ${S.d3done ? '<div class="pass">✓ أكملت البرنامج. خطتك محفوظة — وفّقك الله في تطبيقها.</div>' : ''}</div>
+
+  </section>`;
+}
+function vTrainer() {
+  if (!sessionTrainer) return `<section><div class="panel center narrow"><h3>🔐 لوحة المدرب</h3><input type="password" id="pin" inputmode="numeric" placeholder="الرمز">${btn('pin', 'دخول', 'pri')}</div></section>`;
+  const rows = progressRows;
+  return `<section><h2 class="sec">لوحة المدرب</h2><div class="grid3">
+  <div class="card"><b>عتبة ورشة التدقيق</b>${sel('thr', ['90', '95', '98', '99'], String(S.threshold))}<p class="mut">تُطبق على هذا الجهاز؛ وتُضبط افتراضيًا في نسخة المشاركين.</p></div>
+  <div class="card"><b>نمط الاتصال بكلود</b>${sel('mode', ['sample', 'bridge', 'manual'], AI.mode)}<p class="mut">sample: داخل المختبر بحساب المشارك · manual: نسخ ولصق.</p></div>
+  <div class="card"><b>تصفير بيانات هذا الجهاز</b>${btn('reset', 'صفّر', 'ghost')}</div></div>
+  <div class="panel"><h3>تقدم المشاركين</h3>${rows == null ? '<p class="mut">المتابعة الحية متاحة حين يعمل المختبر داخل Claude وتتاح قاعدة البيانات.</p>' : !rows.length ? '<p class="mut">لا بيانات بعد.</p>'
+   : `<table class="tbl"><thead><tr><th>المشارك</th><th>الدور</th><th>أدوات اليوم الأول</th><th>المهمة ١</th><th>المهمة ٢</th><th>المهمة ٣</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(r.nick || '—')}</td><td>${esc(r.role || '')}</td><td>${AR_D(r.d1 || 0)}/٤</td>${(r.tasks || []).map(x => `<td>${STAGES[(x.st || 1) - 1]}${x.sc >= 0 ? ' · ' + AR_D(x.sc) + '٪' : ''}${x.ok ? ' ✓' : ''}</td>`).join('')}</tr>`).join('')}</tbody></table>`}
+  ${btn('pin', '↻ تحديث', 'ghost')}</div></section>`;
+}
+
+/* ---------- الرسم والأحداث ---------- */
+function render() {
+  const r = route(); let v;
+  if (r === 'day1') v = vDay1(); else if (r === 'day2') v = vDay2(); else if (r === 'task') v = vTask(); else if (r === 'day3') v = vDay3(); else if (r === 'trainer') v = vTrainer(); else v = vHome();
+  const ae = document.activeElement; const keep = ae && ae.id && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT') ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd, v: ae.value } : null;
+  $('#app').innerHTML = header() + `<main>${v}</main>` + (S.busy ? `<div class="busy"><div class="spin"></div><p>${esc(S.busy)}</p></div>` : '') +
+    `<footer>ايفوري للتدريب والاستشارات · ivorytraining.com · <a href="#trainer">لوحة المدرب</a></footer><div id="toast"></div>`;
+  if (keep) { const n = document.getElementById(keep.id); if (n && !n.readOnly) { n.value = keep.v; n.focus(); try { n.setSelectionRange(keep.s, keep.e); } catch (e) {} } }
+  const cb = $('#chatbox'); if (cb) cb.scrollTop = cb.scrollHeight; const cp = $('#compbox'); if (cp) cp.scrollTop = cp.scrollHeight;
+}
+document.addEventListener('click', e => { const el = e.target.closest('[data-a]'); if (!el || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') return; e.preventDefault(); act(el.dataset.a, el); });
+document.addEventListener('change', e => { const el = e.target; if (el.tagName !== 'SELECT' || !el.dataset.a) return;
+  if (el.dataset.a === 'prof' && el.dataset.k === 'famn') { const f = FAMILIES.find(x => x.n === el.value); S.profile.fam = f ? f.k : ''; S.profile.title = ''; S.profile.titleOther = ''; save(); render(); return; }
+  if (el.dataset.a === 'tfield' && el.dataset.k === 'typen') { const x = TYPES.find(y => y.n === el.value); T().type = x ? x.k : ''; save(); render(); return; }
+  act(el.dataset.a, el); });
+document.addEventListener('input', e => { const el = e.target; if (!el.dataset || !el.dataset.a || el.tagName === 'SELECT') return; act(el.dataset.a, el); });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.target.id === 'reply') act('send', e.target); });
+window.addEventListener('hashchange', () => { render(); scrollTop(); });
+load(); render(); setTimeout(initPlatform, 0);
+
+</script></body></html>
