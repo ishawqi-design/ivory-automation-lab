@@ -1,0 +1,709 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>العرض — مهارة الأتمتة التشغيلية بالذكاء الاصطناعي — ايفوري</title>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>:root{--key:#7A2E2E;--key-deep:#5a1f1f;--key-soft:#f6ecea;--key-soft2:#e7cfca;--accent:#a8894e;
+--ink:#231c1a;--ink2:#3d3431;--ink3:#6b5f5a;--muted:#8c817b;--line:#e7dfd6;--line2:#ddd2c6;--white:#fff;--bg:#fbf8f4;
+--f-dis:'Almarai',Tahoma,sans-serif;--f-ar:'Almarai',Tahoma,sans-serif;--f-num:'Almarai',Tahoma,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#2a2321;overflow:hidden;font-family:var(--f-ar);direction:rtl}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--bg);padding:90px 120px 120px;display:none;overflow:hidden;color:var(--ink)}
+.slide.on{display:flex;flex-direction:column;justify-content:center}
+.slide.on>.hero,.slide.on>.ayah,.slide.on>.stcover{flex:1}
+.slide.dark{background:radial-gradient(circle at 30% 30%,#3a2523,#1d1515);color:#f3ece6}
+.arcs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.arcs i{position:absolute;border-radius:50%;border:2px solid var(--key-soft2);opacity:.55}
+.arcs i:nth-child(1){width:1100px;height:1100px;left:-520px;top:-560px}
+.arcs i:nth-child(2){width:760px;height:760px;right:-360px;bottom:-420px;border-color:#eadbc6}
+.arcs i:nth-child(3){width:420px;height:420px;right:-120px;bottom:-200px;border-color:var(--key-soft2)}
+.wm{position:absolute;left:70px;bottom:90px;font-size:300px;line-height:1;color:var(--key);opacity:.05;font-weight:800;pointer-events:none}
+.kicker{font-size:27px;font-weight:700;letter-spacing:.1em;color:var(--key)}
+.title{font-family:var(--f-dis);font-size:64px;font-weight:800;line-height:1.2;margin:8px 0 14px;color:var(--ink)}
+.lead{font-size:34px;line-height:1.6;color:var(--ink2);margin:0 0 26px;max-width:1500px}
+.lead b,.cs b{color:var(--key-deep)}
+.insight{font-size:31px;line-height:1.6;background:var(--key-soft);border-inline-start:8px solid var(--key);border-radius:14px;padding:18px 26px;color:var(--ink2)}
+.insight .rl{font-weight:800;color:var(--key);margin-inline-end:12px}
+.footnote{font-size:24px;color:var(--muted)}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.tag{font-size:26px;background:#fff;border:1.5px solid var(--line2);border-radius:40px;padding:8px 22px;color:var(--ink2)}
+/* hero */
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;gap:6px;position:relative}
+.hero .h-top{font-size:26px;font-weight:700;letter-spacing:.14em;color:var(--key-deep);margin-bottom:10px}
+.hero .h-big{font-family:var(--f-dis);font-size:132px;font-weight:800;line-height:1.08;letter-spacing:-.01em;color:var(--ink);margin:0}
+.hero .h-sm{font-family:var(--f-dis);font-size:54px;font-weight:700;line-height:1.3;color:var(--ink3);margin:4px 0 0}
+.hero .h-rule{width:120px;height:5px;border-radius:3px;background:var(--key);margin:26px 0 20px}
+.hero .h-lead{font-size:32px;line-height:1.55;color:var(--ink2);max-width:1180px;margin:0}
+.hero .h-lead b{color:var(--key-deep)}
+.hero .h-by{margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.hero .h-by .nm{font-family:var(--f-dis);font-size:38px;font-weight:800;color:var(--ink)}
+.hero .h-by .rl2{font-size:26px;color:var(--ink3)}
+.hero .h-org{margin-top:22px;font-size:24px;color:var(--muted);letter-spacing:.03em}
+/* ayah */
+.ayah{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;gap:24px;position:relative}
+.ayah .basm{font-size:44px;color:var(--key-deep);font-weight:700}
+.ayah .vs{font-size:62px;font-weight:700;line-height:1.85;color:var(--ink);max-width:1500px}
+.ayah .src{font-size:26px;color:var(--muted);letter-spacing:.05em}
+.ayah .ay-lead{font-size:31px;line-height:1.62;color:var(--ink2);max-width:1320px;margin:14px 0 0}
+.ayah .ay-lead b{color:var(--key-deep)}
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:8px}
+.rl-c{background:#fff;border:1.5px solid var(--line2);border-radius:20px;padding:26px 18px;text-align:center;box-shadow:0 6px 22px rgba(34,39,45,.07);position:relative;overflow:hidden}
+.rl-c::before{content:'';position:absolute;inset-inline:0;top:0;height:5px;background:var(--key)}
+.rl-c .ri{font-size:52px;line-height:1;margin-bottom:14px;display:block}
+.rl-c .rt{font-size:31px;font-weight:800;color:var(--ink);line-height:1.3}
+.rl-c .rs{font-size:26px;color:var(--ink3);margin-top:10px;line-height:1.5}
+/* station cover */
+.stcover{display:grid;grid-template-columns:1.12fr .88fr;align-items:center;height:100%;gap:60px;position:relative}
+.stcover .sc-l{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.stcover .sc-n{font-family:var(--f-num);font-size:150px;font-weight:800;line-height:.9;color:var(--key);opacity:.9}
+.stcover .sc-k{font-size:25px;font-weight:700;letter-spacing:.12em;color:var(--key-deep)}
+.stcover .sc-t{font-family:var(--f-dis);font-size:78px;font-weight:800;line-height:1.14;color:var(--ink);margin:6px 0 0}
+.stcover .sc-rule{width:110px;height:5px;border-radius:3px;background:var(--key);margin:22px 0 16px}
+.stcover .sc-q{font-size:33px;line-height:1.55;color:var(--ink2);max-width:860px;margin:0}
+.stcover .sc-q b{color:var(--key-deep)}
+.stcover .sc-tool{margin-top:24px;display:inline-flex;align-items:center;gap:12px;font-size:27px;font-weight:700;background:var(--key-soft);border:2px solid var(--key-soft2);color:var(--key-deep);border-radius:16px;padding:14px 24px}
+.stcover .sc-r{display:flex;align-items:center;justify-content:center}
+/* figures */
+.figwrap{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+.fig{display:flex;align-items:center;justify-content:center;width:100%}
+.fig svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(34,39,45,.14))}
+.fig.s{max-width:230px}.fig.m{max-width:340px}.fig.l{max-width:470px}.fig.xl{max-width:560px}
+.figwrap .fcap{font-size:26px;color:var(--ink3);font-weight:700;text-align:center;line-height:1.45;max-width:520px}
+/* cards */
+.grid{display:grid;gap:22px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+.card{background:#fff;border:1.5px solid var(--line2);border-radius:20px;padding:26px 28px;box-shadow:0 6px 22px rgba(34,39,45,.06);position:relative}
+.card .ci{font-size:46px;line-height:1;display:block;margin-bottom:10px}
+.card .ct{font-size:34px;font-weight:800;color:var(--ink);line-height:1.3}
+.card .cs{font-size:29px;color:var(--ink3);line-height:1.5;margin-top:8px}
+.card.k{border-top:6px solid var(--key)}
+.card .cn{position:absolute;left:22px;top:18px;font-size:30px;font-weight:800;color:var(--key);opacity:.5}
+.split{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:center}
+.steps{display:flex;flex-direction:column;gap:14px}
+.step{display:flex;gap:20px;align-items:center;background:#fff;border:1.5px solid var(--line2);border-radius:16px;padding:16px 22px;font-size:29px;line-height:1.45;color:var(--ink2)}
+.step i{font-style:normal;flex:0 0 54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--key);color:#fff;font-weight:800;font-size:27px}
+.step b{color:var(--ink)}
+/* journey map */
+.jmap{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:6px}
+.jm-day{background:#fff;border:1.5px solid var(--line2);border-radius:22px;padding:22px 24px;box-shadow:0 6px 22px rgba(34,39,45,.06)}
+.jm-day.muted{opacity:.55}
+.jm-h{font-size:34px;font-weight:800;color:var(--key);border-bottom:3px solid var(--key-soft2);padding-bottom:8px;margin-bottom:10px}
+.jm-h small{display:block;font-size:26px;color:var(--ink3);font-weight:700}
+.jm-st{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line);font-size:28px;line-height:1.35}
+.jm-st i{font-style:normal;flex:0 0 42px;height:42px;border-radius:50%;background:var(--key-soft);color:var(--key-deep);display:grid;place-items:center;font-weight:800;font-size:24px}
+.jm-st span{display:block;font-size:24px;color:var(--muted)}
+/* ladder / gauge */
+.ladder{display:flex;align-items:flex-end;gap:18px;height:520px}
+.ladder .lv{flex:1;background:#fff;border:1.5px solid var(--line2);border-radius:18px 18px 8px 8px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;border-top:8px solid var(--key)}
+.ladder .lv b{font-size:54px;color:var(--key);line-height:1}.ladder .lv p{font-size:28px;margin:8px 0 0;line-height:1.35;color:var(--ink2);font-weight:700}
+.qrbox{background:#fff;border-radius:26px;padding:26px;box-shadow:0 10px 36px rgba(34,39,45,.12);width:420px}
+.qrbox svg{width:100%;height:auto}
+.url{font-size:34px;font-weight:800;direction:ltr;color:var(--key-deep);margin-top:14px;text-align:center}
+video.film{width:1500px;max-width:100%;aspect-ratio:16/9;border-radius:22px;background:#0b1530;box-shadow:0 20px 50px rgba(0,0,0,.25);display:block;margin:0 auto}
+/* reveal */
+.frag{opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s}
+.frag.in{opacity:1;transform:none}
+/* HUD */
+#hud{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(251,248,244,.94);border-top:1px solid var(--line);font-size:14px;color:var(--ink3);z-index:150}
+.navb{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:#fff;color:var(--ink2);font-size:16px;cursor:pointer;flex:none;font-family:var(--f-ar)}
+.navb:hover{background:var(--key-soft);border-color:var(--key-soft2);color:var(--key-deep)}
+.hn{font-weight:800;color:var(--key-deep);direction:ltr}
+#hudU{font-weight:700}
+#tools{position:fixed;inset-inline-end:14px;bottom:60px;display:flex;flex-direction:column;gap:6px;z-index:140;opacity:.42;transition:opacity .25s}
+#tools:hover{opacity:1}
+.tbtn{padding:6px 8px;font-size:13px;border-radius:9px;background:rgba(255,255,255,.85);border:1px solid rgba(226,217,205,.8);box-shadow:0 2px 7px rgba(34,39,45,.08);line-height:1;cursor:pointer;font-family:var(--f-ar)}
+#guide{position:fixed;top:0;bottom:46px;inset-inline-start:0;width:520px;max-width:92vw;background:#fffdf9;border-inline-end:1px solid var(--line);box-shadow:8px 0 30px rgba(0,0,0,.15);z-index:160;overflow:auto;padding:18px 20px;font-size:15px;line-height:1.75;color:var(--ink2);display:none}
+#guide.on{display:block}#guide h3{color:var(--key);margin:0 0 4px;font-size:19px}#guide h4{color:var(--key-deep);margin:14px 0 4px;font-size:15px}#guide ul{margin:0;padding-inline-start:18px}
+#guide .meta{font-size:13px;color:var(--muted)}#guide .x{float:left;cursor:pointer;border:0;background:none;font-size:20px}
+#idx{position:fixed;inset:0 0 46px;background:rgba(35,28,26,.92);z-index:170;overflow:auto;padding:30px;display:none;color:#fff}
+#idx.on{display:block}#idx h3{color:#e7cfca;margin:18px 0 8px}#idx a{display:inline-block;color:#fff;background:rgba(255,255,255,.08);border-radius:8px;padding:6px 10px;margin:3px;text-decoration:none;font-size:14px;cursor:pointer}
+</style></head><body>
+<div id="stage"><div id="deck"></div></div>
+<div id="tools"><button class="tbtn" onclick="toggleIdx()">☰ الفهرس</button><button class="tbtn" onclick="toggleGuide()">📘 دليل المدرب</button><button class="tbtn" onclick="fs()">⛶ ملء الشاشة</button></div>
+<div id="guide"></div><div id="idx"></div>
+<div id="hud"><button class="navb" onclick="prev()" title="السابقة">▶</button><button class="navb" onclick="next()" title="التالية">◀</button>
+<span class="hn"><span id="hudN">1</span> / <span id="hudT">1</span></span><span id="hudU"></span>
+<span style="margin-inline-start:auto">د. إبراهيم شوقي · ايفوري للتدريب والاستشارات × منصة طموح</span></div>
+<script>'use strict';
+const META = [], TG = {}, ERR = [], SLIDES = [];
+const ARCS = '<div class="arcs"><i></i><i></i><i></i></div>';
+const WM = n => `<div class="wm">${n}</div>`;
+const K = '#7A2E2E', KS = '#e7cfca', A = '#a8894e';
+const ART = {
+  compass: `<svg viewBox="0 0 400 400"><circle cx="200" cy="200" r="160" fill="#fff" stroke="${K}" stroke-width="10"/><circle cx="200" cy="200" r="120" fill="none" stroke="${KS}" stroke-width="4" stroke-dasharray="6 10"/><path d="M200 70 L232 200 L200 330 L168 200Z" fill="${K}" opacity=".9"/><path d="M200 70 L232 200 L168 200Z" fill="${A}"/><circle cx="200" cy="200" r="14" fill="#fff" stroke="${K}" stroke-width="6"/></svg>`,
+  people: `<svg viewBox="0 0 400 400"><circle cx="200" cy="140" r="56" fill="#fff" stroke="${K}" stroke-width="10"/><path d="M100 330c0-60 45-100 100-100s100 40 100 100" fill="#fff" stroke="${K}" stroke-width="10"/><circle cx="90" cy="180" r="36" fill="${KS}"/><circle cx="310" cy="180" r="36" fill="${KS}"/><path d="M30 320c0-40 28-66 60-66M370 320c0-40-28-66-60-66" fill="none" stroke="${A}" stroke-width="8" stroke-linecap="round"/></svg>`,
+  film: `<svg viewBox="0 0 400 400"><rect x="40" y="90" width="320" height="220" rx="28" fill="#fff" stroke="${K}" stroke-width="10"/><path d="M175 150 L265 200 L175 250Z" fill="${K}"/><g fill="${KS}"><rect x="60" y="108" width="22" height="22" rx="5"/><rect x="60" y="270" width="22" height="22" rx="5"/><rect x="318" y="108" width="22" height="22" rx="5"/><rect x="318" y="270" width="22" height="22" rx="5"/></g><path d="M120 340h160" stroke="${A}" stroke-width="8" stroke-linecap="round"/></svg>`,
+  spark: `<svg viewBox="0 0 400 400"><g stroke="${K}" stroke-width="22" stroke-linecap="round">${[0,30,60,90,120,150].map(a=>`<line x1="200" y1="60" x2="200" y2="340" transform="rotate(${a} 200 200)"/>`).join('')}</g><circle cx="200" cy="200" r="38" fill="#fff" stroke="${A}" stroke-width="8"/></svg>`,
+  tools: `<svg viewBox="0 0 400 400"><rect x="60" y="60" width="130" height="130" rx="26" fill="#fff" stroke="${K}" stroke-width="10"/><rect x="210" y="60" width="130" height="130" rx="26" fill="${KS}"/><rect x="60" y="210" width="130" height="130" rx="26" fill="${KS}"/><rect x="210" y="210" width="130" height="130" rx="26" fill="#fff" stroke="${K}" stroke-width="10"/><circle cx="125" cy="125" r="26" fill="${A}"/><path d="M245 275h60M275 245v60" stroke="${K}" stroke-width="12" stroke-linecap="round"/></svg>`,
+  tasks: `<svg viewBox="0 0 400 400"><rect x="80" y="50" width="240" height="300" rx="26" fill="#fff" stroke="${K}" stroke-width="10"/>${[0,1,2].map(i=>`<rect x="115" y="${105+i*75}" width="34" height="34" rx="8" fill="${i<2?K:'#fff'}" stroke="${K}" stroke-width="6"/><path d="M170 ${122+i*75}h110" stroke="${i<2?KS:A}" stroke-width="12" stroke-linecap="round"/>`).join('')}</svg>`,
+  lens: `<svg viewBox="0 0 400 400"><circle cx="170" cy="170" r="110" fill="#fff" stroke="${K}" stroke-width="12"/><path d="M250 250 L350 350" stroke="${K}" stroke-width="30" stroke-linecap="round"/><path d="M110 170h120M110 135h80M110 205h100" stroke="${KS}" stroke-width="12" stroke-linecap="round"/><circle cx="230" cy="130" r="12" fill="${A}"/></svg>`,
+  gauge: `<svg viewBox="0 0 400 400"><path d="M60 270 A140 140 0 0 1 340 270" fill="none" stroke="${KS}" stroke-width="34" stroke-linecap="round"/><path d="M60 270 A140 140 0 0 1 318 190" fill="none" stroke="${K}" stroke-width="34" stroke-linecap="round"/><path d="M200 270 L300 175" stroke="${A}" stroke-width="12" stroke-linecap="round"/><circle cx="200" cy="270" r="18" fill="${K}"/><text x="200" y="350" text-anchor="middle" font-size="54" font-weight="800" fill="${K}" font-family="Almarai">95%</text></svg>`,
+  pack: `<svg viewBox="0 0 400 400"><path d="M200 50 L340 120 L340 280 L200 350 L60 280 L60 120Z" fill="#fff" stroke="${K}" stroke-width="10" stroke-linejoin="round"/><path d="M60 120 L200 190 L340 120M200 190V350" fill="none" stroke="${K}" stroke-width="10" stroke-linejoin="round"/><path d="M130 85 L270 155" stroke="${A}" stroke-width="12"/></svg>`,
+  clock: `<svg viewBox="0 0 400 400"><circle cx="200" cy="210" r="140" fill="#fff" stroke="${K}" stroke-width="10"/><path d="M200 210V120M200 210l70 40" stroke="${K}" stroke-width="14" stroke-linecap="round"/><path d="M160 50h80" stroke="${A}" stroke-width="16" stroke-linecap="round"/><circle cx="200" cy="210" r="12" fill="${A}"/></svg>`,
+  flag: `<svg viewBox="0 0 400 400"><path d="M110 360V50" stroke="${K}" stroke-width="14" stroke-linecap="round"/><path d="M118 60h180l-40 60 40 60H118Z" fill="${K}"/><circle cx="110" cy="360" r="20" fill="${A}"/></svg>`
+};
+const FIG = (key, cap, size = 'l') => `<div class="figwrap"><div class="fig ${size}">${ART[key] || ''}</div>${cap ? `<div class="fcap">${cap}</div>` : ''}</div>`;
+const FRAG_SEL = '.anim,.card,.rl-c,.step,.jm-day,.lv';
+function add(unit, title, html) {
+  if (META.some(m => m.unit === unit && m.title === title)) ERR.push('dup:' + title);
+  META.push({ unit, title }); SLIDES.push(html);
+}
+function G(title, o) { if (TG[title]) ERR.push('dupG:' + title); TG[title] = o; }
+const sKey = i => META[i].unit + '|' + META[i].title;
+let cur = 0, frags = [], fi = 0;
+function build() {
+  const deck = document.getElementById('deck');
+  deck.innerHTML = SLIDES.join('');
+  const ss = deck.querySelectorAll('.slide');
+  if (ss.length !== META.length) ERR.push('count');
+  META.forEach((m, i) => {
+    if (!TG[m.title]) ERR.push('noGuide:' + m.title);
+    else if (i > 0 && TG[META[i - 1].title]) { const g = TG[m.title], p = TG[META[i - 1].title]; g.arc = g.arc || {}; if (!g.arc.w) g.arc.w = p.arc && p.arc.s; if (g.arc.w !== (p.arc && p.arc.s)) ERR.push('chain:' + m.title); }
+  });
+  ss.forEach(s => { const w = document.createTreeWalker(s, NodeFilter.SHOW_TEXT); const ns = []; while (w.nextNode()) if (/\d+%/.test(w.currentNode.nodeValue)) ns.push(w.currentNode);
+    ns.forEach(n => { const sp = document.createElement('span'); sp.innerHTML = n.nodeValue.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/(\d+%)/g, '<span dir="ltr">$1</span>'); n.replaceWith(...sp.childNodes); }); });
+  ss.forEach(s => { if (s.dataset.immediate !== '1') s.querySelectorAll(FRAG_SEL).forEach(e => e.classList.add('frag')); });
+  document.getElementById('hudT').textContent = META.length;
+  const ix = document.getElementById('idx'); let lu = '';
+  ix.innerHTML = META.map((m, i) => (m.unit !== lu ? `<h3>${(lu = m.unit)}</h3>` : '') + `<a data-go="${i}">${i + 1}. ${m.title}</a>`).join('');
+  ix.onclick = e => { const a = e.target.closest('[data-go]'); if (a) { show(+a.dataset.go); ix.classList.remove('on'); } };
+  fit(); window.addEventListener('resize', fit);
+  const h = parseInt((location.hash || '').slice(1)); show(isNaN(h) ? 0 : Math.max(0, Math.min(META.length - 1, h - 1)));
+}
+function fit() { const s = Math.min(innerWidth / 1920, (innerHeight - 46) / 1080); const d = document.getElementById('deck'); d.style.transform = `scale(${s})`; document.getElementById('stage').style.bottom = '46px'; }
+function show(n) {
+  const ss = document.querySelectorAll('.slide'); ss.forEach(s => s.classList.remove('on'));
+  cur = Math.max(0, Math.min(ss.length - 1, n)); const s = ss[cur]; s.classList.add('on');
+  frags = [...s.querySelectorAll('.frag')]; frags.forEach(f => f.classList.remove('in')); fi = 0;
+  document.getElementById('hudN').textContent = cur + 1; document.getElementById('hudU').textContent = META[cur].unit;
+  try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) {}
+  s.querySelectorAll('video').forEach(v => {}); document.querySelectorAll('.slide:not(.on) video').forEach(v => { try { v.pause(); } catch (e) {} });
+  renderGuide();
+}
+function revealAll(s) { (s || document.querySelector('.slide.on')).querySelectorAll('.frag').forEach(f => f.classList.add('in')); fi = frags.length; }
+function next() { if (fi < frags.length) { frags[fi++].classList.add('in'); } else if (cur < META.length - 1) show(cur + 1); }
+function prev() { if (cur > 0) { show(cur - 1); revealAll(); } }
+function renderGuide() {
+  const g = TG[META[cur].title] || {}, a = g.arc || {}; const L = x => (x || []).map(i => `<li>${i}</li>`).join('');
+  document.getElementById('guide').innerHTML = `<button class="x" onclick="toggleGuide()">×</button><h3>${cur + 1}. ${META[cur].title}</h3><div class="meta">${g.role || ''} · ${g.t || ''}</div>
+  <h4>لماذا هذه الشريحة</h4><p>${g.why || ''}</p><h4>قوس الحلقة</h4><ul><li><b>وارث:</b> ${a.w || '—'}</li><li><b>جواب:</b> ${a.a || ''}</li><li><b>بذرة:</b> ${a.s || ''}</li><li><b>وصلة:</b> ${a.l || ''}</li></ul>
+  <h4>الشرح المعمّق</h4><p>${g.deep || ''}</p><h4>السند المنهجي</h4><ul>${L(g.base)}</ul><h4>ماذا أقول</h4><ul>${L(g.say)}</ul><h4>كيف أدير</h4><ul>${L(g.run)}</ul><h4>تحذيرات وماذا لو</h4><ul>${L(g.warn)}</ul><h4>سؤال التحقق</h4><p>${g.check || ''}</p>`;
+}
+function toggleGuide() { document.getElementById('guide').classList.toggle('on'); }
+function toggleIdx() { document.getElementById('idx').classList.toggle('on'); }
+function fs() { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (e) {} }
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'VIDEO') return;
+  if (['ArrowLeft', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); next(); }
+  else if (['ArrowRight', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+  else if (e.key === 'g') toggleGuide(); else if (e.key === 'i') toggleIdx(); else if (e.key === 'f') fs();
+});
+
+/* ===== محتوى العرض — مهارة الأتمتة التشغيلية بالذكاء الاصطناعي ===== */
+const U0 = 'الافتتاح', U1 = 'اليوم الأول — التعارف والانطلاقة', U2 = 'اليوم الثاني — من المهمة إلى الحزمة';
+const LAB_URL = 'https://ivory-automation-lab.pages.dev';
+const gd = (title, o) => G(title, { t: o.t, role: o.role, why: o.why, arc: { a: o.a, s: o.s, l: o.l }, deep: o.deep, base: o.base, say: o.say, run: o.run, warn: o.warn, check: o.check });
+const cover = (n, k, t, q, qb, tool, from, to, fig, cap) => `<section class="slide" data-immediate="1">${ARCS}<div class="stcover"><div class="sc-l">
+ <div class="sc-n">${n}</div><div class="sc-k">${k}</div><h2 class="sc-t">${t}</h2><div class="sc-rule"></div>
+ <p class="sc-q">${q} <b>${qb}</b></p><div class="sc-tool">🗺 ${tool}</div>
+ <p class="sc-q" style="font-size:28px;margin-top:20px;color:var(--ink3)">القيمة: من «${from}» إلى <b>${to}</b>.</p></div>
+ <div class="sc-r">${FIG(fig, cap, 'l')}</div></div></section>`;
+const cards = (cls, arr) => `<div class="grid ${cls}">${arr.map((c, i) => `<div class="card k">${c[0] ? `<span class="ci">${c[0]}</span>` : `<span class="cn">${i + 1}</span>`}<div class="ct">${c[1]}</div><div class="cs">${c[2]}</div></div>`).join('')}</div>`;
+const head = (k, t, l) => `<div class="kicker anim">${k}</div><h2 class="title anim">${t}</h2>${l ? `<p class="lead anim">${l}</p>` : ''}`;
+
+/* ================= الافتتاح ================= */
+add(U0, 'الغلاف', `<section class="slide" data-immediate="1">${ARCS}<div class="hero">
+ <div class="fig s" style="max-width:90px;margin-bottom:8px">${ART.spark}</div>
+ <div class="h-top">ايفوري للتدريب والاستشارات × منصة طموح</div>
+ <h1 class="h-big">الأتمتة التشغيلية</h1>
+ <div class="h-sm">بالذكاء الاصطناعي — من مهمةٍ تستنزفك إلى حزمةٍ تعمل في حسابك</div>
+ <div class="h-rule"></div>
+ <p class="h-lead">ثلاثة أيام تكتب فيها مهامك بيدك، وتصقل تعليماتها مع Claude حتى تبلغ <b>المستوى الاحترافي</b>، ثم تشغّلها في عملك.</p>
+ <div class="row" style="margin-top:22px;justify-content:center"><span class="tag">🗓 ثلاثة أيام</span><span class="tag">💻 كلٌّ على جهازه</span><span class="tag">✳ Claude</span><span class="tag">📦 ثلاث حزم أتمتة</span></div>
+ <div class="h-by"><div class="nm">د. إبراهيم شوقي</div><div class="rl2">خبير تدريب ومستشار التطوير المؤسسي</div></div>
+ <div class="h-org">الرياض · 2026</div></div></section>`);
+gd('الغلاف', { t: 'دقيقتان', role: 'افتتاح · تأطير', why: 'الغلاف يعلن الوعد كله في سطر: المشارك سيخرج بحزم أتمتة تعمل في حسابه، لا بمعرفة نظرية عن الذكاء الاصطناعي. الجمهور مختلط من جهات متعددة، ففيه رئيس تنفيذي ومدير موارد بشرية ومحاسب، والوعد يجب أن يخاطبهم جميعًا.',
+  a: 'إعلان الوعد: حزمة أتمتة لمهامك أنت', s: 'قبل أن نبدأ العمل، نبدأ بما يحكم كل عمل', l: 'قبل أن نفتح الأجهزة… لنبدأ بأقصر سورة جمعت شروط النجاح.',
+  deep: 'اقرأ العنوان كما هو: «الأتمتة التشغيلية» هي الموضوع، و«من مهمة تستنزفك إلى حزمة تعمل في حسابك» هي التخصيص. أشر إلى أن كل مشارك سيعمل على جهازه وبمهامه هو، وأن لا أحد سيرى مهام غيره؛ هذه الجملة تطمئن أصحاب المناصب الحساسة من البداية. مثال ميداني افتراضي: مدير موارد بشرية في شركة تجارية متوسطة يقضي يومين كل شهر في جمع أرقام الغياب والدوران من ثلاثة ملفات وكتابة تقرير للإدارة؛ في نهاية اليوم الثاني سيملك حزمة تجهّز هذا التقرير في دقائق ويبقى هو من يعتمده. لا تشرح الأدوات هنا، ولا تذكر المدد والاستراحات. وفي هذه اللحظة قل شفهيًا مرة واحدة إن الأمثلة في العرض افتراضية للتدريب، وإن بيانات كل مشارك الحقيقية تبقى عنده.',
+  base: ['مبدأ «الوعد أولًا» في تصميم تجربة المتعلم البالغ (نولز: البالغ يتعلم حين يرى العائد المباشر على عمله)'],
+  say: ['ثلاثة أيام، ومهامك أنت، وجهازك أنت.', 'ستخرج بحزم تعمل في حسابك، لا بملاحظات.', 'Claude يجهّز… وأنت تعتمد.'],
+  run: ['اعرض الغلاف أثناء دخول المشاركين.', 'رحّب بالأسماء دون تقديم ذاتي طويل.', 'انتقل إلى سورة العصر بهدوء.'],
+  warn: ['لا تبدأ بشرح ما هو الذكاء الاصطناعي؛ يفقد الوعد قوته.', 'إن تأخر بعض المشاركين فابدأ دون انتظار، وسيلحقون في التعارف.'],
+  check: 'هل يستطيع أي مشارك أن يقول ماذا سيحمل معه في نهاية البرنامج؟' });
+
+add(U0, 'تمهيد — سورة العصر', `<section class="slide" data-immediate="1">${ARCS}${WM('﴿')}<div class="ayah">
+ <div class="basm">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+ <div class="vs">وَالْعَصْرِ ﴿١﴾ إِنَّ الْإِنسَانَ لَفِي خُسْرٍ ﴿٢﴾<br>إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ ﴿٣﴾</div>
+ <div class="src">سورة العصر</div>
+ <p class="ay-lead">سورةٌ أقسم الله فيها بالوقت، وجعل النجاة في أربع: <b>إيمانٌ، وعملٌ صالح، وتواصٍ بالحق، وتواصٍ بالصبر</b> — وهذه بعينها أتمتتُكم: أن تحفظ وقتك لما هو أصلح، وأن تقول الحقّ في كل رقمٍ تعتمده ولو أعدّته الآلة، وأن تصبر على تدقيق تعليماتك حتى تبلغ تمامها.</p></div></section>`);
+gd('تمهيد — سورة العصر', { t: 'دقيقتان', role: 'تمهيد · لحظة صمت', why: 'أول لحظة صمت مقصودة في اليوم. البرنامج كله عن الوقت، والسورة تبدأ بالقسم بالعصر أي الزمن؛ فالربط طبيعي غير متكلف، ويمنح القاعة سكينة قبل جهد تقني طويل.',
+  a: 'الوقت أثمن ما نملك، والأتمتة طريقة لحفظه', s: 'شروط النجاة في السورة تقابلها قواعد القاعة', l: 'وكما جعلت السورة للنجاة شروطًا… نجعل لقاعتنا خمس قواعد.',
+  deep: 'اقرأ السورة بصوت هادئ ثم اصمت ثلاث ثوانٍ. بعدها اقرأ سطر الربط: البرنامج لا يعدكم بتوفير الوقت فقط، بل بتوجيهه إلى ما هو أصلح. «تواصوا بالحق» هنا تعني أن الرقم الذي تعتمده مسؤوليتك ولو أعدّه Claude؛ وهذا أساس قاعدة «Claude يجهّز وأنت تعتمد» التي ستتكرر. و«تواصوا بالصبر» تعني الصبر على ورشة التدقيق في اليوم الثاني؛ فأفضل التعليمات لا تولد في المحاولة الأولى. مثال افتراضي: محاسب في شركة مقاولات يعتمد تقرير مطابقة أعدّه Claude دون مراجعة، فيمرّ فرق بنكي بلا تفسير؛ هذا خلاف «تواصوا بالحق». لا تُطل الوعظ؛ دقيقتان تكفيان.',
+  base: ['سورة العصر', 'مبدأ المسؤولية البشرية عن مخرجات الذكاء الاصطناعي (Human-in-the-loop)'],
+  say: ['أقسم الله بالوقت… وبرنامجنا كله عن الوقت.', 'الرقم الذي تعتمده مسؤوليتك ولو أعدّته الآلة.', 'التعليمات الممتازة تحتاج صبرًا على التدقيق.'],
+  run: ['اقرأ ببطء ودون موسيقى.', 'اصمت ثلاث ثوانٍ بعد القراءة.', 'لا تفتح نقاشًا هنا.'],
+  warn: ['تجنّب تحويل الشريحة إلى موعظة طويلة.', 'إن كان في القاعة غير مسلمين فقدّمها بوصفها حكمة عن الوقت والعمل.'],
+  check: 'هل خرج المشاركون بمعنى «الرقم مسؤوليتي ولو أعدّته الآلة»؟' });
+
+add(U0, 'القواعد الحاكمة للقاعة', `<section class="slide">${WM('✦')}
+ ${head('ميثاقنا · قبل أن نبدأ', 'خمس قواعد… بها تصير القاعة ورشةً لا مدرّجًا', 'لا نُقرّها بالتصفيق — نُقرّها بالالتزام بها من أول دقيقة إلى آخرها.')}
+ <div class="rules">
+ <div class="rl-c"><span class="ri">🫗</span><div class="rt">تجرّد للتعلّم</div><div class="rs">خبرتك رصيد، لكنها ليست سقفًا لما تستطيعه الأداة.</div></div>
+ <div class="rl-c"><span class="ri">👂</span><div class="rt">أنصت باهتمام</div><div class="rs">أنصت لأسئلة Claude كما تنصت لزميل؛ فيها نصف الحل.</div></div>
+ <div class="rl-c"><span class="ri">✋</span><div class="rt">شارك بفاعلية</div><div class="rs">ما يبقى معك هو ما جرّبته بيدك على جهازك.</div></div>
+ <div class="rl-c"><span class="ri">🙂</span><div class="rt">ابتسامتك مرآتك</div><div class="rs">اشرح مهمتك لClaude بهدوء ووضوح… يعود إليك بالوضوح نفسه.</div></div>
+ <div class="rl-c"><span class="ri">🤝</span><div class="rt">انقل ما تعلّمته</div><div class="rs">علّم زميلك أداةً واحدة في أول أسبوع.</div></div></div>
+ <div class="insight anim" style="margin-top:26px"><span class="rl">وقاعدةٌ إجرائية</span>الجهاز هنا أداة عمل لا نافذة هروب، وبيانات جهتك الحساسة لا تُرفع كما هي أبدًا.</div></section>`);
+gd('القواعد الحاكمة للقاعة', { t: '3 دقائق', role: 'افتتاح · عقد القاعة', why: 'جمهور مختلط المستويات من جهات متعددة؛ القواعد تضع الجميع على أرضية واحدة، وتضيف من البداية قاعدة البيانات الحساسة لأن المشاركين سيرفعون ملفات من عملهم.',
+  a: 'خمس قواعد سلوكية وقاعدة إجرائية للبيانات', s: 'بعد العقد… نرى الطريق كله قبل أن نسلكه', l: 'اتفقنا على كيف نعمل… فلنرَ إلى أين نذهب.',
+  deep: 'اكشف البطاقات واحدة واحدة، واطلب من مشارك مختلف قراءة كل بطاقة. توقف عند «أنصت باهتمام»: في هذا البرنامج الإنصات ليس للمدرب فقط بل لأسئلة Claude؛ في اليوم الثاني سيسألكم المدقق عن أضعف نقطة في تعليماتكم، ومن يتجاوز السؤال يبقى في الدرجة نفسها. وعند «ابتسامتك مرآتك» اربطها بالنبرة: من يكتب لClaude بغضب وغموض يحصل على رد غامض. ثم اقرأ القاعدة الإجرائية: مثال افتراضي لأخصائي امتثال في مستشفى يريد تحليل ملف المخالفات؛ يستبدل أسماء الموظفين وأرقام الهويات برموز (م1، م2) قبل الرفع. هذه القاعدة غير قابلة للنقاش.',
+  base: ['عقد التعلم (Learning Contract) — نولز', 'مبدأ تقليل البيانات (Data Minimization) في نظام حماية البيانات الشخصية السعودي'],
+  say: ['القاعة ورشة لا مدرّج.', 'أسئلة Claude نصف الحل.', 'لا ملف حساس يُرفع كما هو.'],
+  run: ['اكشف بطاقة بكل نقرة.', 'اطلب قراءة كل بطاقة من مشارك مختلف.', 'اختم بالقاعدة الإجرائية وانتظر إيماءة موافقة.'],
+  warn: ['لا تجعلها محاضرة عن السلوك.', 'إن سأل أحد عن جواز رفع ملفات العمل، فأجب: بعد الإخفاء فقط وبما تسمح به سياسة جهتك.'],
+  check: 'هل يعرف كل مشارك ما الذي يجب إخفاؤه قبل رفع أي ملف؟' });
+
+add(U0, 'خريطة البرنامج', `<section class="slide">${WM('⌁')}
+ ${head('خريطة الرحلة', 'من مهمةٍ في رأسك… إلى حزمةٍ تعمل في حسابك', '')}
+ <div class="jmap">
+ <div class="jm-day"><div class="jm-h">اليوم الأول<small>التعارف والانطلاقة</small></div>
+  <div class="jm-st"><i>1</i><div>التعارف<span>ما المهمة التي تسرق أسبوعك؟</span></div></div>
+  <div class="jm-st"><i>2</i><div>الفيلم الافتتاحي<span>ماذا يبقى للإنسان؟</span></div></div>
+  <div class="jm-st"><i>3</i><div>تعرّف على Claude<span>لماذا يجيبك إجابة عامة؟</span></div></div>
+  <div class="jm-st"><i>4</i><div>الأدوات الأربع<span>أي أداة تختصر ساعتك الأولى؟</span></div></div>
+  <div class="jm-st"><i>5</i><div>انطلاقة المهام<span>ما مهامك الثلاث؟</span></div></div></div>
+ <div class="jm-day"><div class="jm-h">اليوم الثاني<small>من المهمة إلى الحزمة</small></div>
+  <div class="jm-st"><i>6</i><div>استنطاق المهمة<span>هل تعرف مهمتك كما تجري فعلًا؟</span></div></div>
+  <div class="jm-st"><i>7</i><div>ورشة التدقيق<span>متى تعمل تعليماتك من دونك؟</span></div></div>
+  <div class="jm-st"><i>8</i><div>الحزمة والقياس<span>هل تعمل في حسابك ببياناتك؟</span></div></div></div>
+ <div class="jm-day muted"><div class="jm-h">اليوم الثالث<small>يُعلن في حينه</small></div>
+  <div class="jm-st"><i>9</i><div>من الحزمة إلى الأثر<span>يكتمل تصميمه مع تقدّمكم</span></div></div></div></div></section>`);
+gd('خريطة البرنامج', { t: '3 دقائق', role: 'افتتاح · خريطة', why: 'المشارك القلق من التقنية يطمئن حين يرى الطريق كاملًا؛ والخريطة تبيّن أن اليوم الأول خفيف تعريفي، وأن الجهد الحقيقي في اليوم الثاني.',
+  a: 'ثماني محطات معلنة ومحطة ختامية', s: 'قبل المحطة الأولى… حقوق وأدوات', l: 'هذه الرحلة. وقبل أول محطة، أمران سريعان.',
+  deep: 'مرّ على الأيام عمودًا عمودًا. اليوم الأول: خمس محطات قصيرة هدفها أن يلمس كل مشارك أربع أدوات بيده، وأن يكتب مهامه الثلاث قبل أن يغادر. اليوم الثاني: ثلاث محطات طويلة تمر بها كل مهمة؛ استنطاق بثمانية عشر سؤالًا، ثم ورشة تدقيق مع Claude حتى تبلغ التعليمات 95%، ثم حزمة تنقلها إلى حسابك. اليوم الثالث يُعلن في حينه، وهو يبني على ما تصلون إليه. مثال افتراضي: مدير إداري في شركة تجارية يدخل اليوم الأول ولم يستخدم Claude قط، ويخرج من اليوم الثاني بحزمة لمتابعة عقود الإيجار والصيانة. أكّد أن كل سؤال تحت المحطة هو «السؤال الحاكم» الذي سنعود إليه.',
+  base: ['المنظِّم المتقدم (Advance Organizer) — أوزوبل'],
+  say: ['اليوم الأول تعريف خفيف، واليوم الثاني عمل حقيقي.', 'لكل محطة سؤال واحد يحكمها.', 'لن نترك مهمة قبل أن تصبح حزمة.'],
+  run: ['اكشف الأعمدة واحدًا واحدًا.', 'اقرأ سؤالًا حاكمًا واحدًا من كل يوم.', 'لا تدخل في تفاصيل اليوم الثالث.'],
+  warn: ['إن سُئلت عن اليوم الثالث فقل إنه يُصمَّم على ما يبلغه المشاركون.'],
+  check: 'هل يعرف المشارك في أي يوم سيبني حزمته الأولى؟' });
+
+add(U0, 'حقوق الملكية الفكرية', `<section class="slide">${WM('©')}
+ ${head('قبل أن نبدأ', 'هذا البرنامج ملكية فكرية لايفوري', 'الحقيبة والمختبر التفاعلي والعرض والأدوات والأنشطة ملكية فكرية لايفوري للتدريب والاستشارات.')}
+ ${cards('g3', [['⛔', 'لا نسخ ولا توزيع', 'لا يجوز نسخ أي جزء أو إعادة استخدامه أو تقديمه لغيرك.'], ['✍️', 'إلا بإذن كتابي', 'أي استخدام خارج البرنامج يحتاج إذنًا كتابيًا مسبقًا من ايفوري.'], ['📦', 'حزمك ملكك', 'ما تبنيه أنت لمهامك من تعليمات ومهارات وبرومبتات ملكك وملك جهتك.']])}</section>`);
+gd('حقوق الملكية الفكرية', { t: 'دقيقة', role: 'افتتاح · إجرائي', why: 'تثبيت الحقوق في بداية البرنامج، مع التفريق الصريح بين مادة ايفوري وما يبنيه المشارك لنفسه، حتى لا يتردد في استخدام حزمه في عمله.',
+  a: 'المادة لايفوري… والحزم لكم', s: 'وبعد الحقوق… الدخول إلى المنصة والمختبر', l: 'أما ما ستبنونه فملككم. لنفتح الآن المنصة والمختبر.',
+  deep: 'اقرأ البطاقتين الأوليين بسرعة، وتوقف عند الثالثة: كل ما يكتبه المشارك لمهامه، من تعليمات مشروع ومهارة وبرومبت رئيسي، ملكه وملك جهته يستخدمه كما يشاء. هذا التفريق مهم لمدير موارد بشرية سيبني حزمة لفرز السير الذاتية ويريد مشاركتها مع فريقه؛ له ذلك. أما المختبر نفسه والعرض والحقيبة فلا تُنسخ ولا تُقدَّم لجهات أخرى. مثال افتراضي: مشارك يريد أن يقدّم ورشة داخلية لزملائه بالمختبر؛ يحتاج إذنًا كتابيًا، لكنه يستطيع أن يعلّمهم حزمته دون إذن.',
+  base: ['سياسة الملكية الفكرية لايفوري'],
+  say: ['المادة لايفوري.', 'الحزم التي تبنيها لك ولجهتك.', 'الاستخدام خارج البرنامج بإذن كتابي.'],
+  run: ['اقرأها في أقل من دقيقة.', 'أبرز البطاقة الثالثة.', 'انتقل مباشرة.'],
+  warn: ['لا تجعلها لهجة تحذير؛ اجعلها اتفاق احترام.'],
+  check: 'هل يعرف المشارك أن حزمه ملكه؟' });
+
+add(U0, 'المنصة والمختبر', `<section class="slide">${WM('⌘')}
+ ${head('خطوتان قبل المحطة الأولى', 'سجّل في المنصة… ثم ادخل مختبرك', '')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>1</i><div><b>سجّل الدخول إلى منصة التدريب</b> وتأكد من صحة بياناتك.</div></div>
+  <div class="step"><i>2</i><div><b>عبّئ الاختبار القبلي</b> — لا نجاح ولا رسوب، هو نقطة انطلاقك.</div></div>
+  <div class="step"><i>3</i><div><b>امسح الرمز وادخل المختبر</b> من جهازك، وأبقه مفتوحًا طوال الأيام الثلاثة.</div></div>
+  <div class="step"><i>4</i><div><b>افتح حسابك على claude.ai</b> في تبويب مجاور.</div></div></div>
+ <div class="figwrap"><div class="qrbox">
+<svg  version='1.1' viewBox='0 0 31 31' xmlns='http://www.w3.org/2000/svg'><path d='M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM9,1H10V2H9zM10,1H11V2H10zM11,1H12V2H11zM14,1H15V2H14zM15,1H16V2H15zM16,1H17V2H16zM17,1H18V2H17zM18,1H19V2H18zM19,1H20V2H19zM23,1H24V2H23zM24,1H25V2H24zM25,1H26V2H25zM26,1H27V2H26zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM1,2H2V3H1zM7,2H8V3H7zM10,2H11V3H10zM11,2H12V3H11zM13,2H14V3H13zM14,2H15V3H14zM18,2H19V3H18zM20,2H21V3H20zM23,2H24V3H23zM29,2H30V3H29zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM10,3H11V4H10zM12,3H13V4H12zM15,3H16V4H15zM16,3H17V4H16zM18,3H19V4H18zM19,3H20V4H19zM23,3H24V4H23zM25,3H26V4H25zM26,3H27V4H26zM27,3H28V4H27zM29,3H30V4H29zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM10,4H11V5H10zM11,4H12V5H11zM13,4H14V5H13zM14,4H15V5H14zM15,4H16V5H15zM16,4H17V5H16zM17,4H18V5H17zM19,4H20V5H19zM20,4H21V5H20zM23,4H24V5H23zM25,4H26V5H25zM26,4H27V5H26zM27,4H28V5H27zM29,4H30V5H29zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM9,5H10V6H9zM12,5H13V6H12zM14,5H15V6H14zM16,5H17V6H16zM17,5H18V6H17zM18,5H19V6H18zM19,5H20V6H19zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM27,5H28V6H27zM29,5H30V6H29zM1,6H2V7H1zM7,6H8V7H7zM9,6H10V7H9zM10,6H11V7H10zM13,6H14V7H13zM18,6H19V7H18zM20,6H21V7H20zM21,6H22V7H21zM23,6H24V7H23zM29,6H30V7H29zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM24,7H25V8H24zM25,7H26V8H25zM26,7H27V8H26zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM9,8H10V9H9zM10,8H11V9H10zM11,8H12V9H11zM12,8H13V9H12zM13,8H14V9H13zM18,8H19V9H18zM21,8H22V9H21zM1,9H2V10H1zM5,9H6V10H5zM7,9H8V10H7zM8,9H9V10H8zM9,9H10V10H9zM10,9H11V10H10zM11,9H12V10H11zM12,9H13V10H12zM14,9H15V10H14zM15,9H16V10H15zM16,9H17V10H16zM18,9H19V10H18zM19,9H20V10H19zM20,9H21V10H20zM22,9H23V10H22zM23,9H24V10H23zM24,9H25V10H24zM25,9H26V10H25zM26,9H27V10H26zM29,9H30V10H29zM3,10H4V11H3zM4,10H5V11H4zM6,10H7V11H6zM8,10H9V11H8zM11,10H12V11H11zM12,10H13V11H12zM13,10H14V11H13zM15,10H16V11H15zM16,10H17V11H16zM18,10H19V11H18zM19,10H20V11H19zM22,10H23V11H22zM23,10H24V11H23zM24,10H25V11H24zM25,10H26V11H25zM26,10H27V11H26zM27,10H28V11H27zM28,10H29V11H28zM29,10H30V11H29zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM6,11H7V12H6zM7,11H8V12H7zM12,11H13V12H12zM14,11H15V12H14zM15,11H16V12H15zM16,11H17V12H16zM18,11H19V12H18zM19,11H20V12H19zM21,11H22V12H21zM22,11H23V12H22zM24,11H25V12H24zM25,11H26V12H25zM29,11H30V12H29zM2,12H3V13H2zM4,12H5V13H4zM6,12H7V13H6zM9,12H10V13H9zM12,12H13V13H12zM14,12H15V13H14zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM23,12H24V13H23zM24,12H25V13H24zM26,12H27V13H26zM28,12H29V13H28zM29,12H30V13H29zM3,13H4V14H3zM7,13H8V14H7zM9,13H10V14H9zM11,13H12V14H11zM13,13H14V14H13zM14,13H15V14H14zM17,13H18V14H17zM18,13H19V14H18zM20,13H21V14H20zM21,13H22V14H21zM24,13H25V14H24zM28,13H29V14H28zM1,14H2V15H1zM3,14H4V15H3zM4,14H5V15H4zM5,14H6V15H5zM8,14H9V15H8zM10,14H11V15H10zM11,14H12V15H11zM14,14H15V15H14zM15,14H16V15H15zM16,14H17V15H16zM17,14H18V15H17zM18,14H19V15H18zM19,14H20V15H19zM23,14H24V15H23zM24,14H25V15H24zM25,14H26V15H25zM26,14H27V15H26zM27,14H28V15H27zM28,14H29V15H28zM29,14H30V15H29zM1,15H2V16H1zM3,15H4V16H3zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM11,15H12V16H11zM12,15H13V16H12zM13,15H14V16H13zM16,15H17V16H16zM18,15H19V16H18zM19,15H20V16H19zM21,15H22V16H21zM25,15H26V16H25zM26,15H27V16H26zM27,15H28V16H27zM29,15H30V16H29zM4,16H5V17H4zM6,16H7V17H6zM8,16H9V17H8zM11,16H12V17H11zM13,16H14V17H13zM15,16H16V17H15zM16,16H17V17H16zM18,16H19V17H18zM21,16H22V17H21zM23,16H24V17H23zM25,16H26V17H25zM28,16H29V17H28zM29,16H30V17H29zM1,17H2V18H1zM2,17H3V18H2zM3,17H4V18H3zM5,17H6V18H5zM7,17H8V18H7zM8,17H9V18H8zM9,17H10V18H9zM10,17H11V18H10zM14,17H15V18H14zM15,17H16V18H15zM18,17H19V18H18zM21,17H22V18H21zM22,17H23V18H22zM28,17H29V18H28zM1,18H2V19H1zM2,18H3V19H2zM6,18H7V19H6zM10,18H11V19H10zM11,18H12V19H11zM12,18H13V19H12zM16,18H17V19H16zM17,18H18V19H17zM19,18H20V19H19zM23,18H24V19H23zM24,18H25V19H24zM25,18H26V19H25zM26,18H27V19H26zM28,18H29V19H28zM29,18H30V19H29zM3,19H4V20H3zM6,19H7V20H6zM7,19H8V20H7zM9,19H10V20H9zM10,19H11V20H10zM11,19H12V20H11zM12,19H13V20H12zM13,19H14V20H13zM14,19H15V20H14zM15,19H16V20H15zM16,19H17V20H16zM18,19H19V20H18zM21,19H22V20H21zM22,19H23V20H22zM23,19H24V20H23zM24,19H25V20H24zM25,19H26V20H25zM27,19H28V20H27zM29,19H30V20H29zM3,20H4V21H3zM4,20H5V21H4zM5,20H6V21H5zM8,20H9V21H8zM13,20H14V21H13zM14,20H15V21H14zM18,20H19V21H18zM19,20H20V21H19zM20,20H21V21H20zM21,20H22V21H21zM23,20H24V21H23zM28,20H29V21H28zM29,20H30V21H29zM1,21H2V22H1zM2,21H3V22H2zM4,21H5V22H4zM5,21H6V22H5zM6,21H7V22H6zM7,21H8V22H7zM10,21H11V22H10zM11,21H12V22H11zM12,21H13V22H12zM13,21H14V22H13zM14,21H15V22H14zM18,21H19V22H18zM21,21H22V22H21zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM25,21H26V22H25zM26,21H27V22H26zM29,21H30V22H29zM9,22H10V23H9zM10,22H11V23H10zM13,22H14V23H13zM14,22H15V23H14zM15,22H16V23H15zM16,22H17V23H16zM17,22H18V23H17zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM25,22H26V23H25zM29,22H30V23H29zM1,23H2V24H1zM2,23H3V24H2zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM9,23H10V24H9zM10,23H11V24H10zM11,23H12V24H11zM13,23H14V24H13zM16,23H17V24H16zM20,23H21V24H20zM21,23H22V24H21zM23,23H24V24H23zM25,23H26V24H25zM26,23H27V24H26zM27,23H28V24H27zM29,23H30V24H29zM1,24H2V25H1zM7,24H8V25H7zM13,24H14V25H13zM15,24H16V25H15zM16,24H17V25H16zM17,24H18V25H17zM18,24H19V25H18zM20,24H21V25H20zM21,24H22V25H21zM25,24H26V25H25zM28,24H29V25H28zM1,25H2V26H1zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM7,25H8V26H7zM9,25H10V26H9zM10,25H11V26H10zM11,25H12V26H11zM14,25H15V26H14zM15,25H16V26H15zM18,25H19V26H18zM19,25H20V26H19zM20,25H21V26H20zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM26,25H27V26H26zM28,25H29V26H28zM1,26H2V27H1zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM7,26H8V27H7zM16,26H17V27H16zM17,26H18V27H17zM18,26H19V27H18zM19,26H20V27H19zM20,26H21V27H20zM21,26H22V27H21zM22,26H23V27H22zM24,26H25V27H24zM29,26H30V27H29zM1,27H2V28H1zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM7,27H8V28H7zM11,27H12V28H11zM13,27H14V28H13zM16,27H17V28H16zM17,27H18V28H17zM19,27H20V28H19zM20,27H21V28H20zM26,27H27V28H26zM27,27H28V28H27zM28,27H29V28H28zM29,27H30V28H29zM1,28H2V29H1zM7,28H8V29H7zM10,28H11V29H10zM11,28H12V29H11zM16,28H17V29H16zM17,28H18V29H17zM18,28H19V29H18zM20,28H21V29H20zM21,28H22V29H21zM23,28H24V29H23zM26,28H27V29H26zM28,28H29V29H28zM29,28H30V29H29zM1,29H2V30H1zM2,29H3V30H2zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM6,29H7V30H6zM7,29H8V30H7zM9,29H10V30H9zM10,29H11V30H10zM13,29H14V30H13zM14,29H15V30H14zM17,29H18V30H17zM18,29H19V30H18zM21,29H22V30H21zM22,29H23V30H22zM26,29H27V30H26zM28,29H29V30H28z' id='qr-path' fill='#000000' fill-opacity='1' fill-rule='nonzero' stroke='none'/></svg></div><div class="url">${LAB_URL.replace('https://', '')}</div></div></div></section>`);
+gd('المنصة والمختبر', { t: '8 دقائق', role: 'افتتاح · تجهيز', why: 'كل ما بعد هذه الشريحة يتم على جهاز المشارك؛ فإن لم يدخل المختبر وحسابه على Claude الآن، سيتأخر عن المحطات كلها.',
+  a: 'المشاركون داخل المنصة والمختبر وClaude', s: 'الآن والمختبر مفتوح… من أنت وما مهمتك؟', l: 'الكل في المختبر؟ أول ما سيطلبه منك أن يعرف من أنت.',
+  deep: 'نفّذ الخطوات معهم خطوة خطوة ولا تنتقل حتى يرفع الجميع أيديهم. الاختبار القبلي يُعبّأ بصدق؛ هدفه قياس نقطة الانطلاق لا التقييم. المختبر يعمل من الجوال والحاسوب، والأفضل الحاسوب لأن اليوم الثاني فيه كتابة كثيرة. أكّد أن ما يكتبه المشارك في المختبر يبقى على جهازه ولا يظهر لزملائه أو على شاشة القاعة. مثال افتراضي: رئيس تنفيذي يتردد في كتابة مهامه أمام موظفين من جهات أخرى؛ طمئنه بأن المختبر شخصي تمامًا. إن لم يكن لدى أحد حساب على Claude فساعده في إنشائه الآن، ويفضّل اشتراك Pro لأن المشاريع والمهارات تعمل بكامل قدرتها فيه.',
+  base: ['جاهزية البيئة التعليمية قبل المحتوى'],
+  say: ['لن نبدأ حتى يدخل الجميع.', 'ما تكتبه في المختبر لا يراه غيرك.', 'أبقِ المختبر وClaude مفتوحين جنبًا إلى جنب.'],
+  run: ['امنح خمس دقائق للتسجيل والاختبار القبلي.', 'تجوّل وساعد من تعثّر.', 'تحقق برفع الأيدي.'],
+  warn: ['ماذا لو لم يملك مشارك حسابًا مدفوعًا؟ الحساب المجاني يكفي لليوم الأول، والمشاريع متاحة فيه بحدود.', 'ماذا لو تعطّل الإنترنت؟ شارك نقطة اتصال الجوال.'],
+  check: 'هل المختبر وClaude مفتوحان على كل جهاز؟' });
+
+/* ================= اليوم الأول ================= */
+add(U1, 'غلاف المحطة ① — التعارف', cover(1, 'المحطة الأولى · اليوم الأول', 'من أنت… وما الذي يسرق وقتك؟', 'لا نتعارف بالمسميات بل بالمهام:', 'ما المهمة التي تسرق من أسبوعك ساعات ولا يراها أحد؟', 'الأداة ① — ملفك في المختبر', 'غرباء من جهات مختلفة', 'زملاء يعرف كلٌّ منهم وجع الآخر', 'people', 'كل مهمة متكررة… قصة وقتٍ ضائع'));
+gd('غلاف المحطة ① — التعارف', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'يفصل الافتتاح الإجرائي عن العمل، ويعلن أن التعارف هنا تعارف بالمهام لا بالمسميات.',
+  a: 'إعلان المحطة الأولى وسؤالها', s: 'افتح ملفك في المختبر واكتب عن نفسك', l: 'سؤالنا: ما المهمة التي تسرق وقتك؟ وقبل أن تجيب، عرّف المختبر بك.',
+  deep: 'اقرأ السؤال الحاكم ببطء واتركه معلقًا. لا تطلب إجابة الآن؛ الإجابة تأتي في جولة التعارف بعد أن يملأ كل مشارك ملفه. أشر إلى الرسمة: أشخاص من جهات مختلفة يجمعهم سؤال واحد. مثال افتراضي: في القاعة نفسها مدير إداري في شركة تجارية ومحاسب في جهة أخرى؛ مسمياتهما مختلفة، لكن كليهما يقضي ساعات في تجميع بيانات من ملفات متفرقة. هذا ما سنكتشفه. مدة المحطة عشرون دقيقة.',
+  base: ['التعلم المتمركز حول المشكلة (Problem-centered learning)'],
+  say: ['لن نسأل عن مسمّاك… بل عن وجعك.', 'المهمة التي تسرق وقتك هي مدخلنا.', 'عشرون دقيقة.'],
+  run: ['اقرأ السؤال واصمت.', 'أعلن المدة.', 'انتقل إلى النشاط.'],
+  warn: ['خطأ شائع: البدء بتقديم المدرب الطويل.'],
+  check: 'هل يستطيع مشارك ترديد السؤال الحاكم؟' });
+
+add(U1, 'نشاط التعارف', `<section class="slide">${WM('١')}
+ ${head('نشاط · 20 دقيقة', 'ملفك… ثم جملة واحدة أمام القاعة', 'في المختبر: اليوم الأول ← التعارف. اختر مسارك ومسمّاك، ثم استعد لجملة واحدة.')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>1</i><div><b>املأ ملفك:</b> المسار، والمسمى، والخبرة، وعلاقتك بالذكاء الاصطناعي.</div></div>
+  <div class="step"><i>2</i><div><b>في 30 ثانية:</b> اسمك الأول، ودورك، ومهمة واحدة تتمنى أن تختفي من أسبوعك.</div></div>
+  <div class="step"><i>3</i><div><b>استمع:</b> كم مهمة سمعتها تشبه مهمتك؟</div></div></div>
+ ${FIG('people', 'لا اسم جهة ولا تفاصيل حساسة — الدور والمهمة فقط', 'm')}</div></section>`);
+gd('نشاط التعارف', { t: '20 دقيقة', role: 'نشاط · كسر الجليد', why: 'يحقق أمرين: يملأ ملف المشارك الذي يخصّص الأوامر التجريبية لوظيفته، ويكشف للقاعة أن المهام المتكررة متشابهة عبر الجهات.',
+  a: 'كل مشارك عرّف بدوره ومهمته', s: 'سمعنا المهام… فلنرَ لماذا تغيّر سؤال الإدارة', l: 'سمعنا إحدى عشرة مهمة. الآن أربع دقائق تشرح لماذا لم يعد ممكنًا أن نؤديها كما كنا.',
+  deep: 'اطلب ملء الملف أولًا (5 دقائق)، ثم ابدأ الجولة بنفسك نموذجًا: «إبراهيم، مدرب، والمهمة التي أتمنى اختفاءها: تجهيز تقارير الحضور بعد كل برنامج». التزم بثلاثين ثانية لكل مشارك. دوّن المهام على السبورة في أعمدة تقريبية (تقارير، مراسلات، متابعة، تحليل). مثال افتراضي لما قد تسمعه: «أخصائي إداري: متابعة طلبات الصيانة من الفروع»، «محاسب: مطابقة كشوف البنك». في الختام اسأل: كم مهمة سمعتها تشبه مهمتك؟ عادة تُرفع أيدٍ كثيرة، وهذه هي اللحظة التي يكتشف فيها المشاركون أنهم ليسوا وحدهم. لا تطلب اسم الجهة، ولا تضغط على من يتحفظ في ذكر مهمته؛ يكفيه أن يقول «تقارير دورية».',
+  base: ['التعلم الاجتماعي — باندورا', 'مبدأ الأمان النفسي في القاعة — إدموندسون'],
+  say: ['ثلاثون ثانية فقط.', 'المهمة لا الجهة.', 'كم مهمة تشبه مهمتك؟'],
+  run: ['5 دقائق للملف.', 'ابدأ بنفسك نموذجًا.', 'دوّن المهام في أعمدة على السبورة.'],
+  warn: ['ماذا لو أطال مشارك؟ قاطعه بلطف: «سنعود لهذه في اليوم الثاني».', 'لا تعلّق على مهمة بأنها «سهلة الأتمتة»؛ قد تكون أعقد مما تظن.'],
+  check: 'هل امتلأت السبورة بمهام حقيقية من القاعة؟' });
+
+add(U1, 'غلاف المحطة ② — الفيلم الافتتاحي', cover(2, 'المحطة الثانية · اليوم الأول', 'الآلة والإنسان', 'إن كانت الآلة ستتولى المتكرر…', 'فماذا يبقى لك أنت؟', 'الأداة ② — الفيلم الافتتاحي', 'الخوف من أن تحل الآلة محلي', 'وضوح ما أتركه للآلة وما يبقى لي', 'film', 'أربع دقائق من الأهرامات إلى الوكلاء'));
+gd('غلاف المحطة ② — الفيلم الافتتاحي', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'يواجه الخوف الصامت في القاعة مباشرة: هل ستأخذ الآلة وظيفتي؟ والفيلم يجيب دون أن نعظ.',
+  a: 'إعلان سؤال المحطة الثانية', s: 'شاهد الفيلم كاملًا دون مقاطعة', l: 'لا أجيب عن السؤال… الفيلم يجيب.',
+  deep: 'اطرح السؤال بصيغته المؤلمة واتركه. كثير من الموظفين، خصوصًا في الأدوار الإدارية والمحاسبية، يحملون قلقًا لا يصرّحون به من أن الأتمتة مقدمة للاستغناء عنهم. الفيلم يعرض تاريخ الإدارة من بناء الأهرامات إلى عصر الوكلاء، وينتهي بأن الآلة تحمل المتكرر والإنسان يقود. مثال افتراضي: أخصائي إداري يخشى أن تحل لوحة المتابعة محله؛ بعد الفيلم سيرى أن اللوحة تحرره ليصبح صاحب القرار في الطلبات المتأخرة بدل أن يكون ناسخ بيانات. مدة المحطة خمس عشرة دقيقة.',
+  base: ['نظرية مقاومة التغيير — كوتر', 'إطار «الإنسان في الحلقة»'],
+  say: ['السؤال الذي لا يقوله أحد بصوت عالٍ…', 'لن أجيب أنا.', 'أربع دقائق.'],
+  run: ['اخفض الإضاءة.', 'تأكد من الصوت.', 'انتقل إلى الفيلم.'],
+  warn: ['لا تطمئن القاعة قبل الفيلم؛ تفقد اللحظة أثرها.'],
+  check: 'هل شعرت القاعة بثقل السؤال؟' });
+
+add(U1, 'الفيلم الافتتاحي', `<section class="slide dark" data-immediate="1"><div class="figwrap" style="height:100%;justify-content:center">
+ <video class="film" src="hook.mp4" poster="poster.jpg" controls playsinline preload="metadata"></video></div></section>`);
+gd('الفيلم الافتتاحي', { t: '4 دقائق', role: 'هوك · لحظة صمت', why: 'الفيلم يحمل الرسالة العاطفية التي لا تحملها الشرائح: الصراع بين الإنسان والعمل قديم، والجديد أن الآلة صارت قادرة على حمل المتكرر عنه.',
+  a: 'الفيلم يجيب عن سؤال ما يبقى للإنسان', s: 'ماذا بقي في ذهنك من الفيلم؟', l: 'أطفئوا الفيلم… وأشعلوا النقاش.',
+  deep: 'شغّل الفيلم بملء الشاشة دون مقدمة. الفيلم يمر بخمس محطات: العمل الجماعي القديم، ثم الإدارة العلمية لتايلور وهرم فايول، ثم «الصراع المزمن» حيث العقول القادرة على الابتكار غارقة في التكرار، ثم «للآلة ما يتكرر وللإنسان العقل»، ثم أرقام حديثة عن استخدام الموظفين للذكاء الاصطناعي دون سياسة، وينتهي بـ«كن أنت الطريق». لا تعلّق أثناء العرض. مثال للربط بعد الفيلم: المشهد الذي يظهر فيه الموظف منهكًا أمام شاشات الجداول يشبه ما وصفه كثيرون في التعارف قبل قليل.',
+  base: ['التعلم بالقصة (Narrative learning)'],
+  say: ['(لا كلام أثناء الفيلم)'],
+  run: ['ملء الشاشة.', 'صوت واضح.', 'صمت خمس ثوانٍ بعد النهاية.'],
+  warn: ['ماذا لو تعطّل التشغيل؟ الفيلم نفسه موجود في المختبر، اليوم الأول ← الفيلم الافتتاحي، ويمكن للمشاركين مشاهدته على أجهزتهم.'],
+  check: 'هل بقيت القاعة صامتة لحظة بعد النهاية؟' });
+
+add(U1, 'نقاش الفيلم', `<section class="slide">${WM('؟')}
+ ${head('نقاش · 10 دقائق', 'ثلاثة أسئلة… وإجابة واحدة تكتبها لنفسك', '')}
+ ${cards('g3', [['🧭', 'ما المشهد الذي يشبه عملك؟', 'أي لحظة في الفيلم رأيت فيها أسبوعك؟'], ['⚖️', 'ما الذي تتركه للآلة؟', 'سمِّ عملًا واحدًا متكررًا لا يحتاج عقلك.'], ['🌱', 'وما الذي يبقى لك؟', 'سمِّ قرارًا واحدًا لا يجوز أن يتخذه غيرك.']])}
+ <div class="insight anim" style="margin-top:26px"><span class="rl">الخلاصة</span>للآلة ما يتكرر… وللإنسان الحكم والاعتماد والعلاقة.</div></section>`);
+gd('نقاش الفيلم', { t: '10 دقائق', role: 'نشاط · استخلاص', why: 'تحويل الأثر العاطفي للفيلم إلى قرار عملي: ما الذي سأتركه للآلة؟ وهذا يمهّد لاختيار المهام.',
+  a: 'كل مشارك سمّى ما يتركه وما يبقى له', s: 'وحتى نترك لها المتكرر… يجب أن نعرف كيف تفكر', l: 'قررنا ما نتركه للآلة. لكن هل نعرف هذه الآلة؟',
+  deep: 'اكشف الأسئلة واحدًا واحدًا، واطلب ثلاث إجابات سريعة لكل سؤال. السؤال الثالث هو الأهم: القرار الذي لا يُفوَّض. مثال افتراضي: مدير الموارد البشرية يترك للآلة تجميع أرقام الدوران وصياغة التقرير، ويبقى له تفسير سبب ارتفاع الدوران في قسم معيّن وقرار التدخل. هذه الإجابة ستعود حرفيًا في اليوم الثاني في سؤال «ما الذي يبقى قرارك أنت؟» ضمن محور الحوكمة. اختم بالخلاصة، واطلب من كل مشارك أن يكتب قراره الذي لا يُفوّض في ورقة أو ملاحظات جواله.',
+  base: ['تصنيف المهام: روتينية وغير روتينية — Autor, Levy & Murnane', 'Human-in-the-loop'],
+  say: ['أي مشهد يشبه أسبوعك؟', 'سمِّ ما تتركه.', 'وسمِّ ما لا تتركه أبدًا.'],
+  run: ['ثلاث إجابات لكل سؤال.', 'دوّن على السبورة.', 'اطلب كتابة القرار غير المفوّض.'],
+  warn: ['ماذا لو قال أحد «كل شيء يمكن أتمتته»؟ اسأله: من يُحاسَب إن أخطأت الآلة؟'],
+  check: 'هل كتب كل مشارك قرارًا لا يفوّضه؟' });
+
+add(U1, 'غلاف المحطة ③ — تعرّف على Claude', cover(3, 'المحطة الثالثة · اليوم الأول', 'تعرّف على Claude', 'لماذا يجيبك أحيانًا إجابة عامة…', 'وكيف تجعله يجيب كأنه زميلك؟', 'الأداة ③ — ثلاث شرائح عن Claude', 'أداة غامضة أخشاها', 'زميل أفهم كيف يفكر', 'spark', 'ثلاث شرائح… لا أكثر'));
+gd('غلاف المحطة ③ — تعرّف على Claude', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'وعد صريح بالاختصار: ثلاث شرائح فقط عن Claude، لأن المشارك جاء ليعمل لا ليسمع محاضرة عن التقنية.',
+  a: 'إعلان المحطة الثالثة', s: 'أولًا: من هو Claude؟', l: 'ثلاث شرائح فقط. الأولى: من هو؟',
+  deep: 'أكّد أن هذه المحطة عشرون دقيقة فقط، وأن الهدف ليس حفظ تاريخ الشركة أو أسماء النماذج، بل فهم جملة واحدة ستحكم اليوم الثاني كله: Claude لا يعرف عنك إلا ما تخبره به. مثال افتراضي: محاسب يكتب «اكتب لي تقرير المصروفات» فيحصل على تقرير عام لا يشبه شركته؛ وزميله يكتب ثلاثة أسطر عن جهته ومعاييرها فيحصل على تقرير قريب من المعتمد. الفرق ليس في الأداة بل في السياق.',
+  base: ['مبدأ الحد الأدنى الكافي من النظرية قبل التطبيق'],
+  say: ['ثلاث شرائح فقط.', 'جملة واحدة ستحكم اليوم الثاني.', 'الفرق في السياق لا في الأداة.'],
+  run: ['أعلن المدة.', 'لا تفتح أسئلة تقنية الآن.', 'انتقل.'],
+  warn: ['لا تتوسع في المقارنة بين النماذج.'],
+  check: 'هل يتوقع المشاركون أن المحطة قصيرة؟' });
+
+const mslide = (k, t, cls, cards, key) => `<section class="slide">${WM('✳')}${head(k, t, '')}
+ ${cards_(cls, cards)}
+ <div class="insight anim" style="margin-top:24px"><span class="rl">الخلاصة</span>${key}</div></section>`;
+const cards_ = (cls, arr) => `<div class="grid ${cls}">${arr.map(c => `<div class="card k"><span class="ci">${c[0]}</span><div class="ct">${c[1]}</div><div class="cs">${c[2]}</div></div>`).join('')}</div>`;
+add(U1, 'من هو Claude؟', mslide('تعرّف على Claude · 1 من 3 · في دقيقة واحدة', 'من هو Claude؟', 'g3', [
+  ['🏛', 'الشركة', 'تطوّره <b>Anthropic</b>، شركة أبحاث أمريكية تأسست عام 2021، وتضع الأمان والموثوقية في قلب تصميمه.'],
+  ['🧠', 'العائلة', 'ثلاث فئات: <b>Haiku</b> الأسرع، و<b>Sonnet</b> المتوازن، و<b>Opus</b> الأعمق. وأحدثها Opus 5.5 (سبتمبر 2026).'],
+  ['📱', 'أين تجده', 'claude.ai على الويب، وتطبيقات الجوال وسطح المكتب — والحساب نفسه في كل مكان.']],
+  'ليس محرك بحث ولا قاعدة بيانات: <b>زميل يفكّر بما تعطيه</b>.'));
+gd('من هو Claude؟', { t: '6 دقائق', role: 'محتوى · تعريف مركّز', why: 'يعطي المشارك في دقيقة واحدة ثلاث حقائق تكفيه ليثق بالأداة ويعرف أين يجدها، دون محاضرة عن التقنية، ويصحح التصور الأشيع بأن Claude محرك بحث.',
+  a: 'Claude زميل يفكر بما تعطيه', s: 'وإن كان زميلًا… فماذا يستطيع أن يفعل اليوم؟', l: 'عرفنا من هو. السؤال الأهم: ماذا يستطيع أن يفعل لك الآن؟',
+  deep: 'مرّ على البطاقات الثلاث في دقيقة لكل بطاقة. في الأولى: Anthropic شركة أبحاث أمريكية تأسست عام 2021، ويهم المشارك منها أمران: أنها تطوّر Claude وتحدّثه باستمرار، وأنها تضع الأمان في قلب التصميم، وهذا ما يفسر لاحقًا لماذا يرفض أحيانًا أو يطلب توضيحًا. في الثانية: لا تتوقف عند الأرقام؛ يكفي أن يعرف المشارك أن Opus هو الفئة الأعمق والأعلى قدرة، وSonnet في الوسط، وHaiku الأسرع والأقل كلفة، وأن أحدث إصدار Opus 5.5 صدر في سبتمبر 2026. الاختيار يظهر في قائمة النموذج داخل المحادثة. في الثالثة: الحساب واحد على الويب والجوال وسطح المكتب، فما يبدؤه المشارك في القاعة يكمله في مكتبه. ثم اقرأ الخلاصة. مثال افتراضي: مدير مبيعات يسأل «ما مبيعاتنا الشهر الماضي؟» فيعتذر Claude لأنه لا يملك بيانات الجهة، فإن رفع ملف المبيعات حلله بدقة؛ هذا هو الفرق بين محرك البحث والزميل.',
+  base: ['النماذج اللغوية الكبيرة (LLMs)', 'إعلان Anthropic عن Opus 5.5 — سبتمبر 2026'],
+  say: ['ليس محرك بحث.', 'ثلاث فئات: الأسرع والمتوازن والأعمق.', 'حساب واحد في كل مكان.'],
+  run: ['اكشف بطاقة بكل نقرة.', 'اسأل: من استخدمه قبل اليوم؟', 'لا تتجاوز ست دقائق.'],
+  warn: ['ماذا لو سأل أحد: هل يحفظ بياناتي؟ أجب: إعدادات الخصوصية في حسابك تحدد ذلك، والقاعدة عندنا: لا ترفع الحساس كما هو.', 'لا تدخل في مقارنات مع أدوات أخرى.'],
+  check: 'هل يستطيع مشارك أن يشرح الفرق بين Claude ومحرك البحث في جملة؟' });
+
+add(U1, 'ماذا يستطيع اليوم؟', mslide('تعرّف على Claude · 2 من 3 · ست قدرات تهمّ عملك', 'ماذا يستطيع اليوم؟', 'g3', [
+  ['📄', 'يقرأ', 'ملفات وتقارير طويلة كاملة؛ تتسع المحادثة في Opus 5.5 لمليون رمز.'],
+  ['🔎', 'يبحث', 'في الويب، ويعود بخلاصة موثقة بروابطها.'],
+  ['🧩', 'يبني', 'مستندات وجداول وعروضًا وأدوات تفاعلية تعمل أمامك.'],
+  ['🗂', 'يتذكّر عملك', 'المشاريع والمهارات تحفظ تعليماتك وطريقتك.'],
+  ['🔗', 'يتصل', 'ببريدك وتقويمك وملفاتك عبر الموصلات، وبإذنك.'],
+  ['⚙️', 'ينفّذ', 'مهامًا متعددة الخطوات ومهامًا مجدولة، وأنت تعتمد.']],
+  'وكل قدرة منها تبدأ بسؤال واحد: <b>ما السياق الذي أعطيته؟</b>'));
+gd('ماذا يستطيع اليوم؟', { t: '7 دقائق', role: 'محتوى · خريطة قدرات', why: 'يرسم للمشارك ما يستطيعه Claude اليوم بست كلمات أفعال، فيربط كل قدرة بمهمة من عمله، ويمهّد للأدوات الأربع التي سيجربها بعد قليل.',
+  a: 'ست قدرات: يقرأ ويبحث ويبني ويتذكر ويتصل وينفذ', s: 'والقدرات كلها رهينة سؤال واحد… فكيف تعمل معه؟', l: 'ست قدرات، وكلها تتوقف على شيء واحد. ما هو؟',
+  deep: 'اقرأ الأفعال الستة واحدًا واحدًا واطلب من القاعة أن تربط كل فعل بمهمة من عملها. «يقرأ»: يستطيع Claude قراءة تقرير طويل أو مجموعة ملفات في محادثة واحدة، وتتسع المحادثة في Opus 5.5 لمليون رمز، أي ما يعادل ملفات ضخمة دفعة واحدة. «يبحث»: سيجربونه في الأداة الثانية. «يبني»: سيجربونه في الأداة الثالثة. «يتذكر عملك»: المشاريع والمهارات، وهي جوهر اليوم الثاني. «يتصل»: الموصلات تربطه بالبريد والتقويم والملفات، لكنها تحتاج إعدادًا وصلاحيات، فلن نجربها اليوم. «ينفذ»: المهام المتعددة الخطوات والمجدولة، وهي الدرجة العليا في سلّم النضج. مثال افتراضي: أخصائي إداري يرى «يتذكر عملك» فيفهم لماذا يكرر شرح طريقة تقريره كل مرة: لأنه لم يستخدم مشروعًا بعد. اختم بالخلاصة.',
+  base: ['إعلان Anthropic عن Opus 5.5 — نافذة سياق مليون رمز', 'نموذج نضج الأتمتة'],
+  say: ['ست قدرات بست أفعال.', 'سنجرب أربعًا منها اليوم.', 'كلها تبدأ بالسياق.'],
+  run: ['اكشف البطاقات.', 'اطلب ربط كل فعل بمهمة.', 'أشر إلى ما سنجربه اليوم وما نتركه.'],
+  warn: ['ماذا لو سأل أحد عن ربط البريد الآن؟ قل إنه يحتاج صلاحيات جهته، ونعود إليه لاحقًا.'],
+  check: 'هل ربط كل مشارك قدرة واحدة على الأقل بمهمة من عمله؟' });
+
+add(U1, 'كيف تعمل معه؟', mslide('تعرّف على Claude · 3 من 3 · معادلة واحدة وأربعة عناصر', 'كيف تعمل معه؟ جودة المخرج = جودة السياق', 'g4', [
+  ['👤', 'من أنت', 'دورك، ومجالك، ومن يستلم المخرج.'],
+  ['🎯', 'ماذا تريد', 'المهمة بدقة، والبيانات التي يعمل عليها.'],
+  ['📏', 'بأي معيار', 'متى يكون المخرج ممتازًا، وما الذي لا يجوز.'],
+  ['🧾', 'بأي شكل', 'الصيغة والطول واللغة والنبرة.']],
+  'القاعدة الذهبية: <b>Claude يجهّز… وأنت تعتمد.</b>'));
+gd('كيف تعمل معه؟', { t: '7 دقائق', role: 'محتوى · مفهوم مركزي', why: 'أهم شريحة في اليوم الأول: المعادلة والعناصر الأربعة هي نفسها بنية البرومبت الرئيسي الذي سيبنيه المشارك في اليوم الثاني، فيتعلمها هنا ويطبقها هناك.',
+  a: 'جودة المخرج من جودة السياق بعناصره الأربعة', s: 'عرفنا المعادلة… فلنجربها بأيدينا في أربع أدوات', l: 'كفى كلامًا. أربع أدوات، كل واحدة على جهازك.',
+  deep: 'اقرأ المعادلة في العنوان ثم العناصر الأربعة. هذه العناصر ليست نظرية؛ هي البنية نفسها التي سيجدها المشارك في «البرومبت الرئيسي» في اليوم الثاني: السياق والطلب والمعيار والمخرج. نفّذ عرضًا حيًا قصيرًا: اكتب «اكتب خطاب اعتذار لعميل عن تأخير»، ثم أعد الطلب بالعناصر الأربعة: من أنت (مدير حسابات عملاء في شركة فعاليات)، وماذا تريد (اعتذار عن تأخير تسليم مواد معرض يومين بسبب المورد)، وبأي معيار (لا يلقي اللوم، ولا يذكر تعويضًا ماليًا)، وبأي شكل (خطاب رسمي مختصر). قارن الردين أمام القاعة. ثم اقرأ القاعدة الذهبية واربطها بسورة العصر: الرقم الذي تعتمده مسؤوليتك ولو أعدّته الآلة.',
+  base: ['هندسة السياق (Context Engineering)', 'Human-in-the-loop'],
+  say: ['المعادلة: جودة المخرج = جودة السياق.', 'أربعة عناصر: من، وماذا، وبأي معيار، وبأي شكل.', 'Claude يجهّز وأنت تعتمد.'],
+  run: ['اكشف العناصر.', 'نفّذ عرضًا حيًا بمقارنة طلبين.', 'اطلب من القاعة قراءة المعادلة بصوت واحد.'],
+  warn: ['ماذا لو أخطأ Claude في العرض الحي؟ ممتاز؛ استخدمه دليلًا على أهمية المراجعة.'],
+  check: 'هل يستطيع المشارك أن يعدّد العناصر الأربعة؟' });
+
+add(U1, 'غلاف المحطة ④ — الأدوات الأربع', cover(4, 'المحطة الرابعة · اليوم الأول', 'الأدوات الأربع', 'أربع أدوات من بين عشرات…', 'أيها يختصر أول ساعة من أسبوعك؟', 'الأداة ④ — المختبر: أوامر مكتوبة لوظيفتك', 'سمعت عن Claude', 'جرّبته بيدي على عملي', 'tools', 'المحادثة · البحث · الأداة الحية · المشاريع'));
+gd('غلاف المحطة ④ — الأدوات الأربع', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'اختيار أربع أدوات فقط بدل عشرات يخفف الحمل المعرفي، ويضمن أن كل مشارك يخرج بتجربة يدوية حقيقية لكل أداة.',
+  a: 'إعلان المحطة الرابعة', s: 'الأداة الأولى: المحادثة مع ملفاتك', l: 'نبدأ بأقرب الأدوات إلى عملك اليومي: ملفاتك.',
+  deep: 'اشرح سبب الاختيار: المحادثة مع الملفات لأن كل مشارك لديه ملف يعمل عليه، والبحث لأن المعلومة الموثقة أساس أي مخرج، والأداة الحية لأنها أول تجربة «بناء»، والمشاريع لأنها جسر اليوم الثاني. أكّد أن الأوامر في المختبر مكتوبة لوظيفة كل مشارك بناء على ملفه. مثال افتراضي: المحاسب يجد في أمر الأداة الحية متابعة لمهمته، بينما يجد مدير الموارد البشرية متابعة لمهمته هو. مدة المحطة نحو ساعتين بما فيها الاستراحة.',
+  base: ['نظرية الحمل المعرفي — سويلر'],
+  say: ['أربع فقط من عشرات.', 'الأوامر مكتوبة لوظيفتك.', 'كل أداة نصف ساعة تقريبًا.'],
+  run: ['اطلب فتح المختبر: اليوم الأول ← الأدوات الأربع.', 'تأكد أن Claude مفتوح بجانبه.', 'انتقل.'],
+  warn: ['لا تعرض الأدوات الأخرى الآن مهما سُئلت.'],
+  check: 'هل الأدوات الأربع ظاهرة في مختبر كل مشارك؟' });
+
+const toolSlide = (n, ic, t, what, where, notice, trap) => `<section class="slide">${WM(ic)}${head('الأداة ' + n + ' من 4', t, what)}
+ <div class="grid g3"><div class="card k"><span class="ci">📍</span><div class="ct">أين تجدها</div><div class="cs">${where}</div></div>
+ <div class="card k"><span class="ci">👁</span><div class="ct">لاحظ</div><div class="cs">${notice}</div></div>
+ <div class="card k"><span class="ci">⚠️</span><div class="ct">انتبه</div><div class="cs">${trap}</div></div></div>
+ <div class="insight anim" style="margin-top:26px"><span class="rl">الآن</span>انسخ «الأمر التجريبي لوظيفتك» من المختبر، وجرّبه في Claude، ثم قيّم التجربة.</div></section>`;
+const TOOLGD = (title, t, why, a, s, l, deep, base) => gd(title, { t, role: 'تطبيق · أداة', why, a, s, l, deep, base, say: ['انسخ الأمر من المختبر.', 'جرّبه على حالة حقيقية بعد الإخفاء.', 'قيّم التجربة في المختبر.'], run: ['دقيقتان شرح ثم تطبيق فردي.', 'تجوّل بين الأجهزة.', 'اطلب من مشاركين اثنين عرض نتيجتهما.'], warn: ['ماذا لو لم يعمل الأمر؟ اطلب من المشارك قراءة رد Claude: غالبًا يطلب معلومة ناقصة.', 'لا ترفع بيانات حقيقية حساسة.'], check: 'هل قيّم كل مشارك الأداة في المختبر؟' });
+add(U1, 'الأداة ١ — المحادثة مع ملفاتك', toolSlide(1, '💬', 'المحادثة مع ملفاتك', 'ترفع ملفًا من عملك بعد إخفاء الحساس، فيقرؤه Claude ويحلله ويجيب عنه كزميل خبير.', 'claude.ai ← محادثة جديدة ← زر (+) ← رفع ملف', 'كيف تتغير جودة الرد حين تذكر من أنت ولمن المخرج.', 'لا أسماء موظفين ولا هويات ولا رواتب كما هي — استبدلها برموز.'));
+TOOLGD('الأداة ١ — المحادثة مع ملفاتك', '30 دقيقة', 'أقرب أداة إلى العمل اليومي، وأول نجاح سريع يبدد تردد المشارك.', 'كل مشارك حلّل ملفًا من عمله', 'والآن من ملفك… إلى ما هو خارج ملفك', 'قرأ Claude ملفك. الآن دعه يقرأ العالم.',
+  'اطلب من كل مشارك اختيار ملف حقيقي من عمله (تقرير، جدول، محضر) وإخفاء البيانات الحساسة فيه أولًا. الأمر التجريبي في المختبر يطلب خمس نقاط في جدول، واستخراج ما يحتاج تحققًا، وثلاثة أسئلة لم يطرحها المشارك. الجزء الأخير هو الأقوى: Claude يكشف ما غاب عن صاحب الملف. مثال افتراضي: مدير إداري يرفع تقرير طلبات الصيانة لشهر سابق، فيكتشف Claude أن ثلث الطلبات من فرع واحد، وهو ما لم يلحظه. إن لم يكن مع المشارك ملف فليطلب من Claude إنشاء ملف تجريبي وهمي ثم يحلله.', ['تحليل المستندات بالنماذج اللغوية', 'مبدأ تقليل البيانات']);
+add(U1, 'الأداة ٢ — البحث والبحث المعمّق', toolSlide(2, '🔎', 'البحث في الويب والبحث المعمّق', 'يبحث في مصادر حية ويعود بخلاصة موثقة بروابطها؛ والبحث المعمّق يقرأ عشرات المصادر ويكتب تقريرًا.', 'في المحادثة: أيقونة الأدوات ← فعّل البحث في الويب أو Research', 'افتح رابطين وتحقق: هل يقول المصدر ما نسبه إليه Claude؟', 'البحث لا يعفيك من التحقق؛ الرقم غير المتحقق منه لا يدخل مستندًا رسميًا.'));
+TOOLGD('الأداة ٢ — البحث والبحث المعمّق', '30 دقيقة', 'تعليم التحقق من المصادر في اللحظة نفسها التي يتعلم فيها المشارك البحث، حتى لا يثق ثقة عمياء.', 'كل مشارك بحث وتحقق من مصدرين', 'عرفنا ما يقوله العالم… فلنبنِ شيئًا يعمل', 'بعد الاستراحة: من الكلام إلى أداة تعمل أمامك.',
+  'الأمر التجريبي يطلب أفضل الممارسات في مهمة المشارك لدى المنشآت السعودية مع مصدر لكل ممارسة، والتمييز بين الملزم نظامًا والاختياري. اطلب من كل مشارك فتح رابطين من المصادر والتحقق بنفسه. مثال افتراضي: أخصائي أول موارد بشرية يبحث عن ممارسات متابعة مدد العقود، فيجد Claude يستشهد بمادة من نظام العمل؛ يفتح الرابط ليتأكد من رقم المادة ونصها. إن وجد اختلافًا فهذه أفضل لحظة تعليمية في المحطة. البحث المعمّق يستغرق دقائق؛ يمكن تشغيله في الخلفية أثناء الاستراحة.', ['التحقق من المصادر (Source verification)', 'التمييز بين الالتزام النظامي والممارسة الفضلى']);
+add(U1, 'الأداة ٣ — الأداة الحية (Artifact)', toolSlide(3, '🧩', 'الأداة الحية (Artifact)', 'بدل أن يكتب لك نصًا، يبني تطبيقًا صغيرًا يعمل أمامك: نموذج إدخال، حاسبة، لوحة متابعة.', 'اكتب الطلب في المحادثة — تظهر الأداة في لوحة جانبية ويمكن نشرها برابط', 'اطلب تعديلًا واحدًا («أضف عمودًا للحالة») وراقب كيف يعدّل الأداة نفسها.', 'لا تُدخل بيانات حقيقية حساسة في أداة ستنشرها برابط.'));
+TOOLGD('الأداة ٣ — الأداة الحية (Artifact)', '30 دقيقة', 'أول تجربة «بناء» حقيقية، وهي لحظة الدهشة في اليوم الأول: موظف غير تقني يبني أداة تعمل في دقائق.', 'كل مشارك بنى أداة متابعة لمهمته', 'بنينا أداة… لكن Claude سينسى كل شيء في المحادثة التالية', 'هذه الأداة رائعة، لكن Claude لن يتذكر شيئًا منها غدًا. إلا إذا…',
+  'الأمر التجريبي يطلب أداة متابعة بقوائم منسدلة وحالات ملونة وبطاقات علوية وبحث، مع خمسة سجلات وهمية. بعد أن تظهر الأداة، اطلب من كل مشارك تعديلًا واحدًا بصياغته هو. مثال افتراضي: محاسب يبني أداة متابعة للفواتير المعلقة، ثم يطلب «أضف عمودًا لعدد أيام التأخير ولوّن ما تجاوز 30 يومًا بالأحمر»، فيراها تتحدث أمامه. هذه اللحظة تبدد خوف «أنا لست تقنيًا». ذكّر بأن النشر برابط يعني أن من يملك الرابط يراها.', ['التعلم بالبناء (Constructionism) — بابرت']);
+add(U1, 'الأداة ٤ — المشاريع (Projects)', toolSlide(4, '🗂️', 'المشاريع (Projects)', 'مساحة تحمل تعليماتك الثابتة وملفاتك المرجعية، فتبدأ كل محادثة داخلها وهي تعرفك — هذا جسرنا إلى اليوم الثاني.', 'claude.ai ← Projects ← Create project ← Set project instructions', 'اسأل السؤال نفسه داخل المشروع وخارجه، وقارن الردين.', 'التعليمات العامة («كن محترفًا») لا تضيف شيئًا؛ القيمة في التفاصيل التي لا يعرفها غيرك.'));
+TOOLGD('الأداة ٤ — المشاريع (Projects)', '20 دقيقة', 'الجسر المباشر إلى اليوم الثاني: الحزمة التي سيبنيها المشارك تُنقل إلى مشروع في حسابه.', 'كل مشارك أنشأ مشروعًا بتعليمات أولية', 'التعليمات الأولية عامة… والسؤال: ما مهامك الثلاث التي تستحق تعليمات خاصة؟', 'أنشأت مشروعك الأول بتعليمات عامة. بعد الاستراحة نكتب المهام التي تستحق تعليمات خاصة.',
+  'اطلب من كل مشارك إنشاء مشروع ولصق التعليمات الأولية من المختبر، ثم طرح السؤال المقترح داخل المشروع وخارجه والمقارنة. التعليمات الأولية عامة عن قصد؛ هي نموذج للبنية لا للمحتوى. مثال افتراضي: رئيس تنفيذي يسأل داخل المشروع «اقترح ثلاث مهام أساعدك فيها» فيقترح Claude مهامًا بلغة القيادة التنفيذية، وخارجه يقترح مهامًا عامة. ثم مهّد: في اليوم الثاني لن نكتب تعليمات عامة، بل تعليمات بثمانية أقسام لكل مهمة، يصقلها مدقق حتى 95%.', ['هندسة السياق', 'التعليمات الثابتة (System instructions)']);
+
+add(U1, 'غلاف المحطة ⑤ — انطلاقة المهام', cover(5, 'المحطة الخامسة · بداية اليوم الثاني', 'مهامي الثلاث', 'ثلاث مهام فقط…', 'لو أُنجزت وحدها، كيف يتغير أسبوعك؟', 'الأداة ⑤ — المختبر: مهامي', 'قائمة أمنيات عامة', 'ثلاث مهام مكتوبة بيدي وجاهزة للاستنطاق', 'tasks', 'أنت من يكتب مهامه'));
+gd('غلاف المحطة ⑤ — انطلاقة المهام', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'نقطة التحول من التعريف إلى العمل: آخر ساعة ونصف من اليوم الأول هي بداية اليوم الثاني فعليًا.',
+  a: 'إعلان المحطة الخامسة', s: 'كيف تختار مهامك الثلاث؟', l: 'قبل أن تكتب، خمسة معايير للمهمة التي تستحق.',
+  deep: 'أكّد أن المهام تُكتب بيد المشارك نفسه، وأن المختبر يقدم أمثلة للإلهام فقط ومساعدًا في الصياغة. هذا مهم خصوصًا للأدوار القيادية: الرئيس التنفيذي أو مدير الموارد البشرية أدرى بحساسية مهامه، ولا نفترض عنه شيئًا. مثال افتراضي: مدير موارد بشرية يرى في الأمثلة «فرز السير الذاتية» لكنه يكتب بنفسه «مراجعة خطابات إنهاء الخدمة قبل اعتمادها»؛ وهذه مهمته الحقيقية. المحطة تمتد إلى نهاية اليوم.',
+  base: ['استقلالية المتعلم البالغ (Self-directed learning) — نولز'],
+  say: ['أنت من يكتب مهامه.', 'الأمثلة للإلهام لا للنسخ.', 'ثلاث مهام فقط.'],
+  run: ['اطلب فتح المختبر: اليوم الثاني.', 'أعلن أن المحطة حتى نهاية اليوم.', 'انتقل إلى المعايير.'],
+  warn: ['لا تقترح مهامًا على مشارك بعينه أمام القاعة.'],
+  check: 'هل فتح الجميع صفحة «مهامي الثلاث»؟' });
+
+add(U1, 'كيف تختار مهامك الثلاث؟', `<section class="slide">${WM('✓')}${head('معايير الاختيار', 'المهمة التي تستحق أن تُؤتمت', 'اختر ثلاث مهام تنطبق عليها أربعة معايير على الأقل:')}
+ ${cards('g5', [['🔁', 'تتكرر', 'أسبوعيًا أو شهريًا على الأقل.'], ['⏳', 'تستهلك وقتًا', 'ساعة فأكثر في المرة.'], ['📥', 'مدخلاتها متاحة', 'ملفات أو بيانات تصل إليها.'], ['📄', 'مخرجها واضح', 'تقرير، خطاب، جدول، لوحة.'], ['🔒', 'بياناتها تُخفى', 'يمكن استبدال الحساس برموز.']])}
+ <div class="insight anim" style="margin-top:26px"><span class="rl">للأدوار القيادية</span>اكتب المهمة بالمستوى الذي تريده؛ «صِغها لي» في المختبر يساعدك في الصياغة دون أن يغيّر معناها.</div></section>`);
+gd('كيف تختار مهامك الثلاث؟', { t: '45 دقيقة', role: 'نشاط · اختيار وصياغة', why: 'اختيار مهمة خاطئة يُضيع اليوم الثاني؛ المعايير الخمسة تحمي المشارك من اختيار مهمة نادرة أو مهمة بلا مدخلات.',
+  a: 'كل مشارك كتب ثلاث مهام وصاغها', s: 'المهمة مكتوبة… فهل تعرفها كما تجري فعلًا؟', l: 'كتبت مهامك. غدًا سنسألك عنها ثمانية عشر سؤالًا. ولنبدأ الأولى الآن.',
+  deep: 'اشرح المعايير الخمسة ثم امنح المشاركين وقتًا للكتابة في المختبر. كل مشارك يختار من الأمثلة أو يكتب مهمته بكلماته، ثم يضغط «صِغها لي باحتراف» فيعيد Claude صياغتها دون تغيير معناها، ثم يختار نوع المهمة. نوع المهمة مهم لأنه يغيّر خيارات أسئلة الاستنطاق لاحقًا. مثال افتراضي: أخصائي إداري يكتب «أتابع الطلبات وأزعل لما تتأخر» فتصبح «متابعة طلبات الخدمات المساندة وتصعيد المتأخر منها» ونوعها «متابعة طلبات ومهام». بعد اعتماد المهمة الأولى يبدأ المشارك الاستنطاق مباشرة إن بقي وقت. للمهام القيادية: لا تضغط على أحد ليكشف تفاصيل؛ الصياغة العامة تكفي الآن.',
+  base: ['معايير اختيار عمليات الأتمتة (التكرار، الحجم، الوضوح، البيانات)'],
+  say: ['أربعة معايير على الأقل.', 'اكتبها أنت، ودع Claude يصقل الصياغة.', 'اختر النوع بعناية.'],
+  run: ['5 دقائق شرح.', '40 دقيقة كتابة وبدء الاستنطاق.', 'تجوّل وراجع اختيار المهام.'],
+  warn: ['ماذا لو اختار مشارك مهمة نادرة (مرة في السنة)؟ اقترح أن يستبدلها بمهمة أكثر تكرارًا.', 'ماذا لو كانت المهمة واسعة جدًا؟ اقترح تجزئتها.'],
+  check: 'هل لكل مشارك ثلاث مهام معتمدة في المختبر؟' });
+
+add(U1, 'ختام اليوم الأول', `<section class="slide">${WM('★')}${head('ختام اليوم الأول', 'أين وصلت اليوم؟', '')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>✓</i><div>عرفت <b>كيف يفكر Claude</b>: جودة المخرج = جودة السياق.</div></div>
+  <div class="step"><i>✓</i><div>جرّبت <b>أربع أدوات</b> بيدك على عملك.</div></div>
+  <div class="step"><i>✓</i><div>أنشأت <b>مشروعك الأول</b> في حسابك.</div></div>
+  <div class="step"><i>✓</i><div>كتبت <b>مهامك الثلاث</b>، وبدأت استنطاق الأولى.</div></div></div>
+ ${FIG('flag', 'غدًا: من المهمة إلى الحزمة', 'm')}</div></section>`);
+gd('ختام اليوم الأول', { t: '10 دقائق', role: 'ختام · تثبيت', why: 'تثبيت ما أُنجز وخلق توقع لليوم الثاني؛ المشارك الذي يرى أربع علامات إنجاز يعود غدًا بحماس.',
+  a: 'أربع علامات إنجاز', s: 'غدًا نبدأ من استنطاق المهمة', l: 'غدًا… نسأل مهامكم ثمانية عشر سؤالًا.',
+  deep: 'اقرأ العلامات الأربع واطلب من كل مشارك أن يتحقق بنفسه في المختبر. ثم اسأل سؤالًا واحدًا سريعًا: «ما الأداة التي ستستخدمها غدًا في عملك قبل أن تأتي؟» ثلاث إجابات تكفي. ذكّرهم بأن تقدمهم محفوظ في المختبر على أجهزتهم، وأن يفتحوه غدًا من الجهاز نفسه. مثال افتراضي: مشارك يغيّر جهازه غدًا فيجد المختبر فارغًا؛ لذلك يجب العودة بالجهاز نفسه أو المتصفح نفسه.',
+  base: ['التثبيت والاسترجاع (Retrieval practice)'],
+  say: ['أربع علامات.', 'تقدمك محفوظ على جهازك.', 'تعال غدًا بالجهاز نفسه.'],
+  run: ['اقرأ العلامات.', 'ثلاث إجابات عن الأداة.', 'أغلق في الوقت.'],
+  warn: ['لا تمدد اليوم بعد الخامسة.'],
+  check: 'هل يعرف الجميع من أين يبدأون غدًا؟' });
+
+/* ================= اليوم الثاني ================= */
+add(U2, 'غلاف المحطة ⑥ — استنطاق المهمة', cover(6, 'المحطة السادسة · اليوم الثاني', 'استنطاق المهمة', 'هل تعرف مهمتك كما تؤديها فعلًا…', 'أم كما تظن أنك تؤديها؟', 'الأداة ⑥ — 18 سؤالًا في ستة محاور', 'مهمة في رأسي', 'مهمة مكتوبة بتفاصيلها وقواعدها واستثناءاتها', 'lens', 'الخبرة التي لم تُكتب… تُستنطق'));
+gd('غلاف المحطة ⑥ — استنطاق المهمة', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'يعلن هوية اليوم الثاني: العمل الحقيقي على المهام، ويبدأ بالاستنطاق لأن أي تعليمات بلا استنطاق ستكون عامة.',
+  a: 'إعلان المحطة السادسة', s: 'ما المحاور الستة للاستنطاق؟', l: 'ثمانية عشر سؤالًا في ستة محاور. لنرها.',
+  deep: 'ابدأ اليوم بالسؤال الحاكم واتركه لحظة. أغلب الموظفين يؤدون مهامهم بخبرة لم تُكتب قط؛ قواعد في الرأس واستثناءات يتعاملون معها دون تفكير. Claude لا يعرف شيئًا من ذلك. مثال افتراضي: محاسب يعرف أن «أي فرق أقل من عشرة ريالات يُرحّل لحساب فروقات التقريب»، لكنه لم يكتبها في أي مكان؛ إن لم يقلها لClaude فسيعامل كل فرق على أنه مشكلة. الاستنطاق يستخرج هذه القواعد.',
+  base: ['المعرفة الضمنية (Tacit knowledge) — بولاني ونوناكا'],
+  say: ['خبرتك لم تُكتب قط.', 'Claude لا يعرف ما في رأسك.', 'الاستنطاق يخرجها.'],
+  run: ['راجع سريعًا أين توقف كل مشارك.', 'اقرأ السؤال الحاكم.', 'انتقل.'],
+  warn: ['لا تبدأ اليوم بشرح طويل؛ المشاركون متحمسون للعمل.'],
+  check: 'هل يعرف المشارك لماذا لا نكتب التعليمات مباشرة؟' });
+
+add(U2, 'يوم كامل داخل المختبر', `<section class="slide">${WM('∞')}${head('مرحلة الاحتضان', 'يومٌ كامل داخل مختبرك… ورفيقك Claude بجانبك', 'لا تخرج من المختبر اليوم. في كل سؤال وكل مرحلة نافذة نقاش مع Claude: يعمّق، ويعيد الصياغة، ويقترح المراجع… وأنت تعتمد.')}
+ ${cards('g4', [['💬', 'ناقش أي سؤال', 'زر «ناقش» بجانب كل سؤال يفتح حوارًا مركّزًا عليه.'], ['🔍', 'عمّق وأعد الصياغة', 'اطلب مثالًا من وظيفتك، أو صياغة أدق لإجابتك.'], ['📚', 'اطلب المراجع', 'الأطر والمعايير المهنية التي تحكم مهمتك.'], ['✓', 'اعتمد بضغطة', 'كل اقتراح يُعتمد بموافقتك، ثم تنتقل للتالي.']])}</section>`);
+gd('يوم كامل داخل المختبر', { t: '5 دقائق', role: 'محتوى · مفهوم اليوم الثاني', why: 'يعلن فلسفة اليوم الثاني: مرحلة احتضان كاملة داخل المختبر، فلا يتشتت المشارك بين نوافذ وأدوات، ولا يتوقف عند أول تحدٍّ لأن Claude معه في المكان نفسه.',
+  a: 'رفيق Claude متاح في كل مرحلة داخل المختبر', s: 'ونبدأ الاستنطاق… بستة محاور', l: 'الرفيق جاهز. لنرَ ما الذي سنناقشه معه أولًا: ستة محاور.',
+  deep: 'اشرح أن المختبر في اليوم الثاني ليس استمارة تُملأ، بل مساحة عمل يجلس فيها المشارك مع Claude طوال اليوم. على يسار الشاشة لوحة «رفيقك Claude» تعرف المهمة والمرحلة والإجابات، وبجانب كل سؤال زر «ناقش» يركّز الحوار عليه. يستطيع المشارك أن يطلب شرح السؤال بمثال من وظيفته، أو إجابة مقترحة تناسب خبرته، أو تعميق إجابته، أو صياغة أدق، أو الأطر والمعايير المهنية التي تحكم مهمته. وكل اقتراح يظهر مع زر «اعتمد»، فلا يتغير شيء دون موافقته. مثال افتراضي: أخصائي أول امتثال لا يعرف كيف يجيب عن «القاعدة غير المكتوبة»، فيضغط «ناقش» ويطلب مثالًا، فيسأله Claude عن آخر ملاحظة رقابية وكيف تعامل معها، ثم يقترح صياغة يعتمدها بضغطة. أكّد أن المراجع التي يذكرها Claude أسماء أطر معروفة، وأن نصوصها الرسمية يُتحقق منها. وفي نهاية اليوم فقط تُنقل الحزمة المعتمدة إلى الحساب.',
+  base: ['السقالات التعليمية (Scaffolding) — فيجوتسكي وبرونر', 'منطقة النمو القريبة (ZPD)'],
+  say: ['اليوم لا تخرج من المختبر.', 'زر «ناقش» بجانب كل سؤال.', 'Claude يقترح وأنت تعتمد.'],
+  run: ['اعرض اللوحة على الشاشة مرة واحدة.', 'نفّذ نقاشًا حيًا على سؤال واحد.', 'اترك المشاركين يبدأون.'],
+  warn: ['ماذا لو اعتمد مشارك كل اقتراح دون قراءة؟ ذكّره بأن الاعتماد مسؤوليته، وأن المدقق سيكشف الضعف لاحقًا.'],
+  check: 'هل جرّب كل مشارك زر «ناقش» مرة واحدة على الأقل؟' });
+
+add(U2, 'المحاور الستة', `<section class="slide">${WM('٦')}${head('بنية الاستنطاق', 'ثمانية عشر سؤالًا… في ستة محاور', 'أجب كما تجري المهمة فعلًا اليوم، لا كما يجب أن تكون.')}
+ ${cards('g3', [['', 'الواقع الحالي', 'ما يطلقها، وتكرارها، وزمنها، وأين يضيع الوقت.'], ['', 'المدخلات والمصادر', 'من أين تأتي، وجودتها، وما الذي يتأخر.'], ['', 'خبرتك غير المكتوبة', 'القاعدة التي في رأسك، والاستثناء، والخطأ المكلف.'], ['', 'المخرج والمستلم', 'لمن، وبأي صيغة ونبرة، ومتى يقول «ممتاز».'], ['', 'الحوكمة والحدود', 'ما يبقى قرارك، ومستوى حساسية البيانات.'], ['', '🚀 رفع السقف', 'ماذا تضيف لو زال العناء؟ وإلى أي درجة تصل؟']])}</section>`);
+gd('المحاور الستة', { t: '5 دقائق', role: 'محتوى · بنية', why: 'يرى المشارك منطق الأسئلة قبل الإجابة عنها، فيجيب بعمق بدل أن يختار أول خيار.',
+  a: 'ستة محاور تغطي المهمة من الواقع إلى الطموح', s: 'والمحور الأخير يرفع السقف… فما السلّم؟', l: 'المحور السادس مختلف: لا يسأل عن الحاضر، بل عن الدرجة التي تريدها.',
+  deep: 'مرّ على المحاور واحدًا واحدًا بجملة لكل محور. توقف عند الثالث «خبرتك غير المكتوبة»: هذا أثمن محور، وفيه سؤال القاعدة التي لم تُكتب؛ شجّع المشاركين على اختيار «أخرى» وكتابة قاعدتهم بدقة بدل الخيارات الجاهزة. وتوقف عند الخامس: الإجابة عن «ما الذي يبقى قرارك» هي ما كتبه المشارك أمس بعد الفيلم. خيارات بعض الأسئلة تتغير حسب نوع المهمة الذي اختاره المشارك أمس. مثال افتراضي: مدير إداري نوع مهمته «متابعة طلبات» يرى في سؤال الخطأ المكلف خيارات مثل «طلب يضيع دون متابعة»، بينما يرى المحاسب خيارات عن الأرقام.',
+  base: ['تحليل المهام المعرفي (Cognitive Task Analysis)'],
+  say: ['أجب كما هي لا كما يجب.', 'المحور الثالث أثمن محور.', 'استخدم «أخرى» لتكتب بدقة.'],
+  run: ['اكشف المحاور.', 'أبرز الثالث والخامس.', 'لا تبدأ الإجابة قبل شريحة السلّم.'],
+  warn: ['ماذا لو اختار مشارك الخيار الأول في كل سؤال؟ سيظهر ذلك في ورشة التدقيق بدرجة منخفضة.'],
+  check: 'هل يعرف المشارك أي محور أثمن؟' });
+
+add(U2, 'سلّم النضج — رفع السقف', `<section class="slide">${WM('↑')}${head('المحور السادس · رفع السقف', 'إلى أي درجة تريد أن تصل مهمتك؟', 'اختر درجة أعلى بدرجة أو اثنتين مما تفعله اليوم.')}
+ <div class="ladder">${[['1', 'مساعد صياغة عند الطلب'], ['2', 'مشروع بتعليمات ثابتة'], ['3', 'مهارة تكرر التنفيذ بالمعيار نفسه'], ['4', 'أداة تفاعلية أو لوحة متابعة'], ['5', 'مهمة مجدولة تعمل وحدها وأنت تعتمد']].map((x, i) => `<div class="lv" style="height:${40 + i * 15}%"><b>${x[0]}</b><p>${x[1]}</p></div>`).join('')}</div></section>`);
+gd('سلّم النضج — رفع السقف', { t: '5 دقائق', role: 'محتوى · طموح', why: 'يرفع المشارك من «أتمتة ما أفعله» إلى «فعل ما لم أكن أستطيعه». هذه الإضافة النوعية في البرنامج: المهمة لا تُنسخ آليًا، بل ترتفع.',
+  a: 'كل مشارك اختار درجة مستهدفة لمهمته', s: 'وبعد الأسئلة القياسية… أسئلة لا يطرحها إلا من قرأ إجاباتك', l: 'أجبتم الثمانية عشر. الآن يقرأ Claude إجاباتكم ويسأل ما لم نسأله.',
+  deep: 'اشرح الدرجات من الأدنى للأعلى. أغلب المشاركين اليوم في الدرجة الأولى أو لا يستخدمون شيئًا. الهدف أن يختار كل منهم درجة أعلى بدرجتين على الأقل. وفي السؤال المجاور «لو زال عناء التنفيذ، ماذا ستضيف؟» يختار المشارك إضافة لم تكن ممكنة يدويًا: تحليل اتجاه، أو تنبيه مبكر، أو نسخة تنفيذية وأخرى تفصيلية. مثال افتراضي: مدير موارد بشرية كان يعدّ تقريرًا شهريًا بالأرقام فقط؛ يختار الدرجة الرابعة (لوحة متابعة) ويضيف «تنبيه مبكر بالمخاطر» فتصبح مهمته لوحة تنبّه إلى قسم يرتفع فيه الغياب قبل أن يتحول إلى استقالات. امنح بعد هذه الشريحة 35 دقيقة لإكمال الأسئلة الثمانية عشر.',
+  base: ['نماذج نضج الأتمتة', 'رفع سقف الأداء (Stretch goals) — لوك ولاثام'],
+  say: ['ارتفع درجتين على الأقل.', 'أضف ما لم يكن ممكنًا يدويًا.', 'خمس وثلاثون دقيقة للأسئلة.'],
+  run: ['اكشف الدرجات.', 'اسأل: في أي درجة أنت اليوم؟', 'ابدأ وقت الإجابة.'],
+  warn: ['ماذا لو اختار مشارك الدرجة الخامسة لمهمة حساسة؟ ذكّره بأن الجدولة لا تلغي الاعتماد البشري.'],
+  check: 'هل اختار كل مشارك درجة أعلى من حاله اليوم؟' });
+
+add(U2, 'أسئلة التعميق', `<section class="slide">${WM('؟')}${head('بعد الثمانية عشر', 'أسئلة لا يطرحها إلا من قرأ إجاباتك', 'يقرأ Claude إجاباتك ويطرح 3–4 أسئلة خاصة بمهمتك أنت.')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>1</i><div>اضغط <b>«اطلب أسئلة التعميق»</b> في المختبر.</div></div>
+  <div class="step"><i>2</i><div>أجب بمثال حقيقي، واستخدم <b>«أخرى»</b> حين لا تكفي الخيارات.</div></div>
+  <div class="step"><i>3</i><div>انتقل إلى <b>التعليمات</b>: مسودة بثمانية أقسام من إجاباتك.</div></div></div>
+ ${FIG('lens', 'ما لم تكشفه الأسئلة القياسية', 'm')}</div></section>`);
+gd('أسئلة التعميق', { t: '15 دقيقة', role: 'تطبيق · تعميق', why: 'الأسئلة القياسية تغطي الإطار، وأسئلة التعميق تكشف خصوصية كل مهمة؛ الجمع بينهما يعطي فهمًا عميقًا للمهمة على أرض الواقع.',
+  a: 'كل مشارك أجاب عن أسئلة التعميق وولّد المسودة', s: 'المسودة جاهزة… فمتى تصبح جيدة بما يكفي؟', l: 'لديك الآن مسودة تعليمات. السؤال: هل هي جيدة؟ هنا تبدأ أخطر مرحلة.',
+  deep: 'أسئلة التعميق تولد من إجابات المشارك نفسه، فتختلف من شخص لآخر. مثال افتراضي: أخصائي أول امتثال في مستشفى أجاب بأن «ملاحظة من جهة رقابية» هي الاستثناء الأشهر، فيسأله Claude: «حين تصل ملاحظة رقابية، من يحدد مهلة الرد ومن يعتمد خطة التصحيح؟». هذا سؤال لا يمكن أن يكون في قائمة قياسية. بعد الإجابة يضغط المشارك «اكتبها بكلود من إجاباتي» فتظهر مسودة التعليمات بثمانية أقسام. إن لم يكن الاتصال بClaude متاحًا داخل المختبر، يعمل النقل اليدوي: انسخ الطلب، والصقه في Claude، ثم ألصق الرد في المختبر.',
+  base: ['المقابلة شبه المنظمة (Semi-structured interview)'],
+  say: ['الأسئلة تولد من إجاباتك.', 'أجب بمثال حقيقي.', 'المسودة ليست النهاية.'],
+  run: ['15 دقيقة للتعميق والمسودة.', 'ساعد من يستخدم النقل اليدوي.', 'لا تسمح بالقفز للورشة دون مسودة.'],
+  warn: ['ماذا لو جاءت أسئلة التعميق عامة؟ هذا يعني أن الإجابات القياسية كانت عامة؛ عد إليها.'],
+  check: 'هل لكل مشارك مسودة تعليمات بثمانية أقسام؟' });
+
+add(U2, 'غلاف المحطة ⑦ — ورشة التدقيق', cover(7, 'المحطة السابعة · اليوم الثاني', 'ورشة التدقيق', 'التعليمات التي تحتاج شرحًا منك في كل مرة ليست أتمتة…', 'متى تصبح تعليماتك جيدة بما يكفي لتعمل من دونك؟', 'الأداة ⑦ — المدقق والمعايير الثمانية', 'مسودة عامة', 'تعليمات احترافية بدرجة 95% فأكثر', 'gauge', 'لا انتقال قبل العتبة'));
+gd('غلاف المحطة ⑦ — ورشة التدقيق', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'أخطر مرحلة في البرنامج؛ هنا يتوقف المشاركون عادة. الغلاف يعلن أن التوقف ليس خيارًا، وأن الورشة تجري داخل المختبر نفسه حتى العتبة.',
+  a: 'إعلان المحطة السابعة', s: 'بأي معايير يقيس المدقق؟', l: 'المدقق لا يقيس بالانطباع. ثمانية معايير.',
+  deep: 'أكّد أن المشارك لن يخرج من المختبر في هذه المرحلة؛ المدقق يعمل داخل النافذة نفسها. في كل جولة: يحسّن التعليمات بنفسه، ويقيّمها بالمعايير الثمانية، ويسأل سؤالًا واحدًا عن أضعف نقطة. يجيب المشارك أو يختار من الخيارات، فتتحدث التعليمات والمهارة والبرومبت معًا. حين تبلغ الدرجة العتبة يقول المدقق: «وصلت إلى المستوى الاحترافي، انتقل الآن». مثال افتراضي: مدير إداري تبدأ تعليماته عند 72%، وبعد خمس جولات تصل إلى 96%.',
+  base: ['التغذية الراجعة التكوينية (Formative feedback) — هاتي وتيمبرلي'],
+  say: ['هنا يتوقف الناس عادة… ونحن لن نتوقف.', 'جولة بعد جولة داخل النافذة نفسها.', 'العتبة 95%.'],
+  run: ['أعلن أن الورشة أطول مرحلة.', 'اطلب الصبر (تواصوا بالصبر).', 'انتقل.'],
+  warn: ['لا تَعِد بأن الجميع سيبلغ العتبة في الجولة الأولى.'],
+  check: 'هل يعرف المشارك أن الورشة داخل المختبر؟' });
+
+add(U2, 'المعايير الثمانية', `<section class="slide">${WM('٨')}${head('كيف يقيّم المدقق', 'ثمانية معايير… والعتبة 95%', '')}
+ ${cards('g4', [['', 'الدور والنطاق', 'من Claude هنا، وما حدود مهمته؟'], ['', 'اكتمال السياق', 'لماذا تهم المهمة، ومتى تنطلق؟'], ['', 'المدخلات', 'ما الذي يدخل، ومن أين، وماذا إن نقص؟'], ['', 'خطوات التنفيذ', 'تسلسل واضح قابل للتكرار.'], ['', 'الخبرة والاستثناءات', 'قواعدك غير المكتوبة وحالاتها الحدّية.'], ['', 'معايير الجودة', 'قابلة للقياس لا انطباعية.'], ['', 'الحوكمة والبيانات', 'حدّك البشري وإخفاء الحساس.'], ['', 'المخرج والمستلم', 'الصيغة والنبرة ولمن.']])}</section>`);
+gd('المعايير الثمانية', { t: '5 دقائق', role: 'محتوى · معايير', why: 'شفافية المعايير تجعل المشارك شريكًا في رفع الدرجة لا متلقيًا لحكم؛ يعرف أين ضعفه ولماذا.',
+  a: 'ثمانية معايير معلنة', s: 'المعايير واضحة… فكيف تحاور المدقق لتصعد؟', l: 'عرفتم المعايير. أربع قواعد للحوار ترفع درجتكم أسرع.',
+  deep: 'اربط كل معيار بقسم من أقسام التعليمات الثمانية؛ البنية والمعايير متطابقتان عن قصد. أوضح أن الدرجة الكلية متوسط المعايير، وأن المدقق لا يمنح العتبة إلا إذا كانت التعليمات قابلة للتشغيل دون أي سؤال إضافي وخالية من مواضع «[يُستكمل]». مثال افتراضي: محاسب يحصل على 90 في الدور والنطاق لكن 60 في الاستثناءات لأنه لم يذكر ماذا يفعل بالفروق الصغيرة؛ سؤال المدقق التالي سيكون عنها تحديدًا. في المختبر تظهر المعايير أشرطة ملونة بجانب المحادثة.',
+  base: ['مصفوفة التقدير (Analytic rubric)'],
+  say: ['ثمانية معايير تقابل ثمانية أقسام.', 'العتبة تعني: تعمل دون سؤال إضافي.', 'السؤال التالي دائمًا عن أضعف معيار.'],
+  run: ['اكشف المعايير.', 'أشر إلى أشرطتها في المختبر.', 'انتقل إلى قواعد الحوار.'],
+  warn: ['ماذا لو اعترض مشارك على درجة؟ دعه يكتب اعتراضه للمدقق؛ هذا جزء من الحوار.'],
+  check: 'هل يستطيع المشارك أن يجد أضعف معيار في لوحته؟' });
+
+add(U2, 'كيف تحاور المدقق', `<section class="slide">${WM('✎')}${head('أربع قواعد للحوار', 'كيف تصعد درجتك أسرع', '')}
+ ${cards('g2', [['💡', 'أجب بمثال حقيقي', 'المثال يرفع الدرجة أكثر من الوصف العام.'], ['✏️', 'عدّل بيدك عند الحاجة', 'التعليمات قابلة للتعديل، والجولة التالية تبني على تعديلك.'], ['🔍', 'اقرأ ما تغيّر', 'كل جولة تعرض أهم التعديلات؛ راجعها قبل أن تجيب.'], ['↩️', 'النسخ محفوظة', 'إن ساءت نسخة فارجع إلى ما قبلها بضغطة.']])}
+ <div class="insight anim" style="margin-top:26px"><span class="rl">العتبة</span>حين يقول المدقق «وصلت إلى المستوى الاحترافي» انتقل إلى الحزمة — والمهارة والبرومبت تزامنا تلقائيًا.</div></section>`);
+gd('كيف تحاور المدقق', { t: '45 دقيقة', role: 'تطبيق · ورشة', why: 'قواعد الحوار تختصر الجولات؛ المشارك الذي يجيب بمثال حقيقي يصل إلى العتبة في نصف عدد الجولات تقريبًا.',
+  a: 'كل مشارك يحاور المدقق حتى العتبة', s: 'وصلت إلى العتبة… فكيف تنقل الحزمة إلى حسابك؟', l: 'وصلتم إلى العتبة. التعليمات والمهارة والبرومبت متزامنة. الآن ننقلها.',
+  deep: 'اشرح القواعد الأربع ثم ابدأ الورشة. أكثر ما يرفع الدرجة: الإجابة بمثال حقيقي بدل كلمة عامة مثل «حسب الحالة». مثال افتراضي: يسأل المدقق «ماذا تفعل حين يتأخر رقم إدارة عن موعد الإقفال؟»؛ إجابة «أتابع معهم» ترفع الدرجة قليلًا، أما «أرسل التقرير وأعلّم البند بانتظار، وأرسل للمدير ملاحظة بالسبب» فترفعها كثيرًا. شجّع المشاركين على قراءة «أهم التعديلات» في كل جولة لأنهم يتعلمون منها كتابة التعليمات. وإن مرت ست جولات دون بلوغ العتبة يظهر زر الانتقال دونها؛ لا تشجعه إلا لمن ضاق وقته.',
+  base: ['التعلم بالتغذية الراجعة المتكررة (Iterative feedback loops)'],
+  say: ['المثال الحقيقي يرفع الدرجة.', 'اقرأ ما تغيّر.', 'لا تقفز قبل العتبة.'],
+  run: ['5 دقائق شرح ثم 40 دقيقة ورشة.', 'تجوّل عند من تبقى درجته تحت 80.', 'احتفل علنًا بأول من يبلغ العتبة.'],
+  warn: ['ماذا لو تكرر سؤال المدقق؟ الإجابة السابقة لم تكن كافية؛ أجب بمثال.', 'ماذا لو انخفضت الدرجة؟ استرجع النسخة السابقة.'],
+  check: 'كم مشاركًا بلغ العتبة في المهمة الأولى؟' });
+
+add(U2, 'غلاف المحطة ⑧ — الحزمة والقياس', cover(8, 'المحطة الثامنة · اليوم الثاني', 'الحزمة والقياس', 'تعليمات ممتازة داخل المختبر لا تكفي…', 'هل تعمل في حسابك ببياناتك الحقيقية؟', 'الأداة ⑧ — الحزمة الثلاثية وخطوات النقل', 'تعليمات في المختبر', 'مهمة تعمل في حسابي وقِسْت أثرها', 'pack', 'تعليمات · مهارة · برومبت'));
+gd('غلاف المحطة ⑧ — الحزمة والقياس', { t: 'دقيقة', role: 'غلاف محطة · تأطير', why: 'يغلق دورة المهمة: لا قيمة لتعليمات لم تُشغَّل في الحساب الحقيقي ولم يُقس أثرها.',
+  a: 'إعلان المحطة الثامنة', s: 'ما الذي في الحزمة، وكيف تُنقل؟', l: 'الحزمة ثلاثة ملفات وخمس خطوات.',
+  deep: 'السؤال الحاكم يتحدى المشارك: التعليمات التي بلغت 96% في المختبر قد تتعثر مع ملف حقيقي فيه صيغة غير متوقعة. لذلك لا تنتهي المهمة إلا بتشغيل حقيقي وقياس. مثال افتراضي: أخصائي إداري يشغّل حزمة متابعة الطلبات على ملف الشهر الماضي بعد الإخفاء، فيكتشف عمودًا بصيغة تاريخ مختلفة؛ يضيف سطرًا للتعليمات ويعيد التشغيل. هذا التحسين بعد التشغيل هو ما يصنع الحزمة المعتمدة.',
+  base: ['التحقق في بيئة التشغيل (Validation in context)'],
+  say: ['المختبر ليس الواقع.', 'شغّلها على ملف حقيقي بعد الإخفاء.', 'ثم قِس.'],
+  run: ['أعلن المحطة.', 'تأكد أن Claude مفتوح.', 'انتقل.'],
+  warn: ['لا تسمح بالانتقال للمهمة الثانية دون تشغيل الأولى.'],
+  check: 'هل يعرف المشارك أن المهمة لا تنتهي في المختبر؟' });
+
+add(U2, 'التشغيل التجريبي داخل المختبر', `<section class="slide">${WM('▶')}${head('قبل النقل إلى حسابك', 'جرّب حزمتك هنا أولًا', 'يشغّل Claude حزمتك داخل المختبر كما ستعمل في حسابك تمامًا: التعليمات والمهارة والبرومبت على بيانات تجريبية.')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>1</i><div><b>البيانات:</b> ألصق عينة بعد الإخفاء، أو ولّد بيانات وهمية واقعية فيها استثناء ونقص.</div></div>
+  <div class="step"><i>2</i><div><b>التشغيل:</b> اضغط «شغّل الحزمة» وراجع المخرج كما تراجع عمل زميل.</div></div>
+  <div class="step"><i>3</i><div><b>النقاش:</b> انقد المخرج مع رفيقك Claude، واعتمد التعديل على التعليمات.</div></div>
+  <div class="step"><i>4</i><div><b>الاعتماد:</b> حين يرضيك المخرج اعتمده، ثم انتقل إلى الحزمة.</div></div></div>
+ ${FIG('pack', 'تعمل هنا… قبل أن تعمل هناك', 'm')}</div></section>`);
+gd('التشغيل التجريبي داخل المختبر', { t: '20 دقيقة', role: 'تطبيق · تشغيل تجريبي', why: 'يغلق الفجوة بين تعليمات ممتازة على الورق ومخرج حقيقي: المشارك يرى حزمته تعمل قبل أن يغادر المختبر، فيصحح ما يلزم وهو ما زال في مرحلة الاحتضان.',
+  a: 'كل مشارك شغّل حزمته واعتمد مخرجها داخل المختبر', s: 'المخرج معتمد… فننقل الحزمة إلى الحساب', l: 'الحزمة جُرّبت واعتُمدت هنا. الآن تنتقل إلى حسابك.',
+  deep: 'اشرح أن التشغيل التجريبي يحاكي ما سيحدث في حساب المشارك بدقة: Claude يقرأ تعليمات المشروع والمهارة، ثم ينفذ البرومبت الرئيسي على البيانات. إن لم يكن مع المشارك ملف حقيقي، فزر «ولّد بيانات تجريبية واقعية» يصنع بيانات وهمية بصيغة مدخلاته، ويضع فيها عمدًا حالة الاستثناء التي ذكرها في الاستنطاق، ونقصًا في المدخل الذي يتأخر عادة؛ حتى يرى هل تتصرف الحزمة كما يريد. ثم يراجع المخرج، ويضغط «ناقش المخرج مع Claude»، فيقترح Claude تعديلًا على التعليمات يعتمده بضغطة، فتتحدث المهارة والبرومبت معها، ويعيد التشغيل. مثال افتراضي: محاسب يشغّل حزمة المطابقة فيلاحظ أن الفروق الصغيرة عوملت كأخطاء؛ يناقش ذلك فيضاف سطر في قواعد الخبرة، ويعيد التشغيل فيظهر المخرج صحيحًا. لا ينتقل المشارك إلى النقل قبل اعتماد مخرج واحد على الأقل.',
+  base: ['اختبار القبول قبل التشغيل (User Acceptance Testing)', 'دورة التحسين المستمر PDCA — ديمنغ'],
+  say: ['جرّبها هنا قبل هناك.', 'البيانات الوهمية فيها استثناء ونقص عن قصد.', 'لا نقل قبل اعتماد مخرج.'],
+  run: ['نفّذ تشغيلًا حيًا لمهمة واحدة.', 'اطلب من كل مشارك تشغيلًا واحدًا على الأقل.', 'تجوّل عند من لم يرضه المخرج.'],
+  warn: ['ماذا لو اختلف المخرج كثيرًا عن المتوقع؟ غالبًا ينقص التعليمات قسم الصيغة؛ ناقشه مع الرفيق.', 'لا تُلصق بيانات حقيقية حساسة دون إخفاء.'],
+  check: 'هل اعتمد كل مشارك مخرجًا تجريبيًا قبل النقل؟' });
+
+add(U2, 'الحزمة وخطوات النقل', `<section class="slide">${WM('٣')}${head('الحزمة الثلاثية', 'ثلاثة ملفات… وخمس خطوات إلى حسابك', '')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>1</i><div>أنشئ <b>مشروعًا</b> باسم المهمة في claude.ai.</div></div>
+  <div class="step"><i>2</i><div>الصق <b>تعليمات المشروع</b> في Set project instructions.</div></div>
+  <div class="step"><i>3</i><div>أضف <b>المهارة</b>: ارفع ملفها، أو الصقها واطلب «احفظ هذه كمهارة».</div></div>
+  <div class="step"><i>4</i><div>شغّل <b>البرومبت الرئيسي</b> داخل المشروع ببيانات حقيقية بعد الإخفاء — كما جرّبته في المختبر.</div></div>
+  <div class="step"><i>5</i><div>راجع المخرج، وأضف ما تعلّمته إلى التعليمات.</div></div></div>
+ ${FIG('pack', 'تعليمات · مهارة · برومبت — متزامنة', 'm')}</div></section>`);
+gd('الحزمة وخطوات النقل', { t: '20 دقيقة', role: 'تطبيق · نقل', why: 'النقل إلى الحساب الحقيقي هو اللحظة التي تتحول فيها الحزمة من تمرين إلى أداة عمل.',
+  a: 'كل مشارك نقل حزمته وشغّلها', s: 'شغّلتها… فكم وفّرت؟', l: 'المخرج أمامك. سؤال أخير: كم دقيقة استغرق؟',
+  deep: 'اشرح الفرق بين الملفات الثلاثة: التعليمات تحكم كل محادثة داخل المشروع، والمهارة تحفظ طريقة العمل خطوة بخطوة ويستدعيها Claude حين يحتاجها، والبرومبت الرئيسي هو ما يلصقه المشارك كل مرة مع بيانات المرة. نفّذ الخطوات مع القاعدة على مهمة واحدة. في المختبر تُعلَّم كل خطوة عند إنجازها. مثال افتراضي: مدير حسابات عملاء ينقل حزمة «تقرير الحساب الدوري»، ويشغّلها على بيانات عميل بعد استبدال اسمه برمز، فيحصل على تقرير جاهز للمراجعة في أربع دقائق. إن لم يتمكن مشارك من رفع المهارة لأن خطته لا تدعم ذلك، فليلصق محتواها في ملف داخل المشروع؛ يعمل بالقدر الكافي.',
+  base: ['نقل التعلم إلى بيئة العمل (Transfer of training) — بالدوين وفورد'],
+  say: ['التعليمات تحكم، والمهارة تحفظ، والبرومبت يشغّل.', 'بيانات حقيقية بعد الإخفاء.', 'راجع كما تراجع عمل زميل.'],
+  run: ['نفّذ الخطوات معهم.', 'تحقق من المخرج الأول لكل مشارك.', 'دوّن الصعوبات المتكررة.'],
+  warn: ['ماذا لو اختلف المخرج كثيرًا عن المتوقع؟ عد إلى ورشة التدقيق بما تعلمته.'],
+  check: 'هل شغّل كل مشارك حزمته الأولى في حسابه؟' });
+
+add(U2, 'القياس قبل وبعد', `<section class="slide">${WM('٪')}${head('القياس', 'كم وفّرت فعلًا؟', 'سجّل في المختبر زمن المهمة مع Claude بعد أول تشغيل حقيقي — بما فيه مراجعتك.')}
+ ${cards('g3', [['⌛', 'قبل', 'الزمن اليدوي من إجابتك في الاستنطاق.'], ['⚡', 'بعد', 'زمن أول تشغيل حقيقي مع المراجعة.'], ['📈', 'التوفير الشهري', 'الفرق × عدد مرات التكرار — تقديري.']])}
+ <div class="insight anim" style="margin-top:26px"><span class="rl">بأمانة</span>الأرقام اليوم تقديرية؛ الرقم المعتبر ما تقيسه بعد أسبوعين من الاستخدام الفعلي.</div></section>`);
+gd('القياس قبل وبعد', { t: '10 دقائق', role: 'تطبيق · قياس', why: 'القياس يحوّل الإحساس بالتوفير إلى رقم يمكن عرضه على المدير، ويحمي البرنامج من المبالغة بتأكيد أنه تقدير.',
+  a: 'كل مشارك سجّل زمن ما قبل وما بعد', s: 'دورة كاملة… تتكرر على المهمتين الأخريين', l: 'هذه دورة مهمة واحدة. لديكم مهمتان أخريان.',
+  deep: 'يأتي زمن «قبل» من إجابة المشارك عن سؤال «كم تستغرق يدويًا؟» في الاستنطاق، وزمن «بعد» يختاره بعد أول تشغيل حقيقي، والتوفير الشهري يُحسب من الفرق مضروبًا في التكرار. أكّد أن الرقم تقديري. مثال افتراضي: محاسب كانت مطابقته الشهرية تستغرق ثلاث ساعات، وأخذت مع Claude عشرين دقيقة شاملة المراجعة؛ التوفير التقديري ساعتان وأربعون دقيقة شهريًا لهذه المهمة وحدها. اطلب منه أن يقيس مرة أخرى بعد أسبوعين، لأن المرة الأولى تتضمن تعلّمًا.',
+  base: ['قياس العائد على الوقت (Time-to-value)', 'مستويات كيركباتريك — المستوى الثالث'],
+  say: ['قبل من إجابتك، وبعد من تجربتك.', 'الرقم تقديري.', 'قِس مرة أخرى بعد أسبوعين.'],
+  run: ['5 دقائق للتسجيل.', 'اطلب رقمين أو ثلاثة من القاعة.', 'لا تجمع الأرقام في رقم كلي مبالغ فيه.'],
+  warn: ['ماذا لو كان زمن «بعد» أطول؟ طبيعي في المرة الأولى؛ ورشة تدقيق أخرى تحلّه.'],
+  check: 'هل سجّل كل مشارك رقميه؟' });
+
+add(U2, 'الدورة على المهمتين الأخريين', `<section class="slide">${WM('↻')}${head('بقية اليوم الثاني', 'الدورة نفسها… مرتين أخريين', 'كل مهمة تمر بالمراحل السبع، وكل مرة أسرع من سابقتها.')}
+ ${cards('g4', [['', 'المهمة ٢', 'الاستنطاق ← التعميق ← التعليمات ← الورشة ← الحزمة ← القياس.'], ['', 'المهمة ٣', 'الدورة نفسها، ومع خبرة جولتين سابقتين.'], ['', 'التشغيل الحقيقي', 'كل حزمة تُشغَّل مرة في حسابك قبل المغادرة.'], ['', 'خط الأساس', 'ثلاث مهام، ولكل مهمة رقمان: قبل وبعد.']])}</section>`);
+gd('الدورة على المهمتين الأخريين', { t: '2.5 ساعة', role: 'تطبيق · تكرار', why: 'التكرار يثبّت المهارة: في المهمة الثالثة يصبح المشارك قادرًا على كتابة تعليمات قوية بنفسه، وهذا هو الأثر الحقيقي.',
+  a: 'ثلاث مهام بحزمها وقياسها', s: 'ثلاث حزم تعمل… والسؤال: ماذا بعدها؟', l: 'ثلاث حزم في حسابك. لنختم اليوم.',
+  deep: 'اترك المشاركين يعملون باستقلالية على المهمتين الثانية والثالثة، مع استراحة وصلاة العصر بينهما. لاحظ أن المهمة الثانية أسرع عادة لأن المشارك فهم منطق الأسئلة، والثالثة أسرع منها، وكثيرون يبلغون العتبة في الثالثة بجولات أقل لأنهم صاروا يجيبون بأمثلة من البداية. مثال افتراضي: مدير إداري يحتاج خمس جولات في المهمة الأولى، وثلاثًا في الثانية، وجولتين في الثالثة. اجمع ملاحظات سريعة عن الصعوبات المتكررة لتستفيد منها في اليوم الثالث.',
+  base: ['التعلم بالممارسة المتكررة (Deliberate practice) — إريكسون'],
+  say: ['الدورة نفسها.', 'كل مرة أسرع.', 'لا تغادر دون تشغيل الحزم الثلاث.'],
+  run: ['عمل فردي مستقل.', 'تجوّل وساعد.', 'دوّن الصعوبات المتكررة.'],
+  warn: ['ماذا لو تأخر مشارك كثيرًا؟ ركّز على إكمال مهمتين بجودة بدل ثلاث مستعجلة.'],
+  check: 'كم حزمة شُغّلت في القاعة؟' });
+
+add(U2, 'ختام اليوم الثاني', `<section class="slide">${WM('★')}${head('ختام اليوم الثاني', 'ما الذي في حسابك الآن؟', '')}
+ <div class="split"><div class="steps">
+  <div class="step"><i>✓</i><div><b>ثلاث مهام</b> مستنطقة بعمق من واقعها.</div></div>
+  <div class="step"><i>✓</i><div><b>تعليمات احترافية</b> بلغت العتبة في ورشة التدقيق.</div></div>
+  <div class="step"><i>✓</i><div><b>ثلاث حزم</b> تعمل في حسابك: تعليمات ومهارة وبرومبت.</div></div>
+  <div class="step"><i>✓</i><div><b>خط أساس</b> لكل مهمة: قبل وبعد.</div></div></div>
+ ${FIG('flag', 'وغدًا: من الحزمة إلى الأثر', 'm')}</div></section>`);
+gd('ختام اليوم الثاني', { t: '10 دقائق', role: 'ختام · تثبيت', why: 'يرى المشارك حصيلة يوم كامل من العمل الحقيقي في أربع علامات، فيعود لليوم الثالث بثقة.',
+  a: 'أربع علامات إنجاز لليوم الثاني', s: 'غدًا: من الحزمة إلى الأثر', l: 'حزمكم تعمل. غدًا نجعل أثرها يتجاوز مكاتبكم.',
+  deep: 'اقرأ العلامات، واطلب من ثلاثة مشاركين أن يقول كل منهم في جملة: ما المهمة التي ستستخدم حزمتها أولًا في عملك؟ ذكّر بأن الحزم الآن في حساباتهم على Claude وليست في المختبر فقط، وأن المختبر يبقى مرجعًا. مثال افتراضي لإجابة: «سأشغّل حزمة تقرير الموارد البشرية الشهري يوم الأحد القادم على أرقام نوفمبر». لا تكشف تفاصيل اليوم الثالث؛ يكفي العنوان.',
+  base: ['نية التطبيق (Implementation intentions) — غولفيتزر'],
+  say: ['ثلاث حزم في حسابك.', 'ما الحزمة الأولى التي ستشغّلها؟', 'غدًا: من الحزمة إلى الأثر.'],
+  run: ['اقرأ العلامات.', 'ثلاث إجابات.', 'أغلق في الوقت.'],
+  warn: ['لا تفتح نقاش اليوم الثالث قبل اعتماد تصوره.'],
+  check: 'هل حدد كل مشارك أول حزمة سيشغّلها؟' });
+
+/* إضافات الشرح المعمّق — تُلحق بمداخل الدليل لتبلغ العمق المطلوب */
+const EXTRA = {
+ 'حقوق الملكية الفكرية': 'ومن المفيد أن تذكر أن المختبر نفسه يبقى متاحًا لهم مرجعًا بعد البرنامج، لكن مشاركته مع جهات أخرى أو إعادة تقديمه في دورات داخلية يحتاج إذنًا. وإن سأل مشارك يعمل في جهة تملك سياسة استخدام للذكاء الاصطناعي عن تعارض محتمل، فقل إن سياسة جهته تتقدم دائمًا على أي حزمة يبنيها هنا، وإن عليه مراجعتها قبل تشغيل أي حزمة على بيانات حقيقية.',
+ 'غلاف المحطة ① — التعارف': 'أهمية هذه المحطة أن القاعدة تضم مشاركين من جهات مختلفة وبمستويات وظيفية متباعدة، من رئيس تنفيذي إلى أخصائي إداري. التعارف بالمهام يزيل حاجز المسمى: حين يقول الرئيس التنفيذي إن مهمته المستنزفة هي تحضير مواد مجلس الإدارة، ويقول المحاسب إنها المطابقة البنكية، يكتشف الطرفان أن الوجع واحد في جوهره: تجميع وتنسيق ومراجعة. هذه هي البذرة التي يقوم عليها البرنامج كله، فلا تستعجلها.',
+ 'غلاف المحطة ② — الفيلم الافتتاحي': 'قبل تشغيل الفيلم تأكد من الصوت في القاعة بتشغيل الثواني الأولى بلا صورة. إن كانت القاعة مضاءة بشدة فاخفض الإضاءة لأن الفيلم يعتمد على مشاهد داكنة في منتصفه. ولا تذكر مدة الفيلم بدقة كي لا ينشغل المشاركون بالوقت؛ يكفي أن تقول «دقائق قليلة». وإن سأل أحد قبل العرض «هل الفيلم عن Claude؟» فقل: عن الإنسان والعمل، وClaude يأتي بعده.',
+ 'الفيلم الافتتاحي': 'بعد النهاية لا تبدأ بسؤالك مباشرة؛ اترك خمس ثوانٍ من الصمت، ثم انتقل إلى شريحة النقاش. وإن لاحظت تأثرًا واضحًا عند بعض المشاركين في مشهد الموظف المنهك، فاستثمره في النقاش بسؤال مفتوح لا يحرج أحدًا. ولاحظ أن الفيلم يذكر أرقامًا عن استخدام الموظفين للذكاء الاصطناعي دون سياسة واضحة؛ هذا مدخل جيد لاحقًا إلى قاعدة إخفاء البيانات الحساسة التي أعلنّاها في الافتتاح.',
+ 'نقاش الفيلم': 'وإن اتجه النقاش إلى الخوف من فقدان الوظائف، فلا تنفِه بشعار؛ قل إن الخطر الحقيقي ليس في الآلة بل في الموظف الذي يتركها لغيره، وإن هذا البرنامج يضع كل مشارك في موقع من يقود الأداة لا من تقوده. واحرص على أن تُدوَّن الإجابات على السبورة في عمودين واضحين: «للآلة» و«لي»؛ ستعود إليهما في اليوم الثاني عند سؤال الحوكمة.',
+ 'غلاف المحطة ③ — تعرّف على Claude': 'تجنّب في هذه المحطة الدخول في المقارنات بين منتجات الذكاء الاصطناعي المختلفة، حتى لو سأل أحد عن أداة يستخدمها في جهته. قل إن المبادئ التي سنتعلمها، من السياق إلى التعليمات إلى الاعتماد البشري، تنطبق على أي أداة، وإن اختيار Claude هنا لأنه يتيح المشاريع والمهارات بشكل مناسب لما سنبنيه. واحرص على أن تبقى المحطة في حدود عشرين دقيقة.',
+ 'كيف تعمل معه؟': 'وإن سأل أحد عن الدرجة الخامسة، المهام المجدولة، فاشرح أنها تعني أن يعمل Claude في موعد محدد دون أن تفتحه، مثل ملخص كل صباح أو تقرير كل خميس، لكنه يبقى يرسل لك مسودة لا يرسلها لغيرك. هذه الدرجة متاحة في بعض الخطط وتحتاج إعدادًا، ولن تكون هدف أغلب المشاركين في هذا البرنامج؛ الهدف الواقعي هو الدرجة الثانية أو الثالثة.',
+ 'غلاف المحطة ④ — الأدوات الأربع': 'وضّح أن هناك أدوات أخرى قوية لم نخترها هنا، مثل الموصلات بالبريد والتقويم وCowork وClaude Code، وأنها تحتاج إعدادًا أو صلاحيات من تقنية المعلومات في جهة المشارك، فلا تناسب يومًا تعريفيًا لجمهور من جهات متعددة. من يريد التوسع فيها يمكنه أن يسأل بعد انتهاء اليوم. هذا يمنع تشتت القاعة ويحفظ إيقاع المحطة.',
+ 'الأداة ١ — المحادثة مع ملفاتك': 'أثناء التجوال راقب أمرين: هل أخفى المشارك البيانات الحساسة فعلًا قبل الرفع، وهل قرأ جدول النقاط الخمس بعين ناقدة أم قبله كما هو. اطلب من مشاركين اثنين أن يعرضا السؤال الذي اقترحه Claude ولم يكونا قد فكرا فيه؛ هذه اللحظة تقنع المترددين بأن الأداة تضيف رؤية لا مجرد تلخيص.',
+ 'الأداة ٢ — البحث والبحث المعمّق': 'وإن لم تتوفر أداة البحث في حساب مشارك لأنه على خطة مجانية أو لأنها غير مفعّلة، فاطلب منه تفعيلها من قائمة الأدوات في المحادثة، أو أن يعمل مع زميل بجانبه في هذه الأداة تحديدًا. وذكّر الجميع بأن تقرير البحث المعمّق ليس مستندًا نهائيًا؛ هو نقطة بداية تُراجَع مصادرها قبل الاستشهاد بها في أي مستند رسمي.',
+ 'الأداة ٣ — الأداة الحية (Artifact)': 'إن تعثّر مشارك لأن الأداة لم تظهر، فاطلب منه أن يكتب في المحادثة «اعرضها كأداة تفاعلية» أو أن يتأكد من تفعيل خاصية الأدوات الحية في الإعدادات. وشجّع من أنهى مبكرًا على طلب تعديل ثانٍ وثالث، لأن قيمة الأداة تظهر في سرعة تعديلها بالكلام. اختم المحطة بعرض أداتين من القاعة على الشاشة إن سمح أصحابهما.',
+ 'الأداة ٤ — المشاريع (Projects)': 'لاحظ أن بعض المشاركين سيكتبون تعليمات طويلة عامة من عندهم؛ هذا مقبول الآن، لكن نبّه إلى أن تعليمات اليوم الثاني ستكون مختلفة: مبنية على استنطاق المهمة ومدققة بالمعايير. واطلب من كل مشارك أن يحفظ اسم مشروعه، لأنه سيضيف إليه أو ينشئ بجانبه مشاريع المهام الثلاث في اليوم الثاني.',
+ 'غلاف المحطة ⑤ — انطلاقة المهام': 'هذه المحطة تبدأ في الساعة الأخيرة من اليوم الأول عن قصد، حتى يغادر المشارك ومهامه مكتوبة، فيعود في اليوم الثاني ويبدأ العمل مباشرة دون أن يضيع ساعته الأولى في التفكير في ماذا يختار. وقد يفكر بعضهم في مهامهم مساءً ويعدّلها؛ هذا مرغوب، والمختبر يسمح بالتعديل في أي وقت قبل الاستنطاق.',
+ 'ختام اليوم الأول': 'إن بقي وقت فاطلب من مشارك واحد أن يقول ما الذي فاجأه اليوم. وراجع في ذهنك قبل اليوم الثاني قائمة المشاركين الذين لم يعتمدوا مهامهم بعد، لتبدأ بهم صباحًا. ولا تنسَ أن تذكّر بأن الفيلم والأدوات الأربع متاحة في المختبر لمن أراد مراجعتها في البيت.',
+ 'غلاف المحطة ⑥ — استنطاق المهمة': 'ابدأ اليوم الثاني بمراجعة سريعة لأين توقف كل مشارك؛ بعضهم بدأ الاستنطاق أمس وبعضهم لم يبدأ. لا تنتظر الجميع؛ من بدأ يكمل، ومن لم يبدأ يبدأ الآن. وذكّر بأن الإجابات تبقى على أجهزتهم ولا تُرسل لأحد، وهذا مهم خصوصًا لمن مهامه حساسة كالرئيس التنفيذي ومدير الموارد البشرية.',
+ 'أسئلة التعميق': 'وإن لاحظت أن مشاركًا يجيب عن أسئلة التعميق باختيار أول خيار دائمًا، فاجلس معه دقيقة واسأله السؤال نفسه شفهيًا؛ غالبًا يقول إجابة أغنى من الخيارات، فاطلب منه كتابتها في «أخرى». هذه الدقيقة ترفع درجته في ورشة التدقيق لاحقًا بعشر نقاط أو أكثر.',
+ 'غلاف المحطة ⑦ — ورشة التدقيق': 'نبّه إلى أن العتبة قابلة للضبط من لوحة المدرب، وأنها هنا 95% لأن هذا المستوى يعني تعليمات قابلة للتشغيل دون أسئلة إضافية. وإن ضاق الوقت على القاعة كلها يمكن خفضها إلى 90% للمهمة الثالثة. ولا تجعل الدرجة سباقًا بين المشاركين؛ كل مهمة تختلف في تعقيدها، والمقارنة الصحيحة هي بين جولات المشارك نفسه.',
+ 'المعايير الثمانية': 'وإن سأل مشارك لماذا لا يمنحه المدقق مئة، فاشرح أن المدقق صارم عن قصد، وأن 95 تعني أن التعليمات جاهزة للتشغيل، وأن الكمال غير مطلوب. المهم أن يقرأ ملاحظة كل معيار تحت شريطه، لأنها تقول بالضبط ما الذي ينقص، وأن يجيب عن سؤال المدقق بمثال.',
+ 'كيف تحاور المدقق': 'لاحظ أيضًا أن بعض المشاركين قد يعدّلون التعليمات بأيديهم تعديلًا كبيرًا ثم يرسلون؛ هذا جيد، والمدقق سيقيّم النسخة المعدلة. وإن تعطل الاتصال بClaude داخل المختبر في أي لحظة فالنقل اليدوي يعمل: يظهر الطلب للنسخ، ويُلصق في Claude، ثم يُلصق الرد في المختبر، والورشة تستمر من حيث توقفت.',
+ 'غلاف المحطة ⑧ — الحزمة والقياس': 'أكّد أن نقل الحزمة لا يحتاج أي مهارة تقنية: نسخ ولصق وإنشاء مشروع، كما فعلوا أمس في الأداة الرابعة. والجديد أنهم الآن يلصقون تعليمات مدققة لا تعليمات عامة. وإن كان أحدهم لا يملك ملفًا حقيقيًا معه، فليطلب من Claude إنشاء ملف تجريبي بالصيغة نفسها ويشغّل الحزمة عليه، ثم يشغّلها على الحقيقي في عمله.',
+ 'القياس قبل وبعد': 'وإن سأل مدير عن كيفية عرض هذه الأرقام على إدارته، فاقترح أن يعرضها رقمًا واحدًا لكل مهمة مع ذكر أنها تقديرية حتى القياس الثاني، وأن يضيف إليها ما لا يُقاس بالدقائق: انخفاض الأخطاء، ووضوح المخرج، وثبات المعيار. هذه القيم غالبًا أهم عند الإدارة من الدقائق.',
+ 'الدورة على المهمتين الأخريين': 'إن أنهى مشارك مهامه الثلاث مبكرًا، فاقترح عليه أن يعود إلى المهمة الأولى ويرفع درجتها في سلّم النضج درجة إضافية، أو أن يساعد زميلًا يجلس بجانبه دون أن يطّلع على تفاصيل مهامه الحساسة. واحرص قبل نهاية اليوم على أن يكون لكل مشارك حزمة واحدة على الأقل مشغّلة في حسابه.',
+ 'ختام اليوم الثاني': 'وقبل أن يغادروا، ذكّرهم بأن الحزم في حساباتهم الآن ويمكنهم تشغيلها في أي وقت، وأن المختبر يحفظ نسخهم وتقدمهم على الجهاز نفسه. وإن كان لديك وقت فاطلب من مشارك واحد أن يقارن بين أول درجة حصل عليها في ورشة التدقيق وآخر درجة؛ هذا الرقم يلخص اليوم الثاني كله.'
+};
+Object.keys(EXTRA).forEach(k => { if (TG[k]) TG[k].deep += ' ' + EXTRA[k]; else ERR.push('extra-missing:' + k); });
+
+build();</script></body></html>
